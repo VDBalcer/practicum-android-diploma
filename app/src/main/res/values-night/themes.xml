@@ -7,5 +7,6 @@
         <item name="text_color">@color/text_color_dark</item>
         <item name="input_background">@color/input_background_dark</item>
         <item name="placeholder_color">@color/placeholder_color_dark</item>
+        <item name="filter_text_color">@color/filter_text_color_dark</item>
     </style>
 </resources>

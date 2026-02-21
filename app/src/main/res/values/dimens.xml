@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="title_text_margin_left">16dp</dimen>
-    <dimen name="title_text_margin_right">4dp</dimen>
     <dimen name="title_text_margin_vertical">19dp</dimen>
 
     <dimen name="icon_padding">8dp</dimen>
@@ -23,23 +22,30 @@
     <dimen name="preloader_icon_margin">6dp</dimen>
     <dimen name="preloader_icon_gap">36dp</dimen>
 
+    <dimen name="filter_section_margin_vertical">6dp</dimen>
     <dimen name="filter_section_margin_left">16dp</dimen>
     <dimen name="filter_section_margin_right">4dp</dimen>
+    <dimen name="filter_section_arrow_size">48dp</dimen>
+    <dimen name="filter_section_arrow_padding">8dp</dimen>
     <dimen name="filter_checkbox_size">24dp</dimen>
     <dimen name="button_selected_margin_horizontal">17dp</dimen>
-    <dimen name="button_selected_margin_bottom">72dp</dimen>
     <dimen name="button_selected_padding_vertical">20dp</dimen>
     <dimen name="button_selected_radius">12dp</dimen>
 
     <dimen name="info_padding_horizontal">16dp</dimen>
+    <dimen name="info_padding_vertical">8dp</dimen>
+    <dimen name="info_title_text_margin_bottom">4dp</dimen>
     <dimen name="info_company_margin_top">16dp</dimen>
     <dimen name="info_company_margin_bottom">24dp</dimen>
     <dimen name="info_company_padding">16dp</dimen>
+    <dimen name="info_company_radius">12dp</dimen>
     <dimen name="info_h2_margin_top">32dp</dimen>
     <dimen name="info_h2_margin_bottom">16dp</dimen>
     <dimen name="info_h3_margin_bottom">4dp</dimen>
     <dimen name="info_text_margin_bottom">8dp</dimen>
+
     <dimen name="error_text_margin_top">16dp</dimen>
+    <dimen name="error_text_margin_horizontal">46dp</dimen>
 
     <dimen name="title_text_font_size">22sp</dimen>
     <dimen name="search_input_font_size">16sp</dimen>

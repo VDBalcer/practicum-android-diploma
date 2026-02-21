@@ -7,6 +7,7 @@
         <item name="text_color">@color/text_color_light</item>
         <item name="input_background">@color/input_background_light</item>
         <item name="placeholder_color">@color/placeholder_color_light</item>
+        <item name="filter_text_color">@color/filter_text_color_light</item>
     </style>
 
     <style name="Theme.PracticumAndroidDiploma" parent="Base.Theme.PracticumAndroidDiploma" />

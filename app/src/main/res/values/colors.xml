@@ -2,20 +2,26 @@
 <resources>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
 
     <color name="input_text">#1A1B22</color>
     <color name="button_background">#3772E7</color>
     <color name="button_text_color">#FDFDFD</color>
     <color name="button_reset_text_color">#F56B6C</color>
+    <color name="bottom_nav_color">#AEAFB4</color>
+    <color name="filter_section_text_color">#AEAFB4</color>
+    <color name="company_background">#E6E8EB</color>
 
     <color name="activity_background_light">#FDFDFD</color>
     <color name="text_color_light">#1A1B22</color>
     <color name="input_background_light">#E6E8EB</color>
     <color name="placeholder_color_light">#AEAFB4</color>
+    <color name="filter_text_color_light">#1A1B22</color>
 
     <color name="activity_background_dark">#1A1B22</color>
     <color name="text_color_dark">#FDFDFD</color>
     <color name="input_background_dark">#AEAFB4</color>
     <color name="placeholder_color_dark">#FDFDFD</color>
+    <color name="filter_text_color_dark">#FDFDFD</color>
 
 </resources>
