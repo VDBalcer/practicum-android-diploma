@@ -34,20 +34,15 @@ class YPApiRepository(
         return try {
             val result = apiCall()
             NetworkResult.Success(result)
-        } catch (e: IOException) {
-            NetworkResult.NetworkError(e)
         } catch (e: HttpException) {
             NetworkResult.Error(
                 code = e.code(),
                 message = e.response()?.errorBody()?.string()
             )
+        } catch (e: IOException) {
+            NetworkResult.NetworkError(e)
         } catch (e: CancellationException) {
             throw e
-        } catch (e: RuntimeException) {
-            NetworkResult.Error(
-                code = -1,
-                message = e.localizedMessage
-            )
         }
     }
 }
