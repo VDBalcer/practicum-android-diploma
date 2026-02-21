@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFFFF</color>
-    <color name="black">#FF000000</color>
     <color name="transparent">#00000000</color>
+    <color name="graphite_black">#1A1B22</color>
+    <color name="klein_blue">#3772E7</color>
+    <color name="white">#FDFDFD</color>
+    <color name="bittersweet">#F56B6C</color>
+    <color name="agate_gray">#AEAFB4</color>
+    <color name="platinum">#E6E8EB</color>
 
-    <color name="input_text">#1A1B22</color>
-    <color name="button_background">#3772E7</color>
-    <color name="button_text_color">#FDFDFD</color>
-    <color name="button_reset_text_color">#F56B6C</color>
-    <color name="bottom_nav_color">#AEAFB4</color>
-    <color name="filter_section_text_color">#AEAFB4</color>
-    <color name="company_background">#E6E8EB</color>
+    <color name="input_text">@color/graphite_black</color>
+    <color name="button_background">@color/klein_blue</color>
+    <color name="button_text_color">@color/white</color>
+    <color name="button_reset_text_color">@color/bittersweet</color>
+    <color name="bottom_nav_color">@color/agate_gray</color>
+    <color name="filter_section_text_color">@color/agate_gray</color>
+    <color name="company_background">@color/platinum</color>
 
-    <color name="activity_background_light">#FDFDFD</color>
-    <color name="text_color_light">#1A1B22</color>
-    <color name="input_background_light">#E6E8EB</color>
-    <color name="placeholder_color_light">#AEAFB4</color>
-    <color name="filter_text_color_light">#1A1B22</color>
+    <color name="activity_background_light">@color/white</color>
+    <color name="text_color_light">@color/graphite_black</color>
+    <color name="input_background_light">@color/platinum</color>
+    <color name="placeholder_color_light">@color/agate_gray</color>
+    <color name="filter_text_color_light">@color/graphite_black</color>
 
-    <color name="activity_background_dark">#1A1B22</color>
-    <color name="text_color_dark">#FDFDFD</color>
-    <color name="input_background_dark">#AEAFB4</color>
-    <color name="placeholder_color_dark">#FDFDFD</color>
-    <color name="filter_text_color_dark">#FDFDFD</color>
-
+    <color name="activity_background_dark">@color/graphite_black</color>
+    <color name="text_color_dark">@color/white</color>
+    <color name="input_background_dark">@color/agate_gray</color>
+    <color name="placeholder_color_dark">@color/white</color>
+    <color name="filter_text_color_dark">@color/white</color>
 </resources>
