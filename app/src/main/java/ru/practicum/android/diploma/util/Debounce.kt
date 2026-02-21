@@ -13,7 +13,7 @@ fun <T> debounce(
 ): (T) -> Unit {
     var debounceJob: Job? = null
 
-    return {param: T ->
+    return { param: T ->
         if (useLastParam) {
             debounceJob?.cancel()
         }
