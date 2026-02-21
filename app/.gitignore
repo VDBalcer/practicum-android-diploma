@@ -1,15 +1,1 @@
-# Build files
 /build
-/app/build
-*.apk
-*.aar
-
-# IDE files
-.idea/
-*.iml
-.gradle/
-.kotlin/
-
-# Local configuration
-local.properties
-
