@@ -34,7 +34,7 @@ class RootActivity : AppCompatActivity() {
                     Log.e(NETWORK_DEBUG_TAG, "HTTP error: ${result.code}")
                 }
 
-                NetworkResult.NetworkError -> {
+                is NetworkResult.NetworkError -> {
                     Log.e(NETWORK_DEBUG_TAG, "Network error")
                 }
             }
