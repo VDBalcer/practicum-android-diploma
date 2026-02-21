@@ -11,12 +11,10 @@ import ru.practicum.android.diploma.data.dto.VacancyResponseDto
 interface YPApiService {
 
     @GET("areas")
-    suspend fun getAreas(
-    ): List<FilterAreaDto>
+    suspend fun getAreas(): List<FilterAreaDto>
 
     @GET("industries")
-    suspend fun getIndustries(
-    ): List<FilterIndustryDto>
+    suspend fun getIndustries(): List<FilterIndustryDto>
 
     @GET("vacancies")
     suspend fun getVacancies(

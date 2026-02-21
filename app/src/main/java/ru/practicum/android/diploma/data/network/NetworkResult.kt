@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.data.network
 
+import java.io.IOException
+
 sealed class NetworkResult<out T> {
 
     data class Success<T>(
@@ -11,5 +13,7 @@ sealed class NetworkResult<out T> {
         val message: String? = null
     ) : NetworkResult<Nothing>()
 
-    object NetworkError : NetworkResult<Nothing>()
+    data class NetworkError(
+        val throwable: IOException
+    ) : NetworkResult<Nothing>()
 }

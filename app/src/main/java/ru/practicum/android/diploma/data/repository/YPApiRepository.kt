@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.data.repository
 
+import kotlinx.coroutines.CancellationException
 import retrofit2.HttpException
 import ru.practicum.android.diploma.data.dto.FilterAreaDto
 import ru.practicum.android.diploma.data.dto.FilterIndustryDto
@@ -34,13 +35,15 @@ class YPApiRepository(
             val result = apiCall()
             NetworkResult.Success(result)
         } catch (e: IOException) {
-            NetworkResult.NetworkError
+            NetworkResult.NetworkError(e)
         } catch (e: HttpException) {
             NetworkResult.Error(
                 code = e.code(),
                 message = e.response()?.errorBody()?.string()
             )
-        } catch (e: Exception) {
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: RuntimeException) {
             NetworkResult.Error(
                 code = -1,
                 message = e.localizedMessage

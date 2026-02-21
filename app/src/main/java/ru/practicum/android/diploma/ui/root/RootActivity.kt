@@ -23,21 +23,26 @@ class RootActivity : AppCompatActivity() {
 
     private fun networkRequestExample() {
         lifecycleScope.launch {
-
             val result = repository.getIndustries() // Любой тестируемый запрос
 
             when (result) {
                 is NetworkResult.Success -> {
-                    Log.d("NETWORK_TEST", "Success: ${result.data}")
+                    Log.d(NETWORK_DEBUG_TAG, "Success: ${result.data}")
                 }
+
                 is NetworkResult.Error -> {
-                    Log.e("NETWORK_TEST", "HTTP error: ${result.code}")
+                    Log.e(NETWORK_DEBUG_TAG, "HTTP error: ${result.code}")
                 }
+
                 NetworkResult.NetworkError -> {
-                    Log.e("NETWORK_TEST", "Network error")
+                    Log.e(NETWORK_DEBUG_TAG, "Network error")
                 }
             }
         }
+    }
+
+    companion object {
+        private const val NETWORK_DEBUG_TAG = "NETWORK_TEST"
     }
 
 }
