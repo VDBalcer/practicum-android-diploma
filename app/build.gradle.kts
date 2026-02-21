@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.bundles.room)
     implementation(libs.bundles.retrofit)
     implementation(libs.bundles.ui)
+    implementation(libs.koin)
 
     testImplementation(libs.bundles.unitTests)
     androidTestImplementation(libs.bundles.uiTests)
