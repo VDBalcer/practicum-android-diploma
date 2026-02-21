@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -36,23 +38,20 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
 dependencies {
-    implementation(libs.androidX.core)
-    implementation(libs.androidX.appCompat)
+    implementation(libs.bundles.androidX.base)
+    implementation(libs.bundles.lifecycle)
+    implementation(libs.bundles.navigation)
+    implementation(libs.bundles.room)
+    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.ui)
 
-    // UI layer libraries
-    implementation(libs.ui.material)
-    implementation(libs.ui.constraintLayout)
+    testImplementation(libs.bundles.unitTests)
+    androidTestImplementation(libs.bundles.uiTests)
 
-    // region Unit tests
-    testImplementation(libs.unitTests.junit)
-    // endregion
-
-    // region UI tests
-    androidTestImplementation(libs.uiTests.junitExt)
-    androidTestImplementation(libs.uiTests.espressoCore)
-    // endregion
+    kapt(libs.room.compiler)
 }
