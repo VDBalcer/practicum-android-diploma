@@ -22,6 +22,7 @@
     <string name="filter_field_title">Выбор отрасли</string>
 
     <string name="icon_filter">Icon filter off</string>
+    <string name="icon_search">Job search</string>
     <string name="icon_clear">Clear text</string>
     <string name="placeholder_start_search">Start search</string>
     <string name="placeholder_not_internet">No internet</string>

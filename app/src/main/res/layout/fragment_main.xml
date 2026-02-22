@@ -41,7 +41,7 @@
         style="@style/Widget.LayoutSearchInput">
 
         <EditText
-            android:id="@+id/edit_textbox_job_search_"
+            android:id="@+id/edit_textbox_job_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/edit_textbox_job_search"
@@ -59,7 +59,7 @@
         <ImageView
             android:id="@+id/icon_search"
             android:src="@drawable/icon_search"
-            android:contentDescription="@string/edit_textbox_job_search"
+            android:contentDescription="@string/icon_search"
             style="@style/icon_center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
