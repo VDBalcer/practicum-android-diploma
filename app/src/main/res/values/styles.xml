@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Widget" />
+
     <style name="font_medium" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
@@ -111,7 +113,7 @@
         <item name="android:paddingHorizontal">@dimen/info_padding_horizontal</item>
     </style>
 
-    <style name="TextAppearance.InfoTitle" parent="font_bold">
+    <style name="TextAppearance.InfoTitleText" parent="font_bold">
         <item name="android:textColor">?attr/text_color</item>
         <item name="android:textSize">@dimen/info_title_font_size</item>
     </style>
