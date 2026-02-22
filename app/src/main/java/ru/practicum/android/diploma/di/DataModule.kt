@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.data.dao.VacancyDao
 import ru.practicum.android.diploma.data.database.VacancyDatabase
+import ru.practicum.android.diploma.data.dto.NetworkMonitor
 import ru.practicum.android.diploma.data.network.YPApiService
 
 val dataModule = module {
@@ -42,4 +43,5 @@ val dataModule = module {
     single<VacancyDao> {
         get<VacancyDatabase>().vacancyDao()
     }
+    single { NetworkMonitor(get()) }
 }
