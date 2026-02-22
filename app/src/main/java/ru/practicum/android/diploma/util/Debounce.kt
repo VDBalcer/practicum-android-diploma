@@ -11,13 +11,14 @@ fun <T> debounce(
     useLastParam: Boolean,
     action: (T) -> Unit
 ): (T) -> Unit {
+    require(delayMillis >= 0)
     var debounceJob: Job? = null
 
     return { param: T ->
         if (useLastParam) {
             debounceJob?.cancel()
         }
-        if (debounceJob?.isCompleted != false || useLastParam) {
+        if (debounceJob?.isCompleted == true || useLastParam) {
             debounceJob = coroutineScope.launch {
                 delay(delayMillis)
                 action(param)
