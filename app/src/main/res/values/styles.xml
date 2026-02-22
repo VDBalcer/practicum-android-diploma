@@ -10,18 +10,24 @@
         <item name="android:fontFamily">@font/ys_display_bold</item>
     </style>
 
-    <style name="page_title_text" parent="font_medium">
-        <item name="android:layout_marginStart">@dimen/title_text_margin_left</item>
-        <item name="android:layout_marginVertical">@dimen/title_text_margin_vertical</item>
+    <style name="TextAppearance.PageTitle" parent="font_medium">
         <item name="android:textColor">?attr/text_color</item>
         <item name="android:textSize">@dimen/title_text_font_size</item>
     </style>
 
-    <style name="input_element" parent="font_regular">
-        <item name="android:layout_marginHorizontal">@dimen/search_input_margin</item>
-        <item name="android:color">@color/input_text</item>
+    <style name="Widget.PageTitle">
+        <item name="android:layout_marginStart">@dimen/title_text_margin_left</item>
+        <item name="android:layout_marginVertical">@dimen/title_text_margin_vertical</item>
+    </style>
+
+    <style name="TextAppearance.Input" parent="font_regular">
         <item name="android:textSize">@dimen/bottom_nav_text_font_size</item>
-        <item name="background">@drawable/input_background</item>
+        <item name="android:textColor">@color/input_text</item>
+    </style>
+
+    <style name="Widget.InputElement">
+        <item name="android:layout_marginHorizontal">@dimen/search_input_margin</item>
+        <item name="android:background">@drawable/input_background</item>
     </style>
 
     <style name="bottom_nav_icon">
@@ -90,9 +96,12 @@
         <item name="android:background">@color/transparent</item>
     </style>
 
-    <style name="text_error" parent="font_medium">
+    <style name="TextAppearance.Error" parent="font_medium">
         <item name="android:textColor">@color/button_reset_text_color</item>
         <item name="android:textSize">@dimen/error_text_font_size</item>
+    </style>
+
+    <style name="Widget.ErrorText">
         <item name="android:layout_marginHorizontal">@dimen/error_text_margin_horizontal</item>
         <item name="android:layout_marginTop">@dimen/error_text_margin_top</item>
     </style>
@@ -102,9 +111,12 @@
         <item name="android:paddingHorizontal">@dimen/info_padding_horizontal</item>
     </style>
 
-    <style name="info_title_text" parent="font_bold">
+    <style name="TextAppearance.InfoTitle" parent="font_bold">
         <item name="android:textColor">?attr/text_color</item>
         <item name="android:textSize">@dimen/info_title_font_size</item>
+    </style>
+
+    <style name="Widget.InfoTitleText">
         <item name="android:layout_marginBottom">@dimen/info_title_text_margin_bottom</item>
     </style>
 
@@ -132,17 +144,32 @@
         <item name="android:textSize">@dimen/info_h3_font_size</item>
     </style>
 
-    <style name="info_text_h2" parent="font_medium">
-        <item name="android:layout_marginTop">@dimen/info_h2_margin_top</item>
-        <item name="android:layout_marginBottom">@dimen/info_h2_margin_bottom</item>
+    <style name="TextAppearance.InfoTextH3" parent="font_medium">
+        <item name="android:textColor">?attr/text_color</item>
+        <item name="android:textSize">@dimen/info_h3_font_size</item>
+    </style>
+
+    <style name="Widget.InfoTextH3">
+        <item name="android:layout_marginBottom">@dimen/info_h3_margin_bottom</item>
+    </style>
+
+    <style name="TextAppearance.InfoTextH2" parent="font_medium">
         <item name="android:textColor">?attr/text_color</item>
         <item name="android:textSize">@dimen/info_h2_font_size</item>
     </style>
 
-    <style name="info_text" parent="font_regular">
-        <item name="android:layout_marginBottom">@dimen/info_text_margin_bottom</item>
+    <style name="Widget.InfoTextH2">
+        <item name="android:layout_marginTop">@dimen/info_h2_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/info_h2_margin_bottom</item>
+    </style>
+
+    <style name="TextAppearance.InfoText" parent="font_medium">
         <item name="android:textColor">?attr/text_color</item>
         <item name="android:textSize">@dimen/info_text_size</item>
+    </style>
+
+    <style name="Widget.InfoText">
+        <item name="android:layout_marginBottom">@dimen/info_text_margin_bottom</item>
     </style>
 
 </resources>

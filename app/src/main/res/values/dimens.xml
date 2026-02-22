@@ -59,10 +59,10 @@
     <dimen name="filter_wages_font_size">12sp</dimen>
     <dimen name="filter_wages_placeholder_font_size">16sp</dimen>
     <dimen name="button_selected_font_size">16sp</dimen>
-    <dimen name="info_title_font_size">32dp</dimen>
-    <dimen name="info_wages_font_size">22dp</dimen>
-    <dimen name="info_h2_font_size">22dp</dimen>
-    <dimen name="info_h3_font_size">16dp</dimen>
-    <dimen name="info_text_size">16dp</dimen>
+    <dimen name="info_title_font_size">32sp</dimen>
+    <dimen name="info_wages_font_size">22sp</dimen>
+    <dimen name="info_h2_font_size">22sp</dimen>
+    <dimen name="info_h3_font_size">16sp</dimen>
+    <dimen name="info_text_size">16sp</dimen>
 
 </resources>
