@@ -19,7 +19,8 @@ import ru.practicum.android.diploma.data.repository.YPApiRepository
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
 
 class RootActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityRootBinding
+    private var _binding: ActivityRootBinding? = null
+    private val binding get() = _binding!!
     private val repository: YPApiRepository by inject()
     private val topLevelDestinations = setOf(
         R.id.main_fragment,
@@ -29,7 +30,7 @@ class RootActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRootBinding.inflate(layoutInflater)
+        _binding = ActivityRootBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
 
