@@ -18,18 +18,28 @@
     </style>
 
     <style name="Widget.PageTitle">
-        <item name="android:layout_marginStart">@dimen/title_text_margin_left</item>
-        <item name="android:layout_marginVertical">@dimen/title_text_margin_vertical</item>
+        <item name="android:paddingLeft">@dimen/title_text_padding_left</item>
+        <item name="android:paddingVertical">@dimen/title_text_padding_vertical</item>
     </style>
 
     <style name="TextAppearance.Input" parent="font_regular">
-        <item name="android:textSize">@dimen/bottom_nav_text_font_size</item>
+        <item name="android:textSize">@dimen/search_input_font_size</item>
         <item name="android:textColor">@color/input_text</item>
+        <item name="android:textColorHint">?attr/placeholder_color</item>
     </style>
 
-    <style name="Widget.InputElement">
-        <item name="android:layout_marginHorizontal">@dimen/search_input_margin</item>
+    <style name="Widget.LayoutSearchInput">
+        <item name="android:layout_marginHorizontal">@dimen/search_layout_margin_horizontal</item>
+        <item name="android:layout_marginVertical">@dimen/search_layout_margin_vertical</item>
         <item name="android:background">@drawable/input_background</item>
+    </style>
+
+    <style name="Widget.SearchInput">
+        <item name="android:background">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingStart">@dimen/search_input_padding_left</item>
+        <item name="android:paddingEnd">@dimen/search_input_padding_right</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_edit_text</item>
     </style>
 
     <style name="bottom_nav_icon">
@@ -41,6 +51,15 @@
     <style name="bottom_nav_text" parent="font_regular">
         <item name="android:textSize">@dimen/bottom_nav_text_font_size</item>
     </style>
+
+    <style name="icon_center_vertical">
+        <item name="android:layout_width">@dimen/icon_size</item>
+        <item name="android:layout_height">@dimen/icon_size</item>
+        <item name="android:layout_margin">@dimen/icon_padding</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+
 
     <style name="company">
         <item name="android:paddingVertical">@dimen/company_margin_vertical</item>

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="title_text_margin_left">16dp</dimen>
-    <dimen name="title_text_margin_vertical">19dp</dimen>
+    <dimen name="title_text_padding_left">16dp</dimen>
+    <dimen name="title_text_padding_vertical">19dp</dimen>
 
     <dimen name="icon_padding">8dp</dimen>
-    <dimen name="icon_size">24dp</dimen>
+    <dimen name="icon_size">48dp</dimen>
 
-    <dimen name="search_input_margin">16dp</dimen>
-    <dimen name="search_input_radius">12dp</dimen>
+    <dimen name="search_layout_margin_horizontal">16dp</dimen>
+    <dimen name="search_layout_margin_vertical">8dp</dimen>
+    <dimen name="search_layout_radius">12dp</dimen>
+    <dimen name="search_input_padding_left">16dp</dimen>
+    <dimen name="search_input_padding_right">8dp</dimen>
+    <dimen name="cursor_radius">2dp</dimen>
 
     <dimen name="bottom_nav_icon_margin">4dp</dimen>
     <dimen name="bottom_nav_icon_size">20dp</dimen>
