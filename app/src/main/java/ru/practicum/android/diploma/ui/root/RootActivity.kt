@@ -63,6 +63,11 @@ class RootActivity : AppCompatActivity() {
         networkRequestExample()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     private fun networkRequestExample() {
         lifecycleScope.launch {
             val result = repository.getIndustries() // Любой тестируемый запрос

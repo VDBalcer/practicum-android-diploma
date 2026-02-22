@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<!--  Поправить цвета после добавления стилей и темы  -->
+    <item android:state_checked="true" android:color="#2E46C3" android:fillAlpha="1"/>
+    <item android:state_checked="false" android:color="#686868" android:fillAlpha="0.75"/>
+</selector>
