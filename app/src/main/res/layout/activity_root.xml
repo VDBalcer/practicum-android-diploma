@@ -22,14 +22,26 @@
         android:id="@+id/root_bottom_nav_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        app:backgroundTint="@color/white"
-        app:itemIconTint="@drawable/bottom_nav_selector"
-        app:itemTextColor="@drawable/bottom_nav_selector"
-
+        app:backgroundTint="?attr/activity_background"
+        app:itemActiveIndicatorStyle="@null"
+        app:itemIconSize="@dimen/bottom_nav_icon_size"
+        app:itemIconTint="@color/bottom_nav_selector"
+        app:itemRippleColor="@null"
+        app:itemTextAppearanceActive="@style/bottom_nav_text"
+        app:itemTextAppearanceActiveBoldEnabled="false"
+        app:itemTextAppearanceInactive="@style/bottom_nav_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
+
+    <View
+        android:id="@+id/bottom_nav_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/platinum"
+        app:layout_constraintBottom_toTopOf="@id/root_bottom_nav_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

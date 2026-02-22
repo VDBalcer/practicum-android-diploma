@@ -40,6 +40,7 @@
 
     <style name="bottom_nav_text" parent="font_regular">
         <item name="android:textSize">@dimen/bottom_nav_text_font_size</item>
+        <item name="itemTextColor">@color/bottom_nav_selector</item>
     </style>
 
     <style name="company">

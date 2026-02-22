@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -21,35 +22,42 @@ class RootActivity : AppCompatActivity() {
     private var _binding: ActivityRootBinding? = null
     private val binding get() = _binding!!
     private val repository: YPApiRepository by inject()
+    private val topLevelDestinations = setOf(
+        R.id.main_fragment,
+        R.id.favorites_fragment,
+        R.id.team_fragment
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityRootBinding.inflate(layoutInflater)
-
         enableEdgeToEdge()
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val paddingBottom = if (binding.rootBottomNavMenu.isVisible) {
-                0
-            } else {
-                systemBars.bottom
-            }
-            v.setPadding(systemBars.left, systemBars.top, systemBars.left, paddingBottom)
+
+            v.updatePadding(
+                left = systemBars.left,
+                top = systemBars.top,
+                right = systemBars.right,
+                bottom = if (binding.rootBottomNavMenu.isVisible) 0 else systemBars.bottom
+            )
+
             insets
         }
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.root_fragment_container) as NavHostFragment
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.root_fragment_container) as? NavHostFragment
+            ?: error("NavHostFragment not found")
         val navController = navHostFragment.navController
 
         binding.rootBottomNavMenu.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.rootBottomNavMenu.isVisible =
-                destination.id == R.id.main_fragment ||
-                destination.id == R.id.favorites_fragment ||
-                destination.id == R.id.team_fragment
+                destination.id in topLevelDestinations
+            ViewCompat.requestApplyInsets(binding.root)
         }
 
         // Пример запроса к API
