@@ -47,7 +47,9 @@ class RootActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.rootBottomNavMenu.isVisible =
-                destination.id == R.id.main_fragment || destination.id == R.id.favorites_fragment || destination.id == R.id.team_fragment
+                destination.id == R.id.main_fragment ||
+                destination.id == R.id.favorites_fragment ||
+                destination.id == R.id.team_fragment
         }
 
         // Пример запроса к API
