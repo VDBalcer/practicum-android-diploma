@@ -65,6 +65,18 @@
         <item name="android:height">@dimen/company_logo_size</item>
     </style>
 
+    <style name="TextAppearance.InfoResult" parent="font_regular">
+        <item name="android:textSize">@dimen/result_text_font_size</item>
+        <item name="android:textColor">@color/info_result</item>
+    </style>
+
+    <style name="Widget.InfoResult">
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:layout_marginTop">@dimen/result_mardin_top</item>
+        <item name="android:paddingHorizontal">@dimen/result_padding_horizontal</item>
+        <item name="android:paddingVertical">@dimen/result_padding_vertical</item>
+    </style>
+
     <style name="TextAppearance.VacancyTitle" parent="font_medium">
         <item name="android:textSize">@dimen/vacancy_name_font_size</item>
         <item name="android:textColor">?attr/text_color</item>

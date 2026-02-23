@@ -74,15 +74,19 @@ class MainFragment : Fragment() {
         containerJobNotFound.isVisible = false
         progressBar.isVisible = false
         vacanciesRecyclerView.isVisible = false
-
+        infoResult.isVisible = false
         when (state) {
             is MainScreenState.StartSearch -> placeholderStartSearch.isVisible = true
             is MainScreenState.NoInternet -> containerNotInternet.isVisible = true
-            is MainScreenState.JobNotFound -> containerJobNotFound.isVisible = true
+            is MainScreenState.JobNotFound -> {
+                containerJobNotFound.isVisible = true
+                infoResult.isVisible = true
+            }
             is MainScreenState.Loading -> progressBar.isVisible = true
 
             is MainScreenState.Content -> {
                 vacanciesRecyclerView.isVisible = true
+                infoResult.isVisible = true
             }
         }
     }
