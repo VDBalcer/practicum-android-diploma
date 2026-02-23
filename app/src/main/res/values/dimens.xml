@@ -15,10 +15,13 @@
     <dimen name="cursor_radius">2dp</dimen>
 
     <dimen name="bottom_nav_icon_margin">4dp</dimen>
-    <dimen name="bottom_nav_icon_size">20dp</dimen>
     <dimen name="result_mardin_top">3dp</dimen>
     <dimen name="result_padding_horizontal">12dp</dimen>
     <dimen name="result_padding_vertical">4dp</dimen>
+    <dimen name="bottom_nav_icon_size">36dp</dimen>
+
+    <dimen name="result_radius">12dp</dimen>
+
 
     <dimen name="company_logo_size">48dp</dimen>
     <dimen name="company_margin_horizontal">16dp</dimen>
