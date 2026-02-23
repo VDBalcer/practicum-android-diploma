@@ -59,12 +59,10 @@ class MainFragment : Fragment() {
             ims?.hideSoftInputFromWindow(binding.editTextboxJobSearch.windowToken, 0)
         }
     }
-
     private fun updateIcons(hasText: Boolean)  {
         binding.iconClear.isVisible = hasText
         binding.iconSearch.isVisible = !hasText
     }
-
     private fun render(state: MainScreenState) {
         with(binding) {
             placeholderStartSearch.isVisible = false
