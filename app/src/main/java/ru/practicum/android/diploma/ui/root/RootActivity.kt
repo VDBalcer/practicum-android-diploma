@@ -14,14 +14,15 @@ import androidx.navigation.ui.setupWithNavController
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.data.network.NetworkResult
-import ru.practicum.android.diploma.data.repository.YPApiRepository
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
+import ru.practicum.android.diploma.domain.api.ApiInteractor
+import ru.practicum.android.diploma.domain.api.NetworkResult
+import ru.practicum.android.diploma.domain.models.VacancyFilterModel
 
 class RootActivity : AppCompatActivity() {
     private var _binding: ActivityRootBinding? = null
     private val binding get() = _binding!!
-    private val repository: YPApiRepository by inject()
+    private val repository: ApiInteractor by inject()
     private val topLevelDestinations = setOf(
         R.id.main_fragment,
         R.id.favorites_fragment,
@@ -71,7 +72,7 @@ class RootActivity : AppCompatActivity() {
 
     private fun networkRequestExample() {
         lifecycleScope.launch {
-            val result = repository.getIndustries() // Любой тестируемый запрос
+            val result = repository.getVacancies(VacancyFilterModel()) // Любой тестируемый запрос
 
             when (result) {
                 is NetworkResult.Success -> {
