@@ -72,14 +72,13 @@ class MainFragment : Fragment() {
         placeholderStartSearch.isVisible = false
         containerNotInternet.isVisible = false
         containerJobNotFound.isVisible = false
+        progressBar.isVisible = false
 
         when (state) {
             is MainScreenState.StartSearch -> placeholderStartSearch.isVisible = true
             is MainScreenState.NoInternet -> containerNotInternet.isVisible = true
             is MainScreenState.JobNotFound -> containerJobNotFound.isVisible = true
-
-            is MainScreenState.Loading -> {
-            }
+            is MainScreenState.Loading -> progressBar.isVisible = true
 
             is MainScreenState.Content -> {
             }
