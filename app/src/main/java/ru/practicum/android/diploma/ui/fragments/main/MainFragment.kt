@@ -1,9 +1,6 @@
 package ru.practicum.android.diploma.ui.fragments.main
-
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +65,6 @@ class MainFragment : Fragment() {
     }
 
     private fun render(state: MainScreenState) = with(binding) {
-
         placeholderStartSearch.isVisible = false
         containerNotInternet.isVisible = false
         containerJobNotFound.isVisible = false
