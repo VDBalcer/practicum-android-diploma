@@ -10,4 +10,3 @@ fun FilterAreaDto.toDomain(): FilterAreaModel =
         parentId = parentId,
         areas = areas.map { it.toDomain() }
     )
-

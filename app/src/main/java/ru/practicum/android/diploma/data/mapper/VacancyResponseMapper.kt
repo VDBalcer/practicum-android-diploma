@@ -10,4 +10,3 @@ fun VacancyResponseDto.toDomain(): VacancyResponseModel =
         page = page,
         vacancies = items.map { it.toDomain() },
     )
-

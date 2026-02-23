@@ -5,5 +5,4 @@ import ru.practicum.android.diploma.domain.api.ApiInteractor
 
 class FilterViewModel(
     apiInteractor: ApiInteractor,
-) : ViewModel() {
-}
+) : ViewModel()

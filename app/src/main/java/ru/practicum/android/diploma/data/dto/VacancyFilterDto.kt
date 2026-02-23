@@ -6,5 +6,5 @@ data class VacancyFilterDto(
     val text: String?,
     val salary: Int?,
     val page: Int?,
-    val only_with_salary: Boolean?
+    val onlyWithSalary: Boolean?
 )
