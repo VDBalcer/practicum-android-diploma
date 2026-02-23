@@ -12,7 +12,6 @@ import ru.practicum.android.diploma.domain.models.FilterIndustryModel
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel
 import ru.practicum.android.diploma.domain.models.VacancyFilterModel
 import ru.practicum.android.diploma.domain.models.VacancyResponseModel
-
 import java.io.IOException
 
 class YPApiRepositoryImpl(
