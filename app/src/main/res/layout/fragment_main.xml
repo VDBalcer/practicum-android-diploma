@@ -94,6 +94,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <ProgressBar android:id="@+id/progressBar"
+            android:layout_width="@dimen/size_progress_bar"
+            android:layout_height="@dimen/size_progress_bar"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/progress_bar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:visibility="gone"
             android:id="@+id/container_not_internet"
