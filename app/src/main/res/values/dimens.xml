@@ -57,8 +57,8 @@
     <dimen name="bottom_nav_text_font_size">12sp</dimen>
     <dimen name="error_text_font_size">22sp</dimen>
     <dimen name="result_text_font_size">16sp</dimen>
-    <dimen name="company_name_font_size">22sp</dimen>
-    <dimen name="company_category_font_size">16sp</dimen>
+    <dimen name="vacancy_name_font_size">22sp</dimen>
+    <dimen name="company_name_font_size">16sp</dimen>
     <dimen name="company_wages_font_size">16sp</dimen>
     <dimen name="filter_section_font_size">16sp</dimen>
     <dimen name="filter_wages_font_size">12sp</dimen>
