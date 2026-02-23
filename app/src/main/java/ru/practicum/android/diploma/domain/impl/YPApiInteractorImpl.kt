@@ -1,8 +1,8 @@
 package ru.practicum.android.diploma.domain.impl
 
-import ru.practicum.android.diploma.domain.api.NetworkResult
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.ApiRepository
+import ru.practicum.android.diploma.domain.api.NetworkResult
 import ru.practicum.android.diploma.domain.models.FilterAreaModel
 import ru.practicum.android.diploma.domain.models.FilterIndustryModel
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel

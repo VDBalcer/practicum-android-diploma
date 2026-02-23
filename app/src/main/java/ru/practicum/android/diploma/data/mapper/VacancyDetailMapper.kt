@@ -21,14 +21,12 @@ fun VacancyDetailDto.toDomain(): VacancyDetailModel =
         industry = industry.toDomain()
     )
 
-
 fun VacancyDetailDto.SalaryDto.toDomain(): VacancyDetailModel.SalaryModel =
     VacancyDetailModel.SalaryModel(
         from = from,
         to = to,
         currency = currency
     )
-
 
 fun VacancyDetailDto.AddressDto.toDomain(): VacancyDetailModel.AddressModel =
     VacancyDetailModel.AddressModel(
