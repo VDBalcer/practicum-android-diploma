@@ -1,4 +1,5 @@
 package ru.practicum.android.diploma.ui.fragments.main
+
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,9 +19,7 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
@@ -78,6 +77,7 @@ class MainFragment : Fragment() {
                 containerJobNotFound.isVisible = true
                 infoResult.isVisible = true
             }
+
             is MainScreenState.Loading -> progressBar.isVisible = true
 
             is MainScreenState.Content -> {
