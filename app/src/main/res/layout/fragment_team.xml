@@ -34,19 +34,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Вадим Бальцер"
-            android:textAppearance="@style/info_text_h3" />
+            android:textAppearance="@style/TextAppearance.InfoTextH3" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="16dp"
             android:text="Роман Татаренко"
-            android:textAppearance="@style/info_text_h3" />
+            android:textAppearance="@style/TextAppearance.InfoTextH3" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Никита Янцен"
-            android:textAppearance="@style/info_text_h3" />
+            android:textAppearance="@style/TextAppearance.InfoTextH3" />
     </LinearLayout>
 </LinearLayout>
