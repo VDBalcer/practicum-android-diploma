@@ -14,6 +14,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import ru.practicum.android.diploma.domain.models.MainScreenState
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
@@ -47,6 +48,7 @@ class MainFragment : Fragment() {
                 R.id.action_mainFragment_to_filterFragment
             )
         }
+        render(MainScreenState.StartSearch)
     }
 
     private fun onInitListener() {
@@ -63,5 +65,24 @@ class MainFragment : Fragment() {
     private fun updateIcons(hasText: Boolean) = with(binding) {
         binding.iconClear.isVisible = hasText
         binding.iconSearch.isVisible = !hasText
+    }
+
+    private fun render(state: MainScreenState) = with(binding) {
+
+        placeholderStartSearch.isVisible = false
+        containerNotInternet.isVisible = false
+        containerJobNotFound.isVisible = false
+
+        when (state) {
+            is MainScreenState.StartSearch -> placeholderStartSearch.isVisible = true
+            is MainScreenState.NoInternet -> containerNotInternet.isVisible = true
+            is MainScreenState.JobNotFound -> containerJobNotFound.isVisible = true
+
+            is MainScreenState.Loading -> {
+            }
+
+            is MainScreenState.Content -> {
+            }
+        }
     }
 }
