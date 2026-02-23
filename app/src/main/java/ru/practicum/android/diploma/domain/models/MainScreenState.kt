@@ -5,6 +5,7 @@ sealed class MainScreenState {
     object NoInternet : MainScreenState()
     object JobNotFound : MainScreenState()
     object Loading : MainScreenState()
+
     // Заглушка для вакансий
     data class Content(
         val items: List<Any>
