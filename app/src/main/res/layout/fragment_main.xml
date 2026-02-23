@@ -83,6 +83,7 @@
         android:layout_weight="1">
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/placeholder_start_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,29 +94,65 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:visibility="gone"
-            android:id="@+id/placeholder_not_internet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/placeholder_not_internet"
-            android:contentDescription="@string/placeholder_not_internet"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:id="@+id/container_not_internet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:visibility="gone"
-            android:id="@+id/placeholder_server_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/placeholder_server_error"
-            android:contentDescription="@string/placeholder_server_error"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            <ImageView
+                android:id="@+id/placeholder_not_internet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/placeholder_not_internet"
+                android:contentDescription="@string/placeholder_not_internet"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/title_not_internet"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"/>
 
+            <TextView
+                android:id="@+id/title_not_internet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_not_internet"
+                style="@style/Widget.ErrorText"
+                android:textAppearance="@style/TextAppearance.ErrorText"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_not_internet"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_job_not_found"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/placeholder_server_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/placeholder_server_error"
+                android:contentDescription="@string/placeholder_server_error"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/title_job_not_found"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"/>
+
+            <TextView
+                android:id="@+id/title_job_not_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_job_not_found"
+                style="@style/Widget.ErrorText"
+                android:textAppearance="@style/TextAppearance.ErrorText"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_server_error"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

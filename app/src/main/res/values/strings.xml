@@ -27,4 +27,8 @@
     <string name="placeholder_start_search">Start search</string>
     <string name="placeholder_not_internet">No internet</string>
     <string name="placeholder_server_error">Server error</string>
+
+
+    <string name="title_not_internet">Нет интернета</string>
+    <string name="title_job_not_found">Не удалось получить\nсписок вакансий</string>
 </resources>
