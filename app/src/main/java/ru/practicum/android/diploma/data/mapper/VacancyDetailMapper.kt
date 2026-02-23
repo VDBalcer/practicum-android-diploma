@@ -70,5 +70,3 @@ fun VacancyDetailDto.EmployerDto.toDomain(): VacancyDetailModel.EmployerModel =
         name = name,
         logo = logo
     )
-
-

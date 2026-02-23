@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 
 class FilterViewModel(
-    apiInteractor: ApiInteractor,
+    private val apiInteractor: ApiInteractor,
 ) : ViewModel() {
+    // TODO: implement logic
 }

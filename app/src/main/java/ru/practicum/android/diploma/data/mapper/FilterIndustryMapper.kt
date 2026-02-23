@@ -8,4 +8,3 @@ fun FilterIndustryDto.toDomain(): FilterIndustryModel =
         id = id,
         name = name
     )
-

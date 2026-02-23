@@ -10,7 +10,5 @@ fun VacancyFilterModel.toDto(): VacancyFilterDto =
         text = text,
         salary = salary,
         page = page,
-        only_with_salary = onlyWithSalary
+        onlyWithSalary = onlyWithSalary
     )
-
-

@@ -4,14 +4,15 @@ import kotlinx.coroutines.CancellationException
 import retrofit2.HttpException
 import ru.practicum.android.diploma.data.mapper.toDomain
 import ru.practicum.android.diploma.data.mapper.toDto
-import ru.practicum.android.diploma.domain.api.NetworkResult
 import ru.practicum.android.diploma.data.network.YPApiService
 import ru.practicum.android.diploma.domain.api.ApiRepository
+import ru.practicum.android.diploma.domain.api.NetworkResult
 import ru.practicum.android.diploma.domain.models.FilterAreaModel
 import ru.practicum.android.diploma.domain.models.FilterIndustryModel
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel
 import ru.practicum.android.diploma.domain.models.VacancyFilterModel
 import ru.practicum.android.diploma.domain.models.VacancyResponseModel
+
 import java.io.IOException
 
 class YPApiRepositoryImpl(
@@ -39,7 +40,7 @@ class YPApiRepositoryImpl(
                 text = dto.text,
                 salary = dto.salary,
                 page = dto.page,
-                onlyWithSalary = dto.only_with_salary
+                onlyWithSalary = dto.onlyWithSalary
             ).toDomain()
         }
 
