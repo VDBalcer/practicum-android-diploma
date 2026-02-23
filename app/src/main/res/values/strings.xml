@@ -2,6 +2,9 @@
     <string name="app_name">Practicum-Android-Diploma</string>
 
     <string name="main_fragment_title">Поиск вакансий</string>
+    <string name="edit_textbox_job_search">Введите запрос</string>
+
+
     <string name="main_fragment_nav_menu_title">Главная</string>
 
     <string name="team_fragment_title">Команда</string>
@@ -17,4 +20,23 @@
     <string name="filter_region_fragment_title">Выбор региона</string>
 
     <string name="filter_field_title">Выбор отрасли</string>
+
+    <string name="icon_filter">Icon filter off</string>
+    <string name="icon_search">Job search</string>
+    <string name="icon_clear">Clear text</string>
+    <string name="placeholder_start_search">Start search</string>
+    <string name="placeholder_not_internet">No internet</string>
+    <string name="placeholder_server_error">Server error</string>
+
+
+    <string name="title_not_internet">Нет интернета</string>
+    <string name="title_job_not_found">Не удалось получить\nсписок вакансий</string>
+    <string name="result_not_found">Таких вакансий нет</string>
+
+    <plurals name="vacancies_found">
+        <item quantity="one">Найдена %d вакансия</item>
+        <item quantity="few">Найдено %d вакансии</item>
+        <item quantity="many">Найдено %d вакансий</item>
+        <item quantity="other">Найдено %d вакансий</item>
+    </plurals>
 </resources>

@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="title_text_margin_left">16dp</dimen>
-    <dimen name="title_text_margin_vertical">19dp</dimen>
+    <dimen name="title_text_padding_left">16dp</dimen>
+    <dimen name="title_text_padding_vertical">19dp</dimen>
 
     <dimen name="icon_padding">8dp</dimen>
-    <dimen name="icon_size">24dp</dimen>
+    <dimen name="icon_size">48dp</dimen>
 
-    <dimen name="search_input_margin">16dp</dimen>
-    <dimen name="search_input_radius">12dp</dimen>
+    <dimen name="search_layout_margin_horizontal">16dp</dimen>
+    <dimen name="search_layout_margin_vertical">8dp</dimen>
+    <dimen name="search_layout_radius">12dp</dimen>
+    <dimen name="search_input_min_height">48dp</dimen>
+    <dimen name="search_input_padding_left">16dp</dimen>
+    <dimen name="search_input_padding_right">8dp</dimen>
+    <dimen name="cursor_radius">2dp</dimen>
 
     <dimen name="bottom_nav_icon_margin">4dp</dimen>
     <dimen name="bottom_nav_icon_size">36dp</dimen>
 
     <dimen name="result_radius">12dp</dimen>
+    <dimen name="result_mardin_top">3dp</dimen>
+    <dimen name="result_padding_horizontal">12dp</dimen>
+    <dimen name="result_padding_vertical">4dp</dimen>
+
 
     <dimen name="company_logo_size">48dp</dimen>
     <dimen name="company_margin_horizontal">16dp</dimen>
@@ -52,8 +61,8 @@
     <dimen name="bottom_nav_text_font_size">12sp</dimen>
     <dimen name="error_text_font_size">22sp</dimen>
     <dimen name="result_text_font_size">16sp</dimen>
-    <dimen name="company_name_font_size">22sp</dimen>
-    <dimen name="company_category_font_size">16sp</dimen>
+    <dimen name="vacancy_name_font_size">22sp</dimen>
+    <dimen name="company_name_font_size">16sp</dimen>
     <dimen name="company_wages_font_size">16sp</dimen>
     <dimen name="filter_section_font_size">16sp</dimen>
     <dimen name="filter_wages_font_size">12sp</dimen>
@@ -64,5 +73,6 @@
     <dimen name="info_h2_font_size">22sp</dimen>
     <dimen name="info_h3_font_size">16sp</dimen>
     <dimen name="info_text_size">16sp</dimen>
+    <dimen name="size_progress_bar">36sp</dimen>
 
 </resources>

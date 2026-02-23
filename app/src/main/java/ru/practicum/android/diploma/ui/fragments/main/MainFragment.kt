@@ -1,13 +1,18 @@
 package ru.practicum.android.diploma.ui.fragments.main
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
+import ru.practicum.android.diploma.domain.models.MainScreenState
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
@@ -29,16 +34,56 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mainVacancyButton.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_mainFragment_to_vacancyDetailsFragment
-            )
-        }
-
-        binding.mainFilterButton.setOnClickListener {
+        onInitListener()
+//        binding.mainVacancyButton.setOnClickListener {
+//            findNavController().navigate(
+//                R.id.action_mainFragment_to_vacancyDetailsFragment
+//            )
+//        }
+//
+        binding.filter.setOnClickListener {
             findNavController().navigate(
                 R.id.action_mainFragment_to_filterFragment
             )
+        }
+        render(MainScreenState.StartSearch)
+    }
+
+    private fun onInitListener() {
+        binding.editTextboxJobSearch.doOnTextChanged { text, _, _, _ ->
+            updateIcons(!text.isNullOrEmpty())
+        }
+        binding.iconClear.setOnClickListener {
+            binding.editTextboxJobSearch.text?.clear()
+            val ims = requireContext().getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
+            ims?.hideSoftInputFromWindow(binding.editTextboxJobSearch.windowToken, 0)
+        }
+    }
+    private fun updateIcons(hasText: Boolean) {
+        binding.iconClear.isVisible = hasText
+        binding.iconSearch.isVisible = !hasText
+    }
+    private fun render(state: MainScreenState) {
+        with(binding) {
+            placeholderStartSearch.isVisible = false
+            containerNotInternet.isVisible = false
+            containerJobNotFound.isVisible = false
+            progressBar.isVisible = false
+            vacanciesRecyclerView.isVisible = false
+            infoResult.isVisible = false
+            when (state) {
+                is MainScreenState.StartSearch -> placeholderStartSearch.isVisible = true
+                is MainScreenState.NoInternet -> containerNotInternet.isVisible = true
+                is MainScreenState.JobNotFound -> {
+                    containerJobNotFound.isVisible = true
+                    infoResult.isVisible = true
+                }
+                is MainScreenState.Loading -> progressBar.isVisible = true
+                is MainScreenState.Content -> {
+                    vacanciesRecyclerView.isVisible = true
+                    infoResult.isVisible = true
+                }
+            }
         }
     }
 }
