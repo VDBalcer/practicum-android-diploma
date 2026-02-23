@@ -10,6 +10,7 @@
     <color name="platinum">#E6E8EB</color>
 
     <color name="input_text">@color/graphite_black</color>
+    <color name="info_result">@color/white</color>
     <color name="button_background">@color/klein_blue</color>
     <color name="button_text_color">@color/white</color>
     <color name="button_reset_text_color">@color/bittersweet</color>
