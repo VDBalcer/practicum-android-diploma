@@ -1,40 +1,151 @@
 [versions]
 
+# Java
 java = "VERSION_1_8"
 
-# Build constants
+# SDK
 minSdk = "26"
 compileSdk = "34"
 targetSdk = "33"
 
-# Detekt
+# Static analysis
 detekt = "1.23.3"
-detektTwitterComposeRules ="0.0.26"
+detektTwitterComposeRules = "0.0.26"
+
+# Core libraries
+retrofit = "2.9.0"
+room = "2.5.1"
+koin = "3.3.0"
+glide = "4.14.2"
+kotlinx-coroutines = "1.6.4"
+
+# AndroidX
+core-ktx = "1.12.0"
+appCompat = "1.6.1"
+fragment-ktx = "1.5.6"
+activity = "1.8.1"
+activity-ktx = "1.6.1"
+viewmodel = "2.5.1"
+lifecycle-livedata-ktx = "2.5.1"
+viewpager2 = "1.0.0"
+navigation = "2.5.3"
+
+# UI
+material = "1.10.0"
+constraintLayout = "2.1.4"
+
+# Testing
+junit4 = "4.13.2"
+androidxJunit = "1.1.5"
+espresso = "3.5.1"
+
 
 [libraries]
 
-# Detekt
-staticAnalysis-detektPlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
-staticAnalysis-detektCli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
-staticAnalysis-detektApi = { module = "io.gitlab.arturbosch.detekt:detekt-api", version.ref = "detekt" }
-staticAnalysis-detektTest = { module = "io.gitlab.arturbosch.detekt:detekt-test", version.ref = "detekt" }
-staticAnalysis-detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-staticAnalysis-detektLibraries = { module = "io.gitlab.arturbosch.detekt:detekt-rules-libraries", version.ref = "detekt" }
-staticAnalysis-detektTwitterComposeRules = { module = "com.twitter.compose.rules:detekt", version.ref = "detektTwitterComposeRules" }
+# Static Analysis
+staticAnalysis-detektPlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
+staticAnalysis-detektCli = { group = "io.gitlab.arturbosch.detekt", name = "detekt-cli", version.ref = "detekt" }
+staticAnalysis-detektApi = { group = "io.gitlab.arturbosch.detekt", name = "detekt-api", version.ref = "detekt" }
+staticAnalysis-detektTest = { group = "io.gitlab.arturbosch.detekt", name = "detekt-test", version.ref = "detekt" }
+staticAnalysis-detektFormatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
+staticAnalysis-detektLibraries = { group = "io.gitlab.arturbosch.detekt", name = "detekt-rules-libraries", version.ref = "detekt" }
+staticAnalysis-detektTwitterComposeRules = { group = "com.twitter.compose.rules", name = "detekt", version.ref = "detektTwitterComposeRules" }
 
-# AndroidX
-androidX-core = "androidx.core:core-ktx:1.12.0"
-androidX-appCompat = "androidx.appcompat:appcompat:1.6.1"
+# AndroidX Core
+androidX-core = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+androidX-appCompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
+fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment-ktx" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity-ktx" }
+viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "viewmodel" }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle-livedata-ktx" }
+viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 
-# UI layer libraries
-ui-material = "com.google.android.material:material:1.10.0"
-ui-constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
+# UI
+ui-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+ui-constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
 
-# Unit tests
-unitTests-junit = "junit:junit:4.13.2"
+# Networking
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
-# UI tests
-uiTests-junitExt = "androidx.test.ext:junit:1.1.5"
-uiTests-espressoCore = "androidx.test.espresso:espresso-core:3.5.1"
+# Room
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+# Koin
+koin = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+
+# Glide
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+
+# Coroutines
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+
+# Testing
+unitTests-junit = { group = "junit", name = "junit", version.ref = "junit4" }
+uiTests-junitExt = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+uiTests-espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+
 
 [bundles]
+
+# AndroidX base UI stack
+androidX-base = [
+    "androidX-core",
+    "androidX-appCompat",
+    "fragment-ktx",
+    "androidx-activity",
+    "activity-ktx"
+]
+
+# Lifecycle
+lifecycle = [
+    "viewmodel-ktx",
+    "lifecycle-livedata-ktx"
+]
+
+# Navigation
+navigation = [
+    "navigation-ui-ktx",
+    "navigation-fragment-ktx"
+]
+
+# Room (без compiler — его лучше отдельно через kapt)
+room = [
+    "room-runtime",
+    "room-ktx"
+]
+
+# Networking
+retrofit = [
+    "retrofit",
+    "retrofit-gson"
+]
+
+# UI
+ui = [
+    "ui-material",
+    "ui-constraintLayout",
+    "viewpager2"
+]
+
+# Image loading
+glide = [
+    "glide"
+]
+
+# Unit tests
+unitTests = [
+    "unitTests-junit"
+]
+
+# UI tests
+uiTests = [
+    "uiTests-junitExt",
+    "uiTests-espressoCore"
+]
