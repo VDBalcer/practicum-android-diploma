@@ -48,7 +48,6 @@ class YPApiRepositoryImpl(
     private suspend fun <T> safeApiCall(
         apiCall: suspend () -> T,
     ): NetworkResult<T> {
-
         if (!networkMonitor.isConnected()) {
             return NetworkResult.NetworkError(
                 IOException("Отсутствует интернет соединение")

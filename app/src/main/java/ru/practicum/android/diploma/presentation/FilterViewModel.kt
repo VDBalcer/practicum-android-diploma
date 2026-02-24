@@ -17,15 +17,13 @@ class FilterViewModel(
 ) : ViewModel() {
     private val _state = MutableLiveData<MainScreenState>()
     val state: LiveData<MainScreenState> = _state
-
-
     private var searchJob: Job? = null
 
     fun searchDebounce(text: String) {
         searchJob?.cancel()
 
         searchJob = viewModelScope.launch {
-            delay(1000L)   // debounce 1 сек
+            delay(SEARCH_DEBOUNCE_DELAY)
             search(text)
         }
     }
@@ -62,5 +60,9 @@ class FilterViewModel(
 
     init {
         _state.value = MainScreenState.StartSearch
+    }
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY = 1000L
     }
 }
