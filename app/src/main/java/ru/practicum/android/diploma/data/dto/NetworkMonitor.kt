@@ -11,6 +11,7 @@ class NetworkMonitor(private val context: Context) {
                 as ConnectivityManager
         val network = connectivityManager.activeNetwork
         val capabilities = network?.let { connectivityManager.getNetworkCapabilities(it) }
-        return capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+        return capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true &&
+            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
 }
