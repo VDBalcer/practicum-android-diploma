@@ -26,7 +26,7 @@ data class VacancyDetailDto(
         val city: String,
         val street: String,
         val building: String,
-        val fullAddress: String,
+        val raw: String,
     )
 
     data class ExperienceDto(
@@ -48,12 +48,17 @@ data class VacancyDetailDto(
         val id: String,
         val name: String,
         val email: String,
-        val phone: List<String>,
+        val phones: List<PhoneDto>,
     )
 
     data class EmployerDto(
         val id: String,
         val name: String,
         val logo: String,
+    )
+
+    data class PhoneDto(
+        val comment: String,
+        val formatted: String
     )
 }
