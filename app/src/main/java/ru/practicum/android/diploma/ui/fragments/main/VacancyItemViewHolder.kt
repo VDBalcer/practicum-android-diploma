@@ -11,7 +11,6 @@ import ru.practicum.android.diploma.presentation.model.VacancyItem
 class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: VacancyItem) {
-
         val companyLogoUrl = item.employer.logo
 
         Glide.with(binding.root.context)

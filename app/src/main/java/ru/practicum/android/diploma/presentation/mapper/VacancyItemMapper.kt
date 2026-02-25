@@ -32,7 +32,7 @@ class VacancyItemMapper(
                 to = item.to,
                 currency = item.currency
             )
-        } else null
+        } else {null}
 
     private fun mapAddressToDomain(item: VacancyItem.AddressItem?) =
         if (item != null) {
@@ -42,7 +42,7 @@ class VacancyItemMapper(
                 building = item.building,
                 fullAddress = item.fullAddress
             )
-        } else null
+        } else {null}
 
     private fun mapExperienceToDomain(item: VacancyItem.ExperienceItem?) =
         if (item != null) {
@@ -50,7 +50,7 @@ class VacancyItemMapper(
                 id = item.id,
                 name = item.name
             )
-        } else null
+        } else {null}
 
     private fun mapScheduleToDomain(item: VacancyItem.ScheduleItem?) =
         if (item != null) {
@@ -58,7 +58,7 @@ class VacancyItemMapper(
                 id = item.id,
                 name = item.name
             )
-        } else null
+        } else {null}
 
     private fun mapEmploymentToDomain(item: VacancyItem.EmploymentItem?) =
         if (item != null) {
@@ -66,7 +66,7 @@ class VacancyItemMapper(
                 id = item.id,
                 name = item.name
             )
-        } else null
+        } else {null}
 
     private fun mapContactsToDomain(item: VacancyItem.ContactsItem?) =
         if (item != null) {
@@ -76,7 +76,7 @@ class VacancyItemMapper(
                 email = item.email,
                 phone = item.phone
             )
-        } else null
+        } else {null}
 
     private fun mapEmployerToDomain(item: VacancyItem.EmployerItem) =
         VacancyDetailModel.EmployerModel(
@@ -110,7 +110,7 @@ class VacancyItemMapper(
                 to = model.to,
                 currency = model.currency
             )
-        } else null
+        } else {null}
 
     private fun mapAddressFromDomain(model: VacancyDetailModel.AddressModel?) =
         if (model != null) {
@@ -120,7 +120,7 @@ class VacancyItemMapper(
                 building = model.building,
                 fullAddress = model.fullAddress
             )
-        } else null
+        } else {null}
 
     private fun mapExperienceFromDomain(model: VacancyDetailModel.ExperienceModel?) =
         if (model != null) {
@@ -128,7 +128,7 @@ class VacancyItemMapper(
                 id = model.id,
                 name = model.name
             )
-        } else null
+        } else {null}
 
     private fun mapScheduleFromDomain(model: VacancyDetailModel.ScheduleModel?) =
         if (model != null) {
@@ -136,7 +136,7 @@ class VacancyItemMapper(
                 id = model.id,
                 name = model.name
             )
-        } else null
+        } else {null}
 
     private fun mapEmploymentFromDomain(model: VacancyDetailModel.EmploymentModel?) =
         if (model != null) {
@@ -144,7 +144,7 @@ class VacancyItemMapper(
                 id = model.id,
                 name = model.name
             )
-        } else null
+        } else {null}
 
     private fun mapContactsFromDomain(model: VacancyDetailModel.ContactsModel?) =
         if (model != null) {
@@ -154,7 +154,7 @@ class VacancyItemMapper(
                 email = model.email,
                 phone = model.phone
             )
-        } else null
+        } else {null}
 
     private fun mapEmployerFromDomain(model: VacancyDetailModel.EmployerModel) =
         VacancyItem.EmployerItem(
