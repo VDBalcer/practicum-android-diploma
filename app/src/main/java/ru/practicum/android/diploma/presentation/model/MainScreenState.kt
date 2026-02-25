@@ -5,6 +5,7 @@ sealed class MainScreenState {
     object NoInternet : MainScreenState()
     object JobNotFound : MainScreenState()
     object Loading : MainScreenState()
+    object ServerError : MainScreenState()
 
     data class Content(
         val item: VacancyResponseItem

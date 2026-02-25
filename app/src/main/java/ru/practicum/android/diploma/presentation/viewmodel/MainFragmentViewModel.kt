@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.NetworkResult
@@ -34,6 +35,8 @@ class MainFragmentViewModel(
 
     fun observeMainSate(): LiveData<MainScreenState> = mainStateLiveData
 
+    private var searchJob: Job? = null
+
     fun searchDebounce(currentSearchQuery: String) {
         if (latestSearchQuery == currentSearchQuery) {
             return
@@ -48,23 +51,29 @@ class MainFragmentViewModel(
     fun searchRequest(searchQuery: String) {
         mainStateLiveData.value = MainScreenState.Loading
 
+        searchJob?.cancel()
         val filter = VacancyFilterItem(text = searchQuery)
-        viewModelScope.launch {
+        searchJob = viewModelScope.launch {
             val response = interactor.getVacancies(filter.toDomain())
             processResult(response)
         }
     }
 
     private fun processResult(result: NetworkResult<VacancyResponseModel>) {
-        when (result) {
-            is NetworkResult.Error -> mainStateLiveData.postValue(MainScreenState.StartSearch)
-            is NetworkResult.NetworkError -> mainStateLiveData.postValue(MainScreenState.StartSearch)
-            is NetworkResult.Success<VacancyResponseModel> -> mainStateLiveData.postValue(
-                MainScreenState.Content(
-                    responseMapper.mapFromDomain(result.data)
-                )
-            )
+        val state = when (result) {
+            is NetworkResult.Error -> MainScreenState.ServerError
+            is NetworkResult.NetworkError -> MainScreenState.NoInternet
+            is NetworkResult.Success<VacancyResponseModel> -> {
+                if (result.data.vacancies.isNotEmpty()) {
+                    MainScreenState.Content(
+                        responseMapper.mapFromDomain(result.data)
+                    )
+                } else {
+                    MainScreenState.JobNotFound
+                }
+            }
         }
+        mainStateLiveData.postValue(state)
     }
 
     companion object {

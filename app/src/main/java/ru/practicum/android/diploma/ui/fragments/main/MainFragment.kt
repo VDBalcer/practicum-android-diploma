@@ -87,6 +87,7 @@ class MainFragment : Fragment() {
         val ims = requireContext().getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
         ims?.hideSoftInputFromWindow(binding.editTextboxJobSearch.windowToken, 0)
     }
+
     private fun updateIcons(hasText: Boolean) {
         binding.iconClear.isVisible = hasText
         binding.iconSearch.isVisible = !hasText
@@ -95,8 +96,9 @@ class MainFragment : Fragment() {
     private fun render(state: MainScreenState) {
         when (state) {
             is MainScreenState.StartSearch -> showStart()
-            is MainScreenState.NoInternet -> {}
-            is MainScreenState.JobNotFound -> {}
+            is MainScreenState.NoInternet -> showNotInternetPlaceholder()
+            is MainScreenState.ServerError -> showServerError()
+            is MainScreenState.JobNotFound -> showEmpty()
             is MainScreenState.Loading -> showLoading()
             is MainScreenState.Content -> showContent(state.item)
         }
@@ -104,20 +106,19 @@ class MainFragment : Fragment() {
 
     private fun showStart() {
         binding.apply {
-            placeholderStartSearch.visibility = View.VISIBLE
-            containerNotInternet.visibility = View.GONE
-            containerJobNotFound.visibility = View.GONE
+            containerPlaceholder.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
             vacanciesRecyclerView.visibility = View.GONE
             infoResult.visibility = View.GONE
+
+            placeholderImage.setImageResource(R.drawable.placeholder_start_search)
+            placeholderMessage.visibility = View.GONE
         }
     }
 
     private fun showLoading() {
         binding.apply {
-            placeholderStartSearch.visibility = View.GONE
-            containerNotInternet.visibility = View.GONE
-            containerJobNotFound.visibility = View.GONE
+            containerPlaceholder.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
             vacanciesRecyclerView.visibility = View.GONE
             infoResult.visibility = View.GONE
@@ -128,9 +129,7 @@ class MainFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun showContent(content: VacancyResponseItem) {
         binding.apply {
-            placeholderStartSearch.visibility = View.GONE
-            containerNotInternet.visibility = View.GONE
-            containerJobNotFound.visibility = View.GONE
+            containerPlaceholder.visibility = View.GONE
             progressBar.visibility = View.GONE
             vacanciesRecyclerView.visibility = View.VISIBLE
             infoResult.visibility = View.VISIBLE
@@ -138,6 +137,47 @@ class MainFragment : Fragment() {
             infoResult.text = resources.getQuantityString(R.plurals.vacancies_found, content.found, content.found)
             vacancyAdapter.setData(content.vacancies)
             vacancyAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun showEmpty() {
+        binding.apply {
+            containerPlaceholder.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            vacanciesRecyclerView.visibility = View.GONE
+
+            infoResult.visibility = View.VISIBLE
+            infoResult.text = getString(R.string.result_not_found)
+
+            placeholderImage.setImageResource(R.drawable.placeholder_nothing_found)
+            placeholderMessage.visibility = View.VISIBLE
+            placeholderMessage.text = getString(R.string.title_job_not_found)
+        }
+    }
+
+    private fun showNotInternetPlaceholder() {
+        binding.apply {
+            containerPlaceholder.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            vacanciesRecyclerView.visibility = View.GONE
+            infoResult.visibility = View.GONE
+
+            placeholderImage.setImageResource(R.drawable.placeholder_not_internet)
+            placeholderMessage.visibility = View.VISIBLE
+            placeholderMessage.text = getString(R.string.title_not_internet)
+        }
+    }
+
+    private fun showServerError() {
+        binding.apply {
+            containerPlaceholder.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            vacanciesRecyclerView.visibility = View.GONE
+            infoResult.visibility = View.GONE
+
+            placeholderImage.setImageResource(R.drawable.placeholder_server_error)
+            placeholderMessage.visibility = View.VISIBLE
+            placeholderMessage.text = getString(R.string.title_server_error)
         }
     }
 
