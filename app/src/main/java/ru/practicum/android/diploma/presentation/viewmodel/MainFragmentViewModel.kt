@@ -61,7 +61,7 @@ class MainFragmentViewModel(
             is NetworkResult.NetworkError -> mainStateLiveData.postValue(MainScreenState.StartSearch)
             is NetworkResult.Success<VacancyResponseModel> -> mainStateLiveData.postValue(
                 MainScreenState.Content(
-                    responseMapper.mapFromDomain((result.data))
+                    responseMapper.mapFromDomain(result.data)
                 )
             )
         }
