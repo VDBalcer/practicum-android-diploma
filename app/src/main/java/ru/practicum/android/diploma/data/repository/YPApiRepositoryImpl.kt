@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.data.repository
 
 import kotlinx.coroutines.CancellationException
 import retrofit2.HttpException
+import ru.practicum.android.diploma.data.dto.NetworkMonitor
 import ru.practicum.android.diploma.data.mapper.toDomain
 import ru.practicum.android.diploma.data.mapper.toDto
 import ru.practicum.android.diploma.data.network.YPApiService
@@ -16,6 +17,7 @@ import java.io.IOException
 
 class YPApiRepositoryImpl(
     private val api: YPApiService,
+    private val networkMonitor: NetworkMonitor
 ) : ApiRepository {
 
     override suspend fun getVacancy(id: String): NetworkResult<VacancyDetailModel> =
@@ -46,6 +48,12 @@ class YPApiRepositoryImpl(
     private suspend fun <T> safeApiCall(
         apiCall: suspend () -> T,
     ): NetworkResult<T> {
+        if (!networkMonitor.isConnected()) {
+            return NetworkResult.NetworkError(
+                IOException("Отсутствует интернет соединение")
+            )
+        }
+
         return try {
             val result = apiCall()
             NetworkResult.Success(result)

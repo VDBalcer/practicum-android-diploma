@@ -87,7 +87,6 @@ class MainFragment : Fragment() {
         val ims = requireContext().getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
         ims?.hideSoftInputFromWindow(binding.editTextboxJobSearch.windowToken, 0)
     }
-
     private fun updateIcons(hasText: Boolean) {
         binding.iconClear.isVisible = hasText
         binding.iconSearch.isVisible = !hasText

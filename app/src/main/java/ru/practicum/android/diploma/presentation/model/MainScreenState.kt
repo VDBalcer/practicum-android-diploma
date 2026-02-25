@@ -6,7 +6,6 @@ sealed class MainScreenState {
     object JobNotFound : MainScreenState()
     object Loading : MainScreenState()
 
-    // Заглушка для вакансий
     data class Content(
         val item: VacancyResponseItem
     ) : MainScreenState()
