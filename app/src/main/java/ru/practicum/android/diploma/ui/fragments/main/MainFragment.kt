@@ -28,7 +28,6 @@ class MainFragment : Fragment() {
     private var _vacancyAdapter: VacancyItemViewAdapter? = null
     private val vacancyAdapter get() = _vacancyAdapter!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
