@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.domain.models
+package ru.practicum.android.diploma.presentation.model
 
 sealed class MainScreenState {
     object StartSearch : MainScreenState()
@@ -8,6 +8,6 @@ sealed class MainScreenState {
 
     // Заглушка для вакансий
     data class Content(
-        val items: List<Any>
+        val item: VacancyResponseItem
     ) : MainScreenState()
 }
