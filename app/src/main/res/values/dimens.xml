@@ -74,5 +74,8 @@
     <dimen name="info_h3_font_size">16sp</dimen>
     <dimen name="info_text_size">16sp</dimen>
     <dimen name="size_progress_bar">36sp</dimen>
+    <dimen name="info_title_margin_top">16dp</dimen>
+    <dimen name="info_title_margin_bottom">24dp</dimen>
+    <dimen name="info_title_line_height">38sp</dimen>
 
 </resources>

@@ -39,6 +39,10 @@
     <string name="currency_rub">\u20bd</string>
     <string name="currency_euro">\u20ac</string>
     <string name="currency_usd">$</string>
+    <string name="app_team">Над приложением работали</string>
+    <string name="developer_1">Вадим Бальцер</string>
+    <string name="developer_2">Роман Татаренко</string>
+    <string name="developer_3">Никита Янцен</string>
 
     <plurals name="vacancies_found">
         <item quantity="one">Найдена %d вакансия</item>
