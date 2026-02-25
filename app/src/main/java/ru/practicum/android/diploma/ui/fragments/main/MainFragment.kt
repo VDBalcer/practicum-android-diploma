@@ -28,7 +28,6 @@ class MainFragment : Fragment() {
     private var _vacancyAdapter: VacancyItemViewAdapter? = null
     private val vacancyAdapter get() = _vacancyAdapter!!
 
-    private var searchQuery = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,8 +69,7 @@ class MainFragment : Fragment() {
     private fun onInitListener() {
         binding.editTextboxJobSearch.doOnTextChanged { text, _, _, _ ->
             updateIcons(!text.isNullOrEmpty())
-            searchQuery = text?.toString() ?: ""
-            viewModel.searchDebounce(searchQuery)
+            viewModel.searchDebounce(text?.toString() ?: "")
         }
 
         binding.iconClear.setOnClickListener {

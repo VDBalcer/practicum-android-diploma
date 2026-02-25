@@ -25,7 +25,7 @@ class VacancyItemMapper(
             industry = industryMapper.mapToDomain(item.industry)
         )
 
-    private fun mapSalaryToDomain(item: VacancyItem.SalaryItem?) =
+    private fun mapSalaryToDomain(item: VacancyItem.SalaryItem?): VacancyDetailModel.SalaryModel? =
         if (item != null) {
             VacancyDetailModel.SalaryModel(
                 from = item.from,
@@ -36,7 +36,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapAddressToDomain(item: VacancyItem.AddressItem?) =
+    private fun mapAddressToDomain(item: VacancyItem.AddressItem?): VacancyDetailModel.AddressModel? =
         if (item != null) {
             VacancyDetailModel.AddressModel(
                 city = item.city,
@@ -48,7 +48,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapExperienceToDomain(item: VacancyItem.ExperienceItem?) =
+    private fun mapExperienceToDomain(item: VacancyItem.ExperienceItem?): VacancyDetailModel.ExperienceModel? =
         if (item != null) {
             VacancyDetailModel.ExperienceModel(
                 id = item.id,
@@ -58,7 +58,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapScheduleToDomain(item: VacancyItem.ScheduleItem?) =
+    private fun mapScheduleToDomain(item: VacancyItem.ScheduleItem?): VacancyDetailModel.ScheduleModel? =
         if (item != null) {
             VacancyDetailModel.ScheduleModel(
                 id = item.id,
@@ -68,7 +68,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapEmploymentToDomain(item: VacancyItem.EmploymentItem?) =
+    private fun mapEmploymentToDomain(item: VacancyItem.EmploymentItem?): VacancyDetailModel.EmploymentModel? =
         if (item != null) {
             VacancyDetailModel.EmploymentModel(
                 id = item.id,
@@ -78,7 +78,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapContactsToDomain(item: VacancyItem.ContactsItem?) =
+    private fun mapContactsToDomain(item: VacancyItem.ContactsItem?): VacancyDetailModel.ContactsModel? =
         if (item != null) {
             VacancyDetailModel.ContactsModel(
                 id = item.id,
@@ -90,7 +90,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapEmployerToDomain(item: VacancyItem.EmployerItem) =
+    private fun mapEmployerToDomain(item: VacancyItem.EmployerItem): VacancyDetailModel.EmployerModel =
         VacancyDetailModel.EmployerModel(
             id = item.id,
             name = item.name,
@@ -115,7 +115,7 @@ class VacancyItemMapper(
             industry = industryMapper.mapFromDomain(model.industry)
         )
 
-    private fun mapSalaryFromDomain(model: VacancyDetailModel.SalaryModel?) =
+    private fun mapSalaryFromDomain(model: VacancyDetailModel.SalaryModel?): VacancyItem.SalaryItem? =
         if (model != null) {
             VacancyItem.SalaryItem(
                 from = model.from,
@@ -126,7 +126,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapAddressFromDomain(model: VacancyDetailModel.AddressModel?) =
+    private fun mapAddressFromDomain(model: VacancyDetailModel.AddressModel?): VacancyItem.AddressItem? =
         if (model != null) {
             VacancyItem.AddressItem(
                 city = model.city,
@@ -138,7 +138,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapExperienceFromDomain(model: VacancyDetailModel.ExperienceModel?) =
+    private fun mapExperienceFromDomain(model: VacancyDetailModel.ExperienceModel?): VacancyItem.ExperienceItem? =
         if (model != null) {
             VacancyItem.ExperienceItem(
                 id = model.id,
@@ -148,7 +148,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapScheduleFromDomain(model: VacancyDetailModel.ScheduleModel?) =
+    private fun mapScheduleFromDomain(model: VacancyDetailModel.ScheduleModel?): VacancyItem.ScheduleItem? =
         if (model != null) {
             VacancyItem.ScheduleItem(
                 id = model.id,
@@ -158,7 +158,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapEmploymentFromDomain(model: VacancyDetailModel.EmploymentModel?) =
+    private fun mapEmploymentFromDomain(model: VacancyDetailModel.EmploymentModel?): VacancyItem.EmploymentItem? =
         if (model != null) {
             VacancyItem.EmploymentItem(
                 id = model.id,
@@ -168,7 +168,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapContactsFromDomain(model: VacancyDetailModel.ContactsModel?) =
+    private fun mapContactsFromDomain(model: VacancyDetailModel.ContactsModel?): VacancyItem.ContactsItem? =
         if (model != null) {
             VacancyItem.ContactsItem(
                 id = model.id,
@@ -180,7 +180,7 @@ class VacancyItemMapper(
             null
         }
 
-    private fun mapEmployerFromDomain(model: VacancyDetailModel.EmployerModel) =
+    private fun mapEmployerFromDomain(model: VacancyDetailModel.EmployerModel): VacancyItem.EmployerItem =
         VacancyItem.EmployerItem(
             id = model.id,
             name = model.name,
