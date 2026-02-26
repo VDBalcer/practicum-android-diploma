@@ -3,16 +3,14 @@ package ru.practicum.android.diploma.presentation.mapper
 import ru.practicum.android.diploma.domain.models.FilterIndustryModel
 import ru.practicum.android.diploma.presentation.model.FilteredIndustryItem
 
-class FilteredIndustryMapper {
-    fun mapToDomain(item: FilteredIndustryItem): FilterIndustryModel =
+fun FilteredIndustryItem.toDomain(): FilterIndustryModel =
         FilterIndustryModel(
-            id = item.id,
-            name = item.name
+            id = id,
+            name = name
         )
 
-    fun mapFromDomain(model: FilterIndustryModel): FilteredIndustryItem =
+fun FilterIndustryModel.toItem(): FilteredIndustryItem =
         FilteredIndustryItem(
-            id = model.id,
-            name = model.name
+            id = id,
+            name = name
         )
-}
