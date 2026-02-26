@@ -22,7 +22,12 @@ class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerV
             .centerCrop()
             .transform(
                 RoundedCorners(
-                    Converter.dpToPx(14.0f, binding.root)
+                    Converter.dpToPx(
+                        binding.root.resources.getInteger(
+                            R.integer.info_company_radius_int
+                        ).toFloat(),
+                        binding.root
+                    )
                 )
             )
             .into(binding.imageLogo)
