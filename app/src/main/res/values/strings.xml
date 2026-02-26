@@ -24,14 +24,24 @@
     <string name="icon_filter">Icon filter off</string>
     <string name="icon_search">Job search</string>
     <string name="icon_clear">Clear text</string>
-    <string name="placeholder_start_search">Start search</string>
-    <string name="placeholder_not_internet">No internet</string>
-    <string name="placeholder_server_error">Server error</string>
-
+    <string name="placeholder_image">Placeholder</string>
+    <string name="company_logo">Company logo</string>
 
     <string name="title_not_internet">Нет интернета</string>
+    <string name="title_server_error">Ошибка сервера</string>
     <string name="title_job_not_found">Не удалось получить\nсписок вакансий</string>
     <string name="result_not_found">Таких вакансий нет</string>
+    <string name="salary_not_specify">Зарплата не указана</string>
+    <string name="salary_from">от %1$d\ </string>
+    <string name="salary_to">до %1$d\ </string>
+    <string name="currency_rub">\u20bd</string>
+    <string name="currency_euro">\u20ac</string>
+    <string name="currency_usd">$</string>
+
+    <string name="app_team">Над приложением работали</string>
+    <string name="developer_1">Вадим Бальцер</string>
+    <string name="developer_2">Роман Татаренко</string>
+    <string name="developer_3">Никита Янцен</string>
 
     <plurals name="vacancies_found">
         <item quantity="one">Найдена %d вакансия</item>

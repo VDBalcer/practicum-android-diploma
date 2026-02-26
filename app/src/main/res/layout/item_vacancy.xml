@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingVertical="@dimen/company_margin_vertical"
     android:paddingHorizontal="@dimen/company_margin_horizontal">
 
@@ -9,7 +9,9 @@
         android:id="@+id/image_logo"
         android:layout_width="@dimen/company_logo_size"
         android:layout_height="@dimen/company_logo_size"
-        />
+        android:contentDescription="@string/company_logo"
+        android:background="@drawable/rounded_image"
+        android:foreground="@drawable/rounded_image_border"/>
 
     <LinearLayout
         android:layout_width="match_parent"

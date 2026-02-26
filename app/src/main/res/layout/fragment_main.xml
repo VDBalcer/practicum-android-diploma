@@ -82,18 +82,6 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <ImageView
-            android:visibility="gone"
-            android:id="@+id/placeholder_start_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/placeholder_start_search"
-            android:contentDescription="@string/placeholder_start_search"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
         <ProgressBar
             android:visibility="gone"
             android:id="@+id/progressBar"
@@ -111,7 +99,7 @@
             android:id="@+id/vacanciesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/info_result"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -130,61 +118,32 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:visibility="gone"
-            android:id="@+id/container_not_internet"
+            android:id="@+id/container_placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/placeholder_not_internet"
+                android:id="@+id/placeholder_image"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="h, 1.47:1"
                 android:src="@drawable/placeholder_not_internet"
-                android:contentDescription="@string/placeholder_not_internet"
+                android:contentDescription="@string/placeholder_image"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/title_not_internet"
+                app:layout_constraintBottom_toTopOf="@id/placeholder_message"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"/>
 
             <TextView
-                android:id="@+id/title_not_internet"
+                android:visibility="gone"
+                android:id="@+id/placeholder_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/title_not_internet"
                 style="@style/Widget.ErrorText"
                 android:textAppearance="@style/TextAppearance.ErrorText"
-                app:layout_constraintTop_toBottomOf="@id/placeholder_not_internet"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:visibility="gone"
-            android:id="@+id/container_job_not_found"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/placeholder_server_error"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/placeholder_server_error"
-                android:contentDescription="@string/placeholder_server_error"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/title_job_not_found"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"/>
-
-            <TextView
-                android:id="@+id/title_job_not_found"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_job_not_found"
-                style="@style/Widget.ErrorText"
-                android:textAppearance="@style/TextAppearance.ErrorText"
-                app:layout_constraintTop_toBottomOf="@id/placeholder_server_error"
+                app:layout_constraintTop_toBottomOf="@id/placeholder_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

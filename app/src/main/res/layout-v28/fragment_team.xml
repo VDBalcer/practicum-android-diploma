@@ -17,8 +17,10 @@
         style="@style/info_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:lineHeight="@dimen/info_title_line_height"
         android:text="@string/app_team"
-        android:textAppearance="@style/TextAppearance.InfoTitleText" />
+        android:textAppearance="@style/TextAppearance.InfoTitleText"
+        android:textStyle="bold" />
 
     <LinearLayout
         style="@style/info_text_layout"

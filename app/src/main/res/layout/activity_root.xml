@@ -10,9 +10,9 @@
         android:id="@+id/root_fragment_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/root_bottom_nav_menu"
+        app:layout_constraintBottom_toTopOf="@id/root_bottom_nav_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +37,7 @@
         app:menu="@menu/bottom_navigation_menu" />
 
     <View
-        android:id="@+id/bottom_nav_divider"
+        android:id="@+id/root_bottom_nav_divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/platinum"

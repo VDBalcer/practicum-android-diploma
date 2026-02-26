@@ -139,11 +139,14 @@
     <style name="info_title">
         <item name="android:paddingVertical">@dimen/info_padding_vertical</item>
         <item name="android:paddingHorizontal">@dimen/info_padding_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/info_title_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/info_title_margin_bottom</item>
     </style>
 
     <style name="TextAppearance.InfoTitleText" parent="font_bold">
         <item name="android:textColor">?attr/text_color</item>
         <item name="android:textSize">@dimen/info_title_font_size</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Widget.InfoTitleText">

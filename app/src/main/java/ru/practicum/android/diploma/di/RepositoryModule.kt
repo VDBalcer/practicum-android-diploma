@@ -7,6 +7,6 @@ import ru.practicum.android.diploma.domain.api.ApiRepository
 val repositoryModule = module {
 
     factory<ApiRepository> {
-        YPApiRepositoryImpl(get())
+        YPApiRepositoryImpl(get(), get())
     }
 }
