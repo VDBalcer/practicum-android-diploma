@@ -32,6 +32,16 @@ class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerV
             )
             .into(binding.imageLogo)
 
+        binding.apply {
+            vacancyName.text = item.name
+            companyName.text = item.employer.name
+            wages.text = getSalary(item)
+        }
+    }
+
+    private fun getSalary(
+        item: VacancyItem
+    ): String {
         var salary = ""
 
         if (item.salary != null) {
@@ -55,13 +65,9 @@ class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerV
         } else {
             salary = binding.root.context.getString(R.string.salary_not_specify)
         }
-
-        binding.apply {
-            vacancyName.text = item.name
-            companyName.text = item.employer.name
-            wages.text = salary
-        }
+        return salary
     }
+
 
     companion object {
         fun from(parent: ViewGroup): VacancyItemViewHolder {
