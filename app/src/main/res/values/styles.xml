@@ -205,4 +205,27 @@
         <item name="android:layout_marginBottom">@dimen/info_text_margin_bottom</item>
     </style>
 
+    <style name="VacancyDeyail.VacancyTitleTextStyle" parent="font_bold">
+        <item name="android:textSize">@dimen/vacancy_title_font_size</item>
+        <item name="android:fontWeight">700</item>
+    </style>
+    <style name="VacancyDeyail.VacancySalaryStyle" parent="font_medium">
+        <item name="android:textSize">@dimen/vacancy_salary_font_size</item>
+        <item name="android:fontWeight">500</item>
+    </style>
+    <style name="VacancyDeyail.TitleH1Style" parent="font_medium">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="VacancyDeyail.TitleH2Style" parent="font_medium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="VacancyDeyail.ListItemStyle" parent="font_regular">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
 </resources>

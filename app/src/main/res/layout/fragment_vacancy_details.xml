@@ -1,13 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.details.VacancyDetailsFragment">
 
-    <TextView
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorSurface"
+        android:titleTextColor="?attr/colorOnSurface"
+        app:layout_scrollFlags="enterAlways"
+        app:menu="@menu/menu_toolbar_vacancy"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:titleTextAppearance="@style/TextAppearance.PageTitle" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/vacancy_details_fragment_title" />
-</FrameLayout>
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- Название вакансии -->
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/VacancyDeyail.VacancyTitleTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Android-разработчик"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Зарплата -->
+            <TextView
+                android:id="@+id/tvSalary"
+                style="@style/VacancyDeyail.VacancySalaryStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="от 100 000 ₽"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+            <!-- Карточка компании -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardCompany"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/platinum"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSalary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:id="@+id/ivCompanyLogo"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/company_logo_placeholder" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvCompanyName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Еда"
+                            android:textAppearance="@style/VacancyDeyail.TitleH1Style"
+                            android:textColor="@color/graphite_black" />
+
+                        <TextView
+                            android:id="@+id/tvCompanyLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Москва"
+                            android:textAppearance="@style/VacancyDeyail.ListItemStyle"
+                            android:textColor="@color/graphite_black" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Требуемый опыт -->
+            <TextView
+                android:id="@+id/tvExperienceTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/vacancy_detail_experience_title"
+                android:textAppearance="@style/VacancyDeyail.TitleH2Style"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardCompany" />
+
+            <TextView
+                android:id="@+id/tvExperienceValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="От 1 года до 3 лет"
+                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvExperienceTitle" />
+
+            <TextView
+                android:id="@+id/tvWorkConditions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Полная занятость, Удаленная работа"
+                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvExperienceValue" />
+
+            <!-- Описание -->
+            <TextView
+                android:id="@+id/tvDescriptionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/vacancy_detail_description_title"
+                android:textAppearance="@style/VacancyDeyail.TitleH1Style"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWorkConditions" />
+
+            <TextView
+                android:id="@+id/tvWorkDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/vacancy_detail_responsibilities_title"
+                android:textAppearance="@style/VacancyDeyail.TitleH2Style"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDescriptionTitle" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="• Разрабатывать новую функциональность приложения\n• Помогать с интеграцией SDK\n• Проектировать большие модули\n• Писать UI- и unit-тесты"
+                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWorkDescription" />
+
+            <!-- Требования -->
+            <TextView
+                android:id="@+id/tvRequirementsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/vacancy_detail_requirements_title"
+                android:textAppearance="@style/VacancyDeyail.TitleH2Style"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+
+            <TextView
+                android:id="@+id/tvRequirements"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="• 100% Kotlin\n• WebRTC\n• CI по модели Trunk Based Development"
+                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRequirementsTitle" />
+
+            <!-- Условия -->
+            <TextView
+                android:id="@+id/tvConditionsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/vacancy_detail_conditions_title"
+                android:textAppearance="@style/VacancyDeyail.TitleH2Style"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRequirements" />
+
+            <TextView
+                android:id="@+id/tvConditions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="24dp"
+                android:text="• Сильная команда\n• Возможность влиять на процесс\n• Расширенная программа ДМС"
+                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvConditionsTitle" />
+            <!-- Ключевые навыки -->
+            <TextView
+                android:id="@+id/tvKeySkillsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/vacancy_detail_skills_title"
+                android:textAppearance="@style/VacancyDeyail.TitleH1Style"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvConditions" />
+
+            <TextView
+                android:id="@+id/tvKeySkills"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="24dp"
+                android:text="• Знание классических алгоритмов и структуры данных\n• Программирование для Android больше одного года\n• Знание WebRTC"
+                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvKeySkillsTitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
