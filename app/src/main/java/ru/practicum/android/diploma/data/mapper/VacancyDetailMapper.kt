@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.data.mapper
 
 import ru.practicum.android.diploma.data.dto.VacancyDetailDto
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel
+import kotlin.String
 
 fun VacancyDetailDto.toDomain(): VacancyDetailModel =
     VacancyDetailModel(
@@ -59,7 +60,13 @@ fun VacancyDetailDto.ContactsDto.toDomain(): VacancyDetailModel.ContactsModel =
         id = id,
         name = name,
         email = email,
-        phone = phones.map { it.formatted }
+        phones = phones.map { it.toDomain() }
+    )
+
+fun VacancyDetailDto.PhoneDto.toDomain(): VacancyDetailModel.PhoneModel =
+    VacancyDetailModel.PhoneModel(
+        comment = comment,
+        formatted = formatted
     )
 
 fun VacancyDetailDto.EmployerDto.toDomain(): VacancyDetailModel.EmployerModel =

@@ -93,7 +93,7 @@
                         android:id="@+id/ivCompanyLogo"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/company_logo_placeholder" />
 
                     <LinearLayout
@@ -178,66 +178,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/vacancy_detail_responsibilities_title"
-                android:textAppearance="@style/VacancyDeyail.TitleH2Style"
+                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDescriptionTitle" />
 
-            <TextView
-                android:id="@+id/tvDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="• Разрабатывать новую функциональность приложения\n• Помогать с интеграцией SDK\n• Проектировать большие модули\n• Писать UI- и unit-тесты"
-                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvWorkDescription" />
 
-            <!-- Требования -->
-            <TextView
-                android:id="@+id/tvRequirementsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/vacancy_detail_requirements_title"
-                android:textAppearance="@style/VacancyDeyail.TitleH2Style"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDescription" />
-
-            <TextView
-                android:id="@+id/tvRequirements"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="• 100% Kotlin\n• WebRTC\n• CI по модели Trunk Based Development"
-                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvRequirementsTitle" />
-
-            <!-- Условия -->
-            <TextView
-                android:id="@+id/tvConditionsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/vacancy_detail_conditions_title"
-                android:textAppearance="@style/VacancyDeyail.TitleH2Style"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvRequirements" />
-
-            <TextView
-                android:id="@+id/tvConditions"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="24dp"
-                android:text="• Сильная команда\n• Возможность влиять на процесс\n• Расширенная программа ДМС"
-                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvConditionsTitle" />
             <!-- Ключевые навыки -->
             <TextView
                 android:id="@+id/tvKeySkillsTitle"
@@ -247,7 +193,7 @@
                 android:text="@string/vacancy_detail_skills_title"
                 android:textAppearance="@style/VacancyDeyail.TitleH1Style"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvConditions" />
+                app:layout_constraintTop_toBottomOf="@id/tvWorkDescription" />
 
             <TextView
                 android:id="@+id/tvKeySkills"
@@ -260,6 +206,54 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvKeySkillsTitle" />
+
+            <!-- Контакты -->
+            <TextView
+                android:id="@+id/tvContactsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Контакты"
+                android:textAppearance="@style/VacancyDeyail.TitleH1Style"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvKeySkills" />
+
+            <TextView
+                android:id="@+id/tvContactsName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="24dp"
+                android:text="Петров Петр Петрович"
+                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvContactsTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPhones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvContactsName"
+                app:layout_constraintBottom_toTopOf="@id/tvContactsEmail"
+                tools:listitem="@layout/item_phone"
+                tools:itemCount="2"/>
+
+
+            <TextView
+                android:id="@+id/tvContactsEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="24dp"
+                android:text="email: 123@gmail.com"
+                android:textAppearance="@style/VacancyDeyail.ListItemStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvPhones" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

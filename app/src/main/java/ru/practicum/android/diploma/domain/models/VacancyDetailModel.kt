@@ -48,7 +48,12 @@ data class VacancyDetailModel(
         val id: String,
         val name: String,
         val email: String,
-        val phone: List<String>,
+        val phones: List<PhoneModel>,
+    )
+
+    data class PhoneModel(
+        val formatted: String,
+        val comment: String? = null,
     )
 
     data class EmployerModel(

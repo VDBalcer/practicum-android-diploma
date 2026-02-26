@@ -58,7 +58,7 @@ data class VacancyDetailDto(
     )
 
     data class PhoneDto(
-        val comment: String,
+        val comment: String?,
         val formatted: String
     )
 }

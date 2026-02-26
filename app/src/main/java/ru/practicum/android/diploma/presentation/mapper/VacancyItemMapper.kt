@@ -5,7 +5,7 @@ import ru.practicum.android.diploma.presentation.model.VacancyItem
 
 class VacancyItemMapper(
     private val areaMapper: FilteredAreaMapper,
-    private val industryMapper: FilteredIndustryMapper
+    private val industryMapper: FilteredIndustryMapper,
 ) {
     fun mapToDomain(item: VacancyItem): VacancyDetailModel =
         VacancyDetailModel(
@@ -84,7 +84,7 @@ class VacancyItemMapper(
                 id = item.id,
                 name = item.name,
                 email = item.email,
-                phone = item.phone
+                phones = item.phone.map { VacancyDetailModel.PhoneModel(it) }
             )
         } else {
             null
@@ -174,7 +174,7 @@ class VacancyItemMapper(
                 id = model.id,
                 name = model.name,
                 email = model.email,
-                phone = model.phone
+                phone = model.phones.map { it.formatted }
             )
         } else {
             null
