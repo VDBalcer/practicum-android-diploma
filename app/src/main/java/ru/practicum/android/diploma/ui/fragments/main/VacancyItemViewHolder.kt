@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ItemVacancyBinding
 import ru.practicum.android.diploma.presentation.model.VacancyItem
+import ru.practicum.android.diploma.util.Converter
 
 class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -17,7 +19,12 @@ class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerV
             .load(companyLogoUrl)
             .placeholder(R.drawable.company_logo_placeholder)
             .error(R.drawable.company_logo_placeholder)
-            .fitCenter()
+            .centerCrop()
+            .transform(
+                RoundedCorners(
+                    Converter.dpToPx(14.0f, binding.root)
+                )
+            )
             .into(binding.imageLogo)
 
         var salary = ""

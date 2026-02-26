@@ -9,7 +9,9 @@
         android:id="@+id/image_logo"
         android:layout_width="@dimen/company_logo_size"
         android:layout_height="@dimen/company_logo_size"
-        android:contentDescription="@string/company_logo" />
+        android:contentDescription="@string/company_logo"
+        android:background="@drawable/rounded_image"
+        android:foreground="@drawable/rounded_image_border"/>
 
     <LinearLayout
         android:layout_width="match_parent"
