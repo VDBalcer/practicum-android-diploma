@@ -49,6 +49,7 @@
     <string name="vacancy_detail_requirements_title">Требования</string>
     <string name="vacancy_detail_conditions_title">Условия</string>
     <string name="vacancy_detail_skills_title">Ключевые навыки</string>
+    <string name="not_fount_vacancy_info_message">Вакансия не найдена или удалена</string>
 
     <plurals name="vacancies_found">
         <item quantity="one">Найдена %d вакансия</item>
