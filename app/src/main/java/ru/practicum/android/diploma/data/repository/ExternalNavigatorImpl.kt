@@ -2,9 +2,7 @@ package ru.practicum.android.diploma.data.repository
 
 import android.content.Context
 import android.content.Intent
-
 import androidx.core.net.toUri
-
 import ru.practicum.android.diploma.domain.api.ExternalNavigator
 
 class ExternalNavigatorImpl(
