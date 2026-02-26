@@ -22,7 +22,6 @@
     <dimen name="result_padding_horizontal">12dp</dimen>
     <dimen name="result_padding_vertical">4dp</dimen>
 
-
     <dimen name="company_logo_size">48dp</dimen>
     <dimen name="company_margin_horizontal">16dp</dimen>
     <dimen name="company_margin_vertical">9dp</dimen>
@@ -48,6 +47,7 @@
     <dimen name="info_company_margin_bottom">24dp</dimen>
     <dimen name="info_company_padding">16dp</dimen>
     <dimen name="info_company_radius">12dp</dimen>
+    <integer name="info_company_radius_int">14</integer>
     <dimen name="info_h2_margin_top">32dp</dimen>
     <dimen name="info_h2_margin_bottom">16dp</dimen>
     <dimen name="info_h3_margin_bottom">4dp</dimen>
