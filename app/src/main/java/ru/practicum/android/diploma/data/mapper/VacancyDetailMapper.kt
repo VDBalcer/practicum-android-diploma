@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.data.mapper
 
 import ru.practicum.android.diploma.data.dto.VacancyDetailDto
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel
-import kotlin.String
 
 fun VacancyDetailDto.toDomain(): VacancyDetailModel =
     VacancyDetailModel(

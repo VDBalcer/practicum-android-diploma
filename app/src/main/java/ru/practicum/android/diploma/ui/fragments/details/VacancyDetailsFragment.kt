@@ -40,7 +40,6 @@ class VacancyDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
@@ -48,8 +47,6 @@ class VacancyDetailsFragment : Fragment() {
         viewModel.observeMainState().observe(viewLifecycleOwner) {
             render(it)
         }
-
-
     }
 
     override fun onDestroyView() {
@@ -96,101 +93,149 @@ class VacancyDetailsFragment : Fragment() {
     }
 
     private fun showVacancy(vacancy: VacancyDetailModel) = with(binding) {
+        showContentState()
 
+        bindHeader(vacancy)
+        bindSalary(vacancy)
+        bindCompany(vacancy)
+        bindExperience(vacancy)
+        bindWorkConditions(vacancy)
+        bindDescription(vacancy)
+        bindSkills(vacancy)
+        bindContacts(vacancy)
+        bindPhones(vacancy)
+        bindToolbar(vacancy)
+        bindLogo(vacancy)
+    }
+
+    private fun showContentState() = with(binding) {
         containerPlaceholder.isVisible = false
         progressBar.isVisible = false
-        toolbar.menu.forEach { item -> item.isVisible = true }
         vacancyAllInfoContainer.isVisible = true
+        toolbar.menu.forEach { it.isVisible = true }
+    }
 
-        // Заголовок
-        tvTitle.text = vacancy.name
+    private fun bindHeader(vacancy: VacancyDetailModel) {
+        binding.tvTitle.text = vacancy.name
+    }
 
-        // Зарплата
-        tvSalary.text = formatSalary(
+    private fun bindSalary(vacancy: VacancyDetailModel) {
+        binding.tvSalary.text = formatSalary(
             vacancy.salary?.from,
             vacancy.salary?.to,
             vacancy.salary?.currency
         )
+    }
 
-        // Компания
-        tvCompanyName.text = vacancy.employer.name
-        tvCompanyLocation.text = vacancy.address?.fullAddress ?: vacancy.area.name
+    private fun bindCompany(vacancy: VacancyDetailModel) {
+        binding.tvCompanyName.text = vacancy.employer.name
+        binding.tvCompanyLocation.text =
+            vacancy.address?.fullAddress ?: vacancy.area.name
+    }
 
-        // Опыт
-        tvExperienceValue.text = vacancy.experience?.name ?: ""
+    private fun bindExperience(vacancy: VacancyDetailModel) {
+        binding.tvExperienceValue.text = vacancy.experience?.name.orEmpty()
+    }
 
-        // Условия работы (график + тип занятости)
-        tvWorkConditions.text = listOfNotNull(
+    private fun bindWorkConditions(vacancy: VacancyDetailModel) {
+        binding.tvWorkConditions.text = listOfNotNull(
             vacancy.employment?.name,
             vacancy.schedule?.name
         ).joinToString(", ")
+    }
 
-        // Описание
-        tvWorkDescription.text = vacancy.description
+    private fun bindDescription(vacancy: VacancyDetailModel) {
+        binding.tvWorkDescription.text = vacancy.description
+    }
 
-        // Ключевые навыки
-        if (vacancy.skills.isNotEmpty()) {
-            tvKeySkillsTitle.isVisible = true
-            tvKeySkills.isVisible = true
-            tvKeySkills.text = vacancy.skills.joinToString(separator = "\n") { "• $it" }
-        } else {
-            tvKeySkillsTitle.isVisible = false
-            tvKeySkills.isVisible = false
+    private fun bindSkills(vacancy: VacancyDetailModel) {
+        val hasSkills = vacancy.skills.isNotEmpty()
+
+        binding.tvKeySkillsTitle.isVisible = hasSkills
+        binding.tvKeySkills.isVisible = hasSkills
+
+        if (hasSkills) {
+            binding.tvKeySkills.text =
+                vacancy.skills.joinToString("\n") { "• $it" }
         }
+    }
 
-        // Контакты
-        if (vacancy.contacts != null) {
-            tvContactsName.text = vacancy.contacts.name
-            tvContactsEmail.text = getString(R.string.email, vacancy.contacts.email)
-        } else {
-            tvContactsTitle.isVisible = false
-            tvContactsName.isVisible = false
-        }
-        val email = vacancy.contacts?.email
-        if (!email.isNullOrEmpty()) {
-            tvContactsEmail.setOnClickListener {
-                viewModel.onEmailClicked(email)
+    private fun bindContacts(vacancy: VacancyDetailModel) {
+        val contacts = vacancy.contacts
+        val hasContacts = contacts != null
+
+        binding.tvContactsTitle.isVisible = hasContacts
+        binding.tvContactsName.isVisible = hasContacts
+        binding.tvContactsEmail.isVisible = hasContacts
+
+        if (hasContacts) {
+            binding.tvContactsName.text = contacts!!.name
+
+            val email = contacts.email
+            binding.tvContactsEmail.text =
+                getString(R.string.email, email)
+
+            if (!email.isNullOrEmpty()) {
+                binding.tvContactsEmail.setOnClickListener {
+                    viewModel.onEmailClicked(email)
+                }
             }
         }
+    }
 
-
-        val phonesAdapter = PhonesAdapter { phone ->
-            viewModel.onCallClicked(phone)
-        }
-        binding.rvPhones.layoutManager = LinearLayoutManager(requireContext())
-        rvPhones.adapter = phonesAdapter
+    private fun bindPhones(vacancy: VacancyDetailModel) {
         val phones = vacancy.contacts?.phones.orEmpty()
-        if (phones.isEmpty()) {
-            binding.rvPhones.isVisible = false
-        } else {
-            binding.rvPhones.isVisible = true
-            phonesAdapter.submitList(phones)
+        val hasPhones = phones.isNotEmpty()
+
+        binding.rvPhones.isVisible = hasPhones
+        if (!hasPhones) return
+
+        val recyclerView = binding.rvPhones
+
+        // LayoutManager ставим только если его нет
+        if (recyclerView.layoutManager == null) {
+            recyclerView.layoutManager =
+                LinearLayoutManager(requireContext())
         }
 
-        toolbar.setOnMenuItemClickListener { item ->
+        // Пытаемся переиспользовать адаптер
+        val existingAdapter = recyclerView.adapter as? PhonesAdapter
+
+        if (existingAdapter != null) {
+            existingAdapter.submitList(phones)
+        } else {
+            val newAdapter = PhonesAdapter { phone ->
+                viewModel.onCallClicked(phone)
+            }
+            recyclerView.adapter = newAdapter
+            newAdapter.submitList(phones)
+        }
+    }
+
+    private fun bindToolbar(vacancy: VacancyDetailModel) {
+        binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_share -> {
                     viewModel.onShareClicked(vacancy.url)
                     true
                 }
 
-                R.id.action_favorite -> {
-                    // действие
-                    true
-                }
-
+                R.id.action_favorite -> true
                 else -> false
             }
         }
+    }
 
-        // Логотип компании
-        if (vacancy.employer.logo.isNotEmpty()) {
-            Glide.with(ivCompanyLogo)
-                .load(vacancy.employer.logo)
+    private fun bindLogo(vacancy: VacancyDetailModel) {
+        val logo = vacancy.employer.logo
+
+        if (logo.isNotEmpty()) {
+            Glide.with(this)
+                .load(logo)
                 .placeholder(R.drawable.company_logo_placeholder)
                 .error(R.drawable.company_logo_placeholder)
                 .fitCenter()
-                .into(ivCompanyLogo)
+                .into(binding.ivCompanyLogo)
         }
     }
 

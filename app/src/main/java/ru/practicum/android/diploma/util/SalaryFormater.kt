@@ -5,7 +5,6 @@ fun formatSalary(
     to: Int?,
     currency: String?,
 ): String {
-
     if (from == null && to == null) return "Зарплата не указана"
 
     val currencySymbol = when (currency) {
