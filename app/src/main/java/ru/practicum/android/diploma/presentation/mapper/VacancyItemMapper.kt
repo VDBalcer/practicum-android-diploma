@@ -20,27 +20,6 @@ fun VacancyItem.toDomain(): VacancyDetailModel =
         url = url,
         industry = industry.toDomain()
     )
-class VacancyItemMapper(
-    private val areaMapper: FilteredAreaMapper,
-    private val industryMapper: FilteredIndustryMapper,
-) {
-    fun mapToDomain(item: VacancyItem): VacancyDetailModel =
-        VacancyDetailModel(
-            id = item.id,
-            name = item.name,
-            description = item.description,
-            salary = mapSalaryToDomain(item = item.salary),
-            address = mapAddressToDomain(item = item.address),
-            experience = mapExperienceToDomain(item = item.experience),
-            schedule = mapScheduleToDomain(item = item.schedule),
-            employment = mapEmploymentToDomain(item = item.employment),
-            contacts = mapContactsToDomain(item = item.contacts),
-            employer = mapEmployerToDomain(item = item.employer),
-            area = areaMapper.mapToDomain(item.area),
-            skills = item.skills,
-            url = item.url,
-            industry = industryMapper.mapToDomain(item.industry)
-        )
 
 fun VacancyItem.SalaryItem.toDomain(): VacancyDetailModel.SalaryModel =
     VacancyDetailModel.SalaryModel(
@@ -80,7 +59,7 @@ fun VacancyItem.ContactsItem.toDomain(): VacancyDetailModel.ContactsModel =
         id = id,
         name = name,
         email = email,
-        phone = phone.map { VacancyDetailModel.PhoneModel(it) }
+        phones = phone.map { VacancyDetailModel.PhoneModel(it) }
     )
 
 fun VacancyItem.EmployerItem.toDomain(): VacancyDetailModel.EmployerModel =

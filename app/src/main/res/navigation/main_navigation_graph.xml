@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/vacancy_details_fragment"
         android:name="ru.practicum.android.diploma.ui.fragments.details.VacancyDetailsFragment"
-        android:label="@string/vacancy_detile_toolbat_title"
+        android:label="@string/vacancy_detail_toolbar_title"
         tools:layout="@layout/fragment_vacancy_details" />
 
     <fragment

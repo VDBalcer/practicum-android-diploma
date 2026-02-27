@@ -13,12 +13,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel
 import ru.practicum.android.diploma.presentation.model.VacancyDetailScreenState
 import ru.practicum.android.diploma.presentation.viewmodel.VacancyDetailsViewModel
+import ru.practicum.android.diploma.util.Converter
 import ru.practicum.android.diploma.util.formatSalary
 import kotlin.getValue
 
@@ -229,14 +231,22 @@ class VacancyDetailsFragment : Fragment() {
     private fun bindLogo(vacancy: VacancyDetailModel) {
         val logo = vacancy.employer.logo
 
-        if (logo.isNotEmpty()) {
-            Glide.with(this)
-                .load(logo)
-                .placeholder(R.drawable.company_logo_placeholder)
-                .error(R.drawable.company_logo_placeholder)
-                .fitCenter()
-                .into(binding.ivCompanyLogo)
-        }
+        Glide.with(this)
+            .load(logo)
+            .placeholder(R.drawable.company_logo_placeholder)
+            .error(R.drawable.company_logo_placeholder)
+            .fitCenter()
+            .transform(
+                RoundedCorners(
+                    Converter.dpToPx(
+                        binding.root.resources.getInteger(
+                            R.integer.info_company_radius_int
+                        ).toFloat(),
+                        binding.root
+                    )
+                )
+            )
+            .into(binding.ivCompanyLogo)
     }
 
     companion object {
