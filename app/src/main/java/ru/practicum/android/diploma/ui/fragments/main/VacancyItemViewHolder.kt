@@ -68,7 +68,6 @@ class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerV
         return salary
     }
 
-
     companion object {
         fun from(parent: ViewGroup): VacancyItemViewHolder {
             val inflater = LayoutInflater.from(parent.context)

@@ -3,6 +3,23 @@ package ru.practicum.android.diploma.presentation.mapper
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel
 import ru.practicum.android.diploma.presentation.model.VacancyItem
 
+fun VacancyItem.toDomain(): VacancyDetailModel =
+    VacancyDetailModel(
+        id = id,
+        name = name,
+        description = description,
+        salary = salary?.toDomain(),
+        address = address?.toDomain(),
+        experience = experience?.toDomain(),
+        schedule = schedule?.toDomain(),
+        employment = employment?.toDomain(),
+        contacts = contacts?.toDomain(),
+        employer = employer.toDomain(),
+        area = area.toDomain(),
+        skills = skills,
+        url = url,
+        industry = industry.toDomain()
+    )
 class VacancyItemMapper(
     private val areaMapper: FilteredAreaMapper,
     private val industryMapper: FilteredIndustryMapper,
@@ -25,165 +42,116 @@ class VacancyItemMapper(
             industry = industryMapper.mapToDomain(item.industry)
         )
 
-    private fun mapSalaryToDomain(item: VacancyItem.SalaryItem?): VacancyDetailModel.SalaryModel? =
-        if (item != null) {
-            VacancyDetailModel.SalaryModel(
-                from = item.from,
-                to = item.to,
-                currency = item.currency
-            )
-        } else {
-            null
-        }
+fun VacancyItem.SalaryItem.toDomain(): VacancyDetailModel.SalaryModel =
+    VacancyDetailModel.SalaryModel(
+        from = from,
+        to = to,
+        currency = currency
+    )
 
-    private fun mapAddressToDomain(item: VacancyItem.AddressItem?): VacancyDetailModel.AddressModel? =
-        if (item != null) {
-            VacancyDetailModel.AddressModel(
-                city = item.city,
-                street = item.street,
-                building = item.building,
-                fullAddress = item.fullAddress
-            )
-        } else {
-            null
-        }
+fun VacancyItem.AddressItem.toDomain(): VacancyDetailModel.AddressModel =
+    VacancyDetailModel.AddressModel(
+        city = city,
+        street = street,
+        building = building,
+        fullAddress = fullAddress
+    )
 
-    private fun mapExperienceToDomain(item: VacancyItem.ExperienceItem?): VacancyDetailModel.ExperienceModel? =
-        if (item != null) {
-            VacancyDetailModel.ExperienceModel(
-                id = item.id,
-                name = item.name
-            )
-        } else {
-            null
-        }
+fun VacancyItem.ExperienceItem.toDomain(): VacancyDetailModel.ExperienceModel =
+    VacancyDetailModel.ExperienceModel(
+        id = id,
+        name = name
+    )
 
-    private fun mapScheduleToDomain(item: VacancyItem.ScheduleItem?): VacancyDetailModel.ScheduleModel? =
-        if (item != null) {
-            VacancyDetailModel.ScheduleModel(
-                id = item.id,
-                name = item.name
-            )
-        } else {
-            null
-        }
+fun VacancyItem.ScheduleItem.toDomain(): VacancyDetailModel.ScheduleModel =
+    VacancyDetailModel.ScheduleModel(
+        id = id,
+        name = name
+    )
 
-    private fun mapEmploymentToDomain(item: VacancyItem.EmploymentItem?): VacancyDetailModel.EmploymentModel? =
-        if (item != null) {
-            VacancyDetailModel.EmploymentModel(
-                id = item.id,
-                name = item.name
-            )
-        } else {
-            null
-        }
+fun VacancyItem.EmploymentItem.toDomain(): VacancyDetailModel.EmploymentModel =
+    VacancyDetailModel.EmploymentModel(
+        id = id,
+        name = name
+    )
 
-    private fun mapContactsToDomain(item: VacancyItem.ContactsItem?): VacancyDetailModel.ContactsModel? =
-        if (item != null) {
-            VacancyDetailModel.ContactsModel(
-                id = item.id,
-                name = item.name,
-                email = item.email,
-                phones = item.phone.map { VacancyDetailModel.PhoneModel(it) }
-            )
-        } else {
-            null
-        }
+fun VacancyItem.ContactsItem.toDomain(): VacancyDetailModel.ContactsModel =
+    VacancyDetailModel.ContactsModel(
+        id = id,
+        name = name,
+        email = email,
+        phone = phone.map { VacancyDetailModel.PhoneModel(it) }
+    )
 
-    private fun mapEmployerToDomain(item: VacancyItem.EmployerItem): VacancyDetailModel.EmployerModel =
-        VacancyDetailModel.EmployerModel(
-            id = item.id,
-            name = item.name,
-            logo = item.logo
-        )
+fun VacancyItem.EmployerItem.toDomain(): VacancyDetailModel.EmployerModel =
+    VacancyDetailModel.EmployerModel(
+        id = id,
+        name = name,
+        logo = logo
+    )
 
-    fun mapFromDomain(model: VacancyDetailModel): VacancyItem =
-        VacancyItem(
-            id = model.id,
-            name = model.name,
-            description = model.description,
-            salary = mapSalaryFromDomain(model.salary),
-            address = mapAddressFromDomain(model.address),
-            experience = mapExperienceFromDomain(model.experience),
-            schedule = mapScheduleFromDomain(model.schedule),
-            employment = mapEmploymentFromDomain(model.employment),
-            contacts = mapContactsFromDomain(model.contacts),
-            employer = mapEmployerFromDomain(model.employer),
-            area = areaMapper.mapFromDomain(model.area),
-            skills = model.skills,
-            url = model.url,
-            industry = industryMapper.mapFromDomain(model.industry)
-        )
+fun VacancyDetailModel.toItem(): VacancyItem =
+    VacancyItem(
+        id = id,
+        name = name,
+        description = description,
+        salary = salary?.toItem(),
+        address = address?.toItem(),
+        experience = experience?.toItem(),
+        schedule = schedule?.toItem(),
+        employment = employment?.toItem(),
+        contacts = contacts?.toItem(),
+        employer = employer.toItem(),
+        area = area.toItem(),
+        skills = skills,
+        url = url,
+        industry = industry.toItem()
+    )
 
-    private fun mapSalaryFromDomain(model: VacancyDetailModel.SalaryModel?): VacancyItem.SalaryItem? =
-        if (model != null) {
-            VacancyItem.SalaryItem(
-                from = model.from,
-                to = model.to,
-                currency = model.currency
-            )
-        } else {
-            null
-        }
+fun VacancyDetailModel.SalaryModel.toItem(): VacancyItem.SalaryItem =
+    VacancyItem.SalaryItem(
+        from = from,
+        to = to,
+        currency = currency
+    )
 
-    private fun mapAddressFromDomain(model: VacancyDetailModel.AddressModel?): VacancyItem.AddressItem? =
-        if (model != null) {
-            VacancyItem.AddressItem(
-                city = model.city,
-                street = model.street,
-                building = model.building,
-                fullAddress = model.fullAddress
-            )
-        } else {
-            null
-        }
+fun VacancyDetailModel.AddressModel.toItem(): VacancyItem.AddressItem =
+    VacancyItem.AddressItem(
+        city = city,
+        street = street,
+        building = building,
+        fullAddress = fullAddress
+    )
 
-    private fun mapExperienceFromDomain(model: VacancyDetailModel.ExperienceModel?): VacancyItem.ExperienceItem? =
-        if (model != null) {
-            VacancyItem.ExperienceItem(
-                id = model.id,
-                name = model.name
-            )
-        } else {
-            null
-        }
+fun VacancyDetailModel.ExperienceModel.toItem(): VacancyItem.ExperienceItem =
+    VacancyItem.ExperienceItem(
+        id = id,
+        name = name
+    )
 
-    private fun mapScheduleFromDomain(model: VacancyDetailModel.ScheduleModel?): VacancyItem.ScheduleItem? =
-        if (model != null) {
-            VacancyItem.ScheduleItem(
-                id = model.id,
-                name = model.name
-            )
-        } else {
-            null
-        }
+fun VacancyDetailModel.ScheduleModel.toItem(): VacancyItem.ScheduleItem =
+    VacancyItem.ScheduleItem(
+        id = id,
+        name = name
+    )
 
-    private fun mapEmploymentFromDomain(model: VacancyDetailModel.EmploymentModel?): VacancyItem.EmploymentItem? =
-        if (model != null) {
-            VacancyItem.EmploymentItem(
-                id = model.id,
-                name = model.name
-            )
-        } else {
-            null
-        }
+fun VacancyDetailModel.EmploymentModel.toItem(): VacancyItem.EmploymentItem =
+    VacancyItem.EmploymentItem(
+        id = id,
+        name = name
+    )
 
-    private fun mapContactsFromDomain(model: VacancyDetailModel.ContactsModel?): VacancyItem.ContactsItem? =
-        if (model != null) {
-            VacancyItem.ContactsItem(
-                id = model.id,
-                name = model.name,
-                email = model.email,
-                phone = model.phones.map { it.formatted }
-            )
-        } else {
-            null
-        }
+fun VacancyDetailModel.ContactsModel.toItem(): VacancyItem.ContactsItem =
+    VacancyItem.ContactsItem(
+        id = id,
+        name = name,
+        email = email,
+        phone = phones.map { it.formatted }
+    )
 
-    private fun mapEmployerFromDomain(model: VacancyDetailModel.EmployerModel): VacancyItem.EmployerItem =
-        VacancyItem.EmployerItem(
-            id = model.id,
-            name = model.name,
-            logo = model.logo
-        )
-}
+fun VacancyDetailModel.EmployerModel.toItem(): VacancyItem.EmployerItem =
+    VacancyItem.EmployerItem(
+        id = id,
+        name = name,
+        logo = logo
+    )

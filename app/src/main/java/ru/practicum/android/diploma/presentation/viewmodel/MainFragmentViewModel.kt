@@ -9,15 +9,14 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.NetworkResult
 import ru.practicum.android.diploma.domain.models.VacancyResponseModel
-import ru.practicum.android.diploma.presentation.mapper.VacancyResponseItemMapper
 import ru.practicum.android.diploma.presentation.mapper.toDomain
+import ru.practicum.android.diploma.presentation.mapper.toItem
 import ru.practicum.android.diploma.presentation.model.MainScreenState
 import ru.practicum.android.diploma.presentation.model.VacancyFilterItem
 import ru.practicum.android.diploma.util.debounce
 
 class MainFragmentViewModel(
-    private val interactor: ApiInteractor,
-    private val responseMapper: VacancyResponseItemMapper
+    private val interactor: ApiInteractor
 ) : ViewModel() {
 
     private var latestSearchQuery: String? = null
@@ -66,7 +65,7 @@ class MainFragmentViewModel(
             is NetworkResult.Success<VacancyResponseModel> -> {
                 if (result.data.vacancies.isNotEmpty()) {
                     MainScreenState.Content(
-                        responseMapper.mapFromDomain(result.data)
+                        result.data.toItem()
                     )
                 } else {
                     MainScreenState.JobNotFound
