@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ItemVacancyBinding
 import ru.practicum.android.diploma.presentation.model.VacancyItem
 import ru.practicum.android.diploma.util.Converter
+import ru.practicum.android.diploma.util.formatSalary
 
 class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -35,37 +36,12 @@ class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerV
         binding.apply {
             vacancyName.text = item.name
             companyName.text = item.employer.name
-            wages.text = getSalary(item)
+            wages.text = formatSalary(
+                from = item.salary?.from,
+                to = item.salary?.to,
+                currency = item.salary?.currency
+            )
         }
-    }
-
-    private fun getSalary(
-        item: VacancyItem
-    ): String {
-        var salary = ""
-
-        if (item.salary != null) {
-            if (item.salary.from != null) {
-                salary += binding.root.context.getString(R.string.salary_from, item.salary.from)
-            }
-            if (item.salary.to != null) {
-                salary += binding.root.context.getString(R.string.salary_to, item.salary.to)
-            }
-
-            salary += when (item.salary.currency) {
-                "RUB" -> binding.root.context.getString(R.string.currency_rub)
-                "EUR" -> binding.root.context.getString(R.string.currency_euro)
-                "USD" -> binding.root.context.getString(R.string.currency_usd)
-                else -> item.salary.currency
-            }
-
-            if (item.salary.from == null && item.salary.to == null) {
-                salary = binding.root.context.getString(R.string.salary_not_specify)
-            }
-        } else {
-            salary = binding.root.context.getString(R.string.salary_not_specify)
-        }
-        return salary
     }
 
     companion object {
