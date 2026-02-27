@@ -11,6 +11,8 @@ import ru.practicum.android.diploma.data.dao.VacancyDao
 import ru.practicum.android.diploma.data.database.VacancyDatabase
 import ru.practicum.android.diploma.data.dto.NetworkMonitor
 import ru.practicum.android.diploma.data.network.YPApiService
+import ru.practicum.android.diploma.data.repository.ExternalNavigatorImpl
+import ru.practicum.android.diploma.domain.api.ExternalNavigator
 
 val dataModule = module {
 
@@ -44,4 +46,8 @@ val dataModule = module {
         get<VacancyDatabase>().vacancyDao()
     }
     single { NetworkMonitor(get()) }
+
+    factory<ExternalNavigator> {
+        ExternalNavigatorImpl(androidContext())
+    }
 }

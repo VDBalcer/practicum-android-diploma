@@ -42,6 +42,16 @@
     <string name="developer_1">Вадим Бальцер</string>
     <string name="developer_2">Роман Татаренко</string>
     <string name="developer_3">Никита Янцен</string>
+    <string name="vacancy_detail_toolbar_title">Вакансия</string>
+    <string name="vacancy_detail_experience_title">Требуемый опыт</string>
+    <string name="vacancy_detail_description_title">Описание вакансии</string>
+    <string name="vacancy_detail_responsibilities_title">Обязанности</string>
+    <string name="vacancy_detail_requirements_title">Требования</string>
+    <string name="vacancy_detail_conditions_title">Условия</string>
+    <string name="vacancy_detail_skills_title">Ключевые навыки</string>
+    <string name="not_fount_vacancy_info_message">Вакансия не найдена или удалена</string>
+    <string name="contacts_format">%1$s\n%2$s</string>
+    <string name="email">email: %1$s</string>
 
     <plurals name="vacancies_found">
         <item quantity="one">Найдена %d вакансия</item>

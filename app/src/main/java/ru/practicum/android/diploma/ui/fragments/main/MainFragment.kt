@@ -18,6 +18,7 @@ import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.presentation.model.MainScreenState
 import ru.practicum.android.diploma.presentation.model.VacancyResponseItem
 import ru.practicum.android.diploma.presentation.viewmodel.MainFragmentViewModel
+import ru.practicum.android.diploma.ui.fragments.details.VacancyDetailsFragment
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
@@ -57,9 +58,10 @@ class MainFragment : Fragment() {
 
     private fun onInitAdapter() {
         binding.vacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        _vacancyAdapter = VacancyItemViewAdapter {
+        _vacancyAdapter = VacancyItemViewAdapter { vacancy ->
             findNavController().navigate(
-                R.id.action_mainFragment_to_vacancyDetailsFragment
+                R.id.action_mainFragment_to_vacancyDetailsFragment,
+                VacancyDetailsFragment.createArgs(vacancy.id)
             )
         }
         binding.vacanciesRecyclerView.adapter = vacancyAdapter

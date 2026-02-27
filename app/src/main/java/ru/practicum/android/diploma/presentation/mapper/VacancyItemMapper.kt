@@ -59,7 +59,7 @@ fun VacancyItem.ContactsItem.toDomain(): VacancyDetailModel.ContactsModel =
         id = id,
         name = name,
         email = email,
-        phone = phone
+        phones = phone.map { VacancyDetailModel.PhoneModel(it) }
     )
 
 fun VacancyItem.EmployerItem.toDomain(): VacancyDetailModel.EmployerModel =
@@ -125,7 +125,7 @@ fun VacancyDetailModel.ContactsModel.toItem(): VacancyItem.ContactsItem =
         id = id,
         name = name,
         email = email,
-        phone = phone
+        phone = phones.map { it.formatted }
     )
 
 fun VacancyDetailModel.EmployerModel.toItem(): VacancyItem.EmployerItem =

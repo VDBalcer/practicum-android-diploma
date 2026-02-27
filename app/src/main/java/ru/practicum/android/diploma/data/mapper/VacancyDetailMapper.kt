@@ -59,7 +59,13 @@ fun VacancyDetailDto.ContactsDto.toDomain(): VacancyDetailModel.ContactsModel =
         id = id,
         name = name,
         email = email,
-        phone = phones.map { it.formatted }
+        phones = phones.map { it.toDomain() }
+    )
+
+fun VacancyDetailDto.PhoneDto.toDomain(): VacancyDetailModel.PhoneModel =
+    VacancyDetailModel.PhoneModel(
+        comment = comment,
+        formatted = formatted
     )
 
 fun VacancyDetailDto.EmployerDto.toDomain(): VacancyDetailModel.EmployerModel =
