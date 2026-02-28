@@ -19,7 +19,7 @@ interface VacancyDao {
 
     // Получить отдельную избранную вакансию по идентификатору
     @Query("SELECT * FROM vacancy_table WHERE id = :id")
-    fun getVacancyById(id: String): Flow<VacancyEntity>
+    fun getVacancyById(id: String): Flow<VacancyEntity?>
 
     // Добавление вакансии в БД
     @Insert(entity = VacancyEntity::class, onConflict = OnConflictStrategy.REPLACE)
