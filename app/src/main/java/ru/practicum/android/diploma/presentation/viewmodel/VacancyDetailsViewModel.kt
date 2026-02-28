@@ -9,13 +9,15 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.domain.api.NetworkResult
+import ru.practicum.android.diploma.domain.database.FavoriteInteractor
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel
 import ru.practicum.android.diploma.presentation.model.VacancyDetailScreenState
 
 class VacancyDetailsViewModel(
-    private val handle: SavedStateHandle,
-    private val interactor: ApiInteractor,
-    private val externalNavigator: ExternalNavigator
+    handle: SavedStateHandle,
+    private val apiInteractor: ApiInteractor,
+    private val favoriteInteractor: FavoriteInteractor,
+    private val externalNavigator: ExternalNavigator,
 ) : ViewModel() {
     private val vacancyId: String =
         requireNotNull(handle["vacancyId"])
@@ -27,7 +29,7 @@ class VacancyDetailsViewModel(
 
     init {
         viewModelScope.launch {
-            when (val result: NetworkResult<VacancyDetailModel> = interactor.getVacancy(vacancyId)) {
+            when (val result: NetworkResult<VacancyDetailModel> = apiInteractor.getVacancy(vacancyId)) {
                 is NetworkResult.Error -> vacancyDetailsStateLiveData
                     .postValue(
                         VacancyDetailScreenState.JobNotFound
@@ -38,13 +40,25 @@ class VacancyDetailsViewModel(
                         VacancyDetailScreenState.ServerError
                     )
 
-                is NetworkResult.Success<VacancyDetailModel> -> vacancyDetailsStateLiveData
-                    .postValue(
-                        VacancyDetailScreenState.Content(result.data)
-                    )
+                is NetworkResult.Success<VacancyDetailModel> -> {
+                    favoriteInteractor
+                        .isVacancyInFavorite(result.data.id)
+                        .collect { isFavorite ->
+                            vacancyDetailsStateLiveData
+                                .postValue(
+                                    VacancyDetailScreenState.Content(
+                                        result.data,
+                                        isFavorite
+                                    )
+                                )
+                        }
+
+                }
+
             }
         }
     }
+
     fun onEmailClicked(email: String) {
         externalNavigator.sendEmail(email)
     }
@@ -55,5 +69,19 @@ class VacancyDetailsViewModel(
 
     fun onShareClicked(text: String) {
         externalNavigator.shareLink(text)
+    }
+
+    fun onFavoriteClick() {
+        val currentState = vacancyDetailsStateLiveData.value
+
+        if (currentState is VacancyDetailScreenState.Content) {
+            viewModelScope.launch {
+                if (currentState.isFavorite) {
+                    favoriteInteractor.deleteFromFavorite(currentState.vacancy.id)
+                } else {
+                    favoriteInteractor.addToFavorite(currentState.vacancy)
+                }
+            }
+        }
     }
 }

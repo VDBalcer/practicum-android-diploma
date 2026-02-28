@@ -21,6 +21,7 @@ val viewModelModule = module {
         VacancyDetailsViewModel(
             handle,
             get(),
+            get(),
             get()
         )
     }

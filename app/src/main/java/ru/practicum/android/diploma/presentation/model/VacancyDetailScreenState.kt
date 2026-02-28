@@ -7,6 +7,7 @@ sealed class VacancyDetailScreenState {
     object JobNotFound : VacancyDetailScreenState()
     object ServerError : VacancyDetailScreenState()
     data class Content(
-        val vacancy: VacancyDetailModel
+        val vacancy: VacancyDetailModel,
+        val isFavorite: Boolean
     ) : VacancyDetailScreenState()
 }

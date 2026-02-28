@@ -70,7 +70,7 @@ class VacancyDetailsFragment : Fragment() {
                 getString(R.string.title_server_error)
             )
 
-            is VacancyDetailScreenState.Content -> showVacancy(state.vacancy)
+            is VacancyDetailScreenState.Content -> showVacancy(state.vacancy, state.isFavorite)
         }
     }
 
@@ -94,7 +94,7 @@ class VacancyDetailsFragment : Fragment() {
         }
     }
 
-    private fun showVacancy(vacancy: VacancyDetailModel) = with(binding) {
+    private fun showVacancy(vacancy: VacancyDetailModel, isFavorite: Boolean) = with(binding) {
         showContentState()
 
         bindHeader(vacancy)
@@ -108,6 +108,7 @@ class VacancyDetailsFragment : Fragment() {
         bindPhones(vacancy)
         bindToolbar(vacancy)
         bindLogo(vacancy)
+        bindFavoriteIcon(isFavorite)
     }
 
     private fun showContentState() = with(binding) {
@@ -177,7 +178,7 @@ class VacancyDetailsFragment : Fragment() {
             binding.tvContactsEmail.text =
                 getString(R.string.email, email)
 
-            if (!email.isNullOrEmpty()) {
+            if (email.isNotEmpty()) {
                 binding.tvContactsEmail.setOnClickListener {
                     viewModel.onEmailClicked(email)
                 }
@@ -222,7 +223,10 @@ class VacancyDetailsFragment : Fragment() {
                     true
                 }
 
-                R.id.action_favorite -> true
+                R.id.action_favorite -> {
+                    viewModel.onFavoriteClick()
+                    true
+                }
                 else -> false
             }
         }
@@ -247,6 +251,13 @@ class VacancyDetailsFragment : Fragment() {
                 )
             )
             .into(binding.ivCompanyLogo)
+    }
+
+    private fun bindFavoriteIcon(isFavorite: Boolean) {
+        if (isFavorite)
+            binding.toolbar.menu.findItem(R.id.action_favorite).setIcon(R.drawable.favorites_24px)
+        else
+            binding.toolbar.menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_border)
     }
 
     companion object {
