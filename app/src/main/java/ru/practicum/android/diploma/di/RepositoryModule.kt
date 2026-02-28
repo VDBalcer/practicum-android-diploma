@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.di
 
 import org.koin.dsl.module
-import ru.practicum.android.diploma.data.mapper.VacancyDbConvertor
 import ru.practicum.android.diploma.data.repository.DatabaseFavoriteRepositoryImpl
 import ru.practicum.android.diploma.data.repository.YPApiRepositoryImpl
 import ru.practicum.android.diploma.domain.api.ApiRepository
@@ -16,6 +15,4 @@ val repositoryModule = module {
     single<FavoriteRepository> {
         DatabaseFavoriteRepositoryImpl(get(), get())
     }
-
-    factory { VacancyDbConvertor(get()) }
 }
