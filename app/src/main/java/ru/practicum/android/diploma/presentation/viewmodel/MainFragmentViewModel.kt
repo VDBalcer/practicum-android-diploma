@@ -13,7 +13,6 @@ import ru.practicum.android.diploma.presentation.mapper.toDomain
 import ru.practicum.android.diploma.presentation.mapper.toItem
 import ru.practicum.android.diploma.presentation.model.MainScreenState
 import ru.practicum.android.diploma.presentation.model.VacancyFilterItem
-import ru.practicum.android.diploma.presentation.model.VacancyItem
 import ru.practicum.android.diploma.util.debounce
 
 class MainFragmentViewModel(
@@ -100,9 +99,13 @@ class MainFragmentViewModel(
     }
     fun onLastItemReached() {
         val currentState = mainStateLiveData.value
-        if (currentState !is MainScreenState.Content) return
-        if (currentState.isPaginationLoading) return
-        if (currentState.currentPage + 1 >= currentState.totalPages) return
+        if (
+            currentState !is MainScreenState.Content ||
+            currentState.isPaginationLoading ||
+            currentState.currentPage + 1 >= currentState.totalPages
+        ) {
+            return
+        }
         mainStateLiveData.value = currentState.copy(
             isPaginationLoading = true
         )
