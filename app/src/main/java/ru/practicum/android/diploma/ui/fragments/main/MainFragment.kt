@@ -12,6 +12,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
@@ -65,6 +66,19 @@ class MainFragment : Fragment() {
             )
         }
         binding.vacanciesRecyclerView.adapter = vacancyAdapter
+
+        binding.vacanciesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    val pos = (binding.vacanciesRecyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                    val itemsCount = vacancyAdapter.itemCount
+                    if (pos >= itemsCount-1) {
+                        viewModel.onLastItemReached()
+                    }
+                }
+            }
+        })
     }
 
     private fun onInitListener() {

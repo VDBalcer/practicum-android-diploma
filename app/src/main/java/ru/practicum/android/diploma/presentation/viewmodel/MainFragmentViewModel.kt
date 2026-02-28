@@ -13,14 +13,19 @@ import ru.practicum.android.diploma.presentation.mapper.toDomain
 import ru.practicum.android.diploma.presentation.mapper.toItem
 import ru.practicum.android.diploma.presentation.model.MainScreenState
 import ru.practicum.android.diploma.presentation.model.VacancyFilterItem
+import ru.practicum.android.diploma.presentation.model.VacancyItem
 import ru.practicum.android.diploma.util.debounce
 
 class MainFragmentViewModel(
     private val interactor: ApiInteractor
 ) : ViewModel() {
 
+    private var currentPage = 0
+    private var totalPages = 0
+    private var currentQuery: String? = null
+    private var isLoadingNextPage = false
     private var latestSearchQuery: String? = null
-
+    private val vacancyList = mutableListOf<VacancyItem>()
     private val vacancySearchDebounce = debounce<String>(
         SEARCH_DEBOUNCE_DELAY,
         viewModelScope,
@@ -31,16 +36,12 @@ class MainFragmentViewModel(
 
     private val mainStateLiveData =
         MutableLiveData<MainScreenState>(MainScreenState.StartSearch)
-
     fun observeMainSate(): LiveData<MainScreenState> = mainStateLiveData
-
     private var searchJob: Job? = null
-
     fun searchDebounce(currentSearchQuery: String) {
         if (latestSearchQuery == currentSearchQuery) {
             return
         }
-
         if (currentSearchQuery.isNotBlank()) {
             this.latestSearchQuery = currentSearchQuery
             vacancySearchDebounce(currentSearchQuery)
@@ -49,9 +50,20 @@ class MainFragmentViewModel(
 
     fun searchRequest(searchQuery: String) {
         mainStateLiveData.value = MainScreenState.Loading
-
         searchJob?.cancel()
-        val filter = VacancyFilterItem(text = searchQuery)
+        currentQuery = searchQuery
+        currentPage = 0
+        totalPages = 0
+        vacancyList.clear()
+        loadPage(0)
+    }
+    private fun loadPage(page: Int) {
+        val query = currentQuery ?: return
+        isLoadingNextPage = true
+        val filter = VacancyFilterItem(
+            text = query,
+            page = page
+        )
         searchJob = viewModelScope.launch {
             val response = interactor.getVacancies(filter.toDomain())
             processResult(response)
@@ -59,20 +71,37 @@ class MainFragmentViewModel(
     }
 
     private fun processResult(result: NetworkResult<VacancyResponseModel>) {
-        val state = when (result) {
-            is NetworkResult.Error -> MainScreenState.ServerError
-            is NetworkResult.NetworkError -> MainScreenState.NoInternet
-            is NetworkResult.Success<VacancyResponseModel> -> {
-                if (result.data.vacancies.isNotEmpty()) {
-                    MainScreenState.Content(
-                        result.data.toItem()
-                    )
+        isLoadingNextPage = false
+        when (result) {
+            is NetworkResult.Error -> {
+                mainStateLiveData.postValue(MainScreenState.ServerError)
+            }
+            is NetworkResult.NetworkError -> {
+                mainStateLiveData.postValue(MainScreenState.NoInternet)
+            }
+            is NetworkResult.Success -> {
+                val item = result.data.toItem()
+                currentPage = item.page
+                totalPages = item.pages
+                vacancyList.addAll(item.vacancies)
+                if (vacancyList.isEmpty()) {
+                    mainStateLiveData.postValue(MainScreenState.JobNotFound)
                 } else {
-                    MainScreenState.JobNotFound
+                    mainStateLiveData.postValue(
+                        MainScreenState.Content(
+                            item.copy(
+                                vacancies = vacancyList.toList()
+                            )
+                        )
+                    )
                 }
             }
         }
-        mainStateLiveData.postValue(state)
+    }
+    fun onLastItemReached() {
+        if (isLoadingNextPage) return
+        if (currentPage + 1 >= totalPages) return
+        loadPage(currentPage + 1)
     }
 
     companion object {
