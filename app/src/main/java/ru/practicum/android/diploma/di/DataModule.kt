@@ -48,7 +48,7 @@ val dataModule = module {
     single<VacancyDao> {
         get<VacancyDatabase>().vacancyDao()
     }
-    factory<Gson> { Gson() }
+    single { Gson() }
 
     single { NetworkMonitor(get()) }
 
