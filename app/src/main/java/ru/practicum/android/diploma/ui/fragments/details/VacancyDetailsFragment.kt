@@ -227,6 +227,7 @@ class VacancyDetailsFragment : Fragment() {
                     viewModel.onFavoriteClick()
                     true
                 }
+
                 else -> false
             }
         }
@@ -254,10 +255,11 @@ class VacancyDetailsFragment : Fragment() {
     }
 
     private fun bindFavoriteIcon(isFavorite: Boolean) {
-        if (isFavorite)
+        if (isFavorite) {
             binding.toolbar.menu.findItem(R.id.action_favorite).setIcon(R.drawable.favorites_24px)
-        else
+        } else {
             binding.toolbar.menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_border)
+        }
     }
 
     companion object {

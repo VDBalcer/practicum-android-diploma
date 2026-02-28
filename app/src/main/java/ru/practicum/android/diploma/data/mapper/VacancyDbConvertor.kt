@@ -35,38 +35,27 @@ class VacancyDbConvertor(private val gson: Gson) {
             id = entity.id,
             name = entity.name,
             description = entity.description,
-            salary = entity.salaryJson?.let {
-                gson.fromJson(it, SalaryModel::class.java)
-            },
-            address = entity.addressJson?.let {
-                gson.fromJson(it, VacancyDetailModel.AddressModel::class.java)
-            },
-            experience = entity.experienceJson?.let {
-                gson.fromJson(it, VacancyDetailModel.ExperienceModel::class.java)
-            },
-            schedule = entity.scheduleJson?.let {
-                gson.fromJson(it, VacancyDetailModel.ScheduleModel::class.java)
-            },
-            employment = entity.employmentJson?.let {
-                gson.fromJson(it, VacancyDetailModel.EmploymentModel::class.java)
-            },
-            contacts = entity.contactsJson?.let {
-                gson.fromJson(it, VacancyDetailModel.ContactsModel::class.java)
-            },
-            employer = entity.employerJson.let {
-                gson.fromJson(it, EmployerModel::class.java)
-            },
-            area = entity.areaJson.let {
-                gson.fromJson(it, FilterAreaModel::class.java)
-            },
-            skills = entity.skillsJson.let {
-                val type = object : TypeToken<List<String>>() {}.type
-                gson.fromJson<List<String>>(it, type)
-            },
+            salary = gson.fromJsonOrNull<SalaryModel>(entity.salaryJson),
+            address = gson.fromJsonOrNull<VacancyDetailModel.AddressModel>(entity.addressJson),
+            experience = gson.fromJsonOrNull<VacancyDetailModel.ExperienceModel>(entity.experienceJson),
+            schedule = gson.fromJsonOrNull<VacancyDetailModel.ScheduleModel>(entity.scheduleJson),
+            employment = gson.fromJsonOrNull<VacancyDetailModel.EmploymentModel>(entity.employmentJson),
+            contacts = gson.fromJsonOrNull<VacancyDetailModel.ContactsModel>(entity.contactsJson),
+            employer = gson.fromJson(entity.employerJson, EmployerModel::class.java),
+            area = gson.fromJson(entity.areaJson, FilterAreaModel::class.java),
+            skills = gson.fromJsonListOrNull<String>(entity.skillsJson),
             url = entity.url,
-            industry = entity.industryJson.let {
-                gson.fromJson(it, FilterIndustryModel::class.java)
-            }
+            industry = gson.fromJson(entity.industryJson, FilterIndustryModel::class.java),
         )
+    }
+
+    private inline fun <reified T> Gson.fromJsonOrNull(json: String?): T? {
+        if (json.isNullOrBlank()) return null
+        return fromJson(json, T::class.java)
+    }
+
+    private inline fun <reified T> Gson.fromJsonListOrNull(json: String?): List<T> {
+        val type = object : TypeToken<List<T>>() {}.type
+        return fromJson(json, type)
     }
 }

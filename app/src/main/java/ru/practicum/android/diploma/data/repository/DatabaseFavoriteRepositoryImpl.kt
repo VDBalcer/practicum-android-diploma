@@ -25,7 +25,6 @@ class DatabaseFavoriteRepositoryImpl(
                 entity?.let { convertor.map(it) }
             }
 
-
     override suspend fun addToFavorite(vacancy: VacancyDetailModel) {
         withContext(Dispatchers.IO) {
             val maxIndex: Int = database.vacancyDao().getMaxOrderIndex() ?: 0
