@@ -80,9 +80,10 @@ class MainFragmentViewModel(
                 currentPage = item.page
                 totalPages = item.pages
                 vacancyList.addAll(item.vacancies)
-                if (vacancyList.isEmpty())
-                    mainStateLiveData.postValue(MainScreenState.JobNotFound)
-                else
+                if (vacancyList.isEmpty()) {
+                    mainStateLiveData.postValue(
+                        MainScreenState.JobNotFound)
+                } else {
                     mainStateLiveData.postValue(
                         MainScreenState.Content(
                             item.copy(
@@ -90,12 +91,17 @@ class MainFragmentViewModel(
                             )
                         )
                     )
+                }
             }
         }
     }
     fun onLastItemReached() {
-        if (isLoadingNextPage) return
-        if (currentPage + 1 >= totalPages) return
+        if (isLoadingNextPage) {
+            return
+        }
+        if (currentPage + 1 >= totalPages) {
+            return
+        }
         mainStateLiveData.value = MainScreenState.PaginationLoading
         loadPage(currentPage + 1)
     }

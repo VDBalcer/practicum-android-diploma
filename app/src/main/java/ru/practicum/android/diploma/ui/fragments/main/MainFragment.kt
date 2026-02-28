@@ -71,9 +71,12 @@ class MainFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0) {
-                    val pos = (binding.vacanciesRecyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                    val layoutManager =
+                        binding.vacanciesRecyclerView.layoutManager as? LinearLayoutManager
+                            ?: return
+                    val pos = layoutManager.findLastVisibleItemPosition()
                     val itemsCount = vacancyAdapter.itemCount
-                    if (pos >= itemsCount-1) {
+                    if (pos >= itemsCount - 1) {
                         viewModel.onLastItemReached()
                     }
                 }
