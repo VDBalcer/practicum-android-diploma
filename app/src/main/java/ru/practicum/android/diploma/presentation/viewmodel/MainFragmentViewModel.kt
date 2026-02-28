@@ -19,19 +19,17 @@ import ru.practicum.android.diploma.util.debounce
 class MainFragmentViewModel(
     private val interactor: ApiInteractor
 ) : ViewModel() {
-
-    private var currentPage = 0
-    private var totalPages = 0
-    private var currentQuery: String? = null
-    private var isLoadingNextPage = false
     private var latestSearchQuery: String? = null
-    private val vacancyList = mutableListOf<VacancyItem>()
     private val vacancySearchDebounce = debounce<String>(
         SEARCH_DEBOUNCE_DELAY,
         viewModelScope,
         true
-    ) { changedText ->
-        searchRequest(changedText)
+    ) { query ->
+        val filter = VacancyFilterItem(
+            text = query,
+            page = 0
+        )
+        searchRequest(filter)
     }
 
     private val mainStateLiveData =
@@ -48,48 +46,52 @@ class MainFragmentViewModel(
         }
     }
 
-    fun searchRequest(searchQuery: String) {
+    fun searchRequest(filter: VacancyFilterItem) {
         mainStateLiveData.value = MainScreenState.Loading
         searchJob?.cancel()
-        currentQuery = searchQuery
-        currentPage = 0
-        totalPages = 0
-        vacancyList.clear()
-        loadPage(0)
-    }
-    private fun loadPage(page: Int) {
-        val query = currentQuery ?: return
-        isLoadingNextPage = true
-        val filter = VacancyFilterItem(
-            text = query,
-            page = page
+        loadPage(
+            filter = filter.copy(page = 0),
+            isNewSearch = true
         )
+    }
+    private fun loadPage(
+        filter: VacancyFilterItem,
+        isNewSearch: Boolean
+    ) {
         searchJob = viewModelScope.launch {
-            val response = interactor.getVacancies(filter.toDomain())
-            processResult(response)
+            val result = interactor.getVacancies(filter.toDomain())
+            processResult(result, filter, isNewSearch)
         }
     }
 
-    private fun processResult(result: NetworkResult<VacancyResponseModel>) {
-        isLoadingNextPage = false
+    private fun processResult(
+        result: NetworkResult<VacancyResponseModel>,
+        filter: VacancyFilterItem,
+        isNewSearch: Boolean
+    ) {
         when (result) {
             is NetworkResult.Error -> mainStateLiveData.postValue(MainScreenState.ServerError)
             is NetworkResult.NetworkError -> mainStateLiveData.postValue(MainScreenState.NoInternet)
             is NetworkResult.Success -> {
                 val item = result.data.toItem()
-                currentPage = item.page
-                totalPages = item.pages
-                vacancyList.addAll(item.vacancies)
-                if (vacancyList.isEmpty()) {
-                    mainStateLiveData.postValue(
-                        MainScreenState.JobNotFound
-                    )
+                val lastVacancies =
+                    if (!isNewSearch && mainStateLiveData.value is MainScreenState.Content) {
+                        (mainStateLiveData.value as MainScreenState.Content).vacancies
+                    } else {
+                        emptyList()
+                    }
+                val updatedList = lastVacancies + item.vacancies
+                if (updatedList.isEmpty()) {
+                    mainStateLiveData.postValue(MainScreenState.JobNotFound)
                 } else {
                     mainStateLiveData.postValue(
                         MainScreenState.Content(
-                            item.copy(
-                                vacancies = vacancyList.toList()
-                            )
+                            vacancies = updatedList,
+                            currentPage = item.page,
+                            totalPages = item.pages,
+                            isPaginationLoading = false,
+                            filter = filter,
+                            found = item.found
                         )
                     )
                 }
@@ -97,14 +99,17 @@ class MainFragmentViewModel(
         }
     }
     fun onLastItemReached() {
-        if (isLoadingNextPage) {
-            return
-        }
-        if (currentPage + 1 >= totalPages) {
-            return
-        }
-        mainStateLiveData.value = MainScreenState.PaginationLoading
-        loadPage(currentPage + 1)
+        val currentState = mainStateLiveData.value
+        if (currentState !is MainScreenState.Content) return
+        if (currentState.isPaginationLoading) return
+        if (currentState.currentPage + 1 >= currentState.totalPages) return
+        mainStateLiveData.value = currentState.copy(
+            isPaginationLoading = true
+        )
+        loadPage(
+            filter = currentState.filter.copy(page = currentState.currentPage + 1),
+            isNewSearch = false
+        )
     }
 
     companion object {

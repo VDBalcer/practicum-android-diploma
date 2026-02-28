@@ -6,9 +6,13 @@ sealed class MainScreenState {
     object JobNotFound : MainScreenState()
     object Loading : MainScreenState()
     object ServerError : MainScreenState()
-    object PaginationLoading : MainScreenState()
 
     data class Content(
-        val item: VacancyResponseItem
+        val found: Int,
+        val vacancies: List<VacancyItem>,
+        val currentPage: Int,
+        val totalPages: Int,
+        val isPaginationLoading: Boolean,
+        val filter: VacancyFilterItem
     ) : MainScreenState()
 }

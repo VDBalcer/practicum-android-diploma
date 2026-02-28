@@ -119,8 +119,7 @@ class MainFragment : Fragment() {
             is MainScreenState.ServerError -> showServerError()
             is MainScreenState.JobNotFound -> showEmpty()
             is MainScreenState.Loading -> showLoading()
-            is MainScreenState.Content -> showContent(state.item)
-            is MainScreenState.PaginationLoading -> showPaginationLoading()
+            is MainScreenState.Content -> showContent(state)
         }
     }
 
@@ -130,7 +129,6 @@ class MainFragment : Fragment() {
             progressBar.visibility = View.GONE
             vacanciesRecyclerView.visibility = View.GONE
             infoResult.visibility = View.GONE
-
             placeholderImage.setImageResource(R.drawable.placeholder_start_search)
             placeholderMessage.visibility = View.GONE
         }
@@ -146,20 +144,19 @@ class MainFragment : Fragment() {
         hideKeyboard()
     }
 
-    private fun showPaginationLoading() {
-        binding.progressBarPagination.isVisible = true
-    }
-
     @SuppressLint("NotifyDataSetChanged")
-    private fun showContent(content: VacancyResponseItem) {
-        binding.progressBarPagination.isVisible = false
+    private fun showContent(content: MainScreenState.Content) {
         binding.apply {
             containerPlaceholder.visibility = View.GONE
             progressBar.visibility = View.GONE
             vacanciesRecyclerView.visibility = View.VISIBLE
             infoResult.visibility = View.VISIBLE
-
-            infoResult.text = resources.getQuantityString(R.plurals.vacancies_found, content.found, content.found)
+            progressBarPagination.isVisible = content.isPaginationLoading
+            infoResult.text = resources.getQuantityString(
+                R.plurals.vacancies_found,
+                content.found,
+                content.found
+            )
             vacancyAdapter.setData(content.vacancies)
             vacancyAdapter.notifyDataSetChanged()
         }
@@ -170,10 +167,8 @@ class MainFragment : Fragment() {
             containerPlaceholder.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
             vacanciesRecyclerView.visibility = View.GONE
-
             infoResult.visibility = View.VISIBLE
             infoResult.text = getString(R.string.result_not_found)
-
             placeholderImage.setImageResource(R.drawable.placeholder_nothing_found)
             placeholderMessage.visibility = View.VISIBLE
             placeholderMessage.text = getString(R.string.title_job_not_found)
