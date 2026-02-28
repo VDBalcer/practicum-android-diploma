@@ -73,20 +73,16 @@ class MainFragmentViewModel(
     private fun processResult(result: NetworkResult<VacancyResponseModel>) {
         isLoadingNextPage = false
         when (result) {
-            is NetworkResult.Error -> {
-                mainStateLiveData.postValue(MainScreenState.ServerError)
-            }
-            is NetworkResult.NetworkError -> {
-                mainStateLiveData.postValue(MainScreenState.NoInternet)
-            }
+            is NetworkResult.Error -> mainStateLiveData.postValue(MainScreenState.ServerError)
+            is NetworkResult.NetworkError -> mainStateLiveData.postValue(MainScreenState.NoInternet)
             is NetworkResult.Success -> {
                 val item = result.data.toItem()
                 currentPage = item.page
                 totalPages = item.pages
                 vacancyList.addAll(item.vacancies)
-                if (vacancyList.isEmpty()) {
+                if (vacancyList.isEmpty())
                     mainStateLiveData.postValue(MainScreenState.JobNotFound)
-                } else {
+                else
                     mainStateLiveData.postValue(
                         MainScreenState.Content(
                             item.copy(
@@ -94,7 +90,6 @@ class MainFragmentViewModel(
                             )
                         )
                     )
-                }
             }
         }
     }
