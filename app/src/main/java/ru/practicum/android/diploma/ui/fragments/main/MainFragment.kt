@@ -117,6 +117,7 @@ class MainFragment : Fragment() {
             is MainScreenState.JobNotFound -> showEmpty()
             is MainScreenState.Loading -> showLoading()
             is MainScreenState.Content -> showContent(state.item)
+            is MainScreenState.PaginationLoading -> showPaginationLoading()
         }
     }
 
@@ -142,8 +143,13 @@ class MainFragment : Fragment() {
         hideKeyboard()
     }
 
+    private fun showPaginationLoading() {
+        binding.progressBarPagination.isVisible = true
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun showContent(content: VacancyResponseItem) {
+        binding.progressBarPagination.isVisible = false
         binding.apply {
             containerPlaceholder.visibility = View.GONE
             progressBar.visibility = View.GONE

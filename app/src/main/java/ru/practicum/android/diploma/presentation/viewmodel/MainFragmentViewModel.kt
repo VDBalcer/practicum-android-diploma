@@ -101,6 +101,7 @@ class MainFragmentViewModel(
     fun onLastItemReached() {
         if (isLoadingNextPage) return
         if (currentPage + 1 >= totalPages) return
+        mainStateLiveData.value = MainScreenState.PaginationLoading
         loadPage(currentPage + 1)
     }
 
