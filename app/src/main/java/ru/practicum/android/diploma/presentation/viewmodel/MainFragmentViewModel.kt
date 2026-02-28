@@ -82,7 +82,8 @@ class MainFragmentViewModel(
                 vacancyList.addAll(item.vacancies)
                 if (vacancyList.isEmpty()) {
                     mainStateLiveData.postValue(
-                        MainScreenState.JobNotFound)
+                        MainScreenState.JobNotFound
+                    )
                 } else {
                     mainStateLiveData.postValue(
                         MainScreenState.Content(
