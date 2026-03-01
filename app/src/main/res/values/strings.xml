@@ -21,6 +21,13 @@
 
     <string name="filter_field_title">Выбор отрасли</string>
 
+    <string name="filter_area_item">Место работы</string>
+    <string name="filter_industry_item">Отрасль</string>
+    <string name="salary_title">Ожидаемая зарплата</string>
+    <string name="edit_textbox_salary">Введите сумму</string>
+    <string name="filter_only_salary">Не показывать без зарплаты</string>
+
+
     <string name="icon_filter">Icon filter off</string>
     <string name="icon_search">Job search</string>
     <string name="icon_clear">Clear text</string>

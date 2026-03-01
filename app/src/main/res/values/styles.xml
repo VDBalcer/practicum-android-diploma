@@ -38,6 +38,10 @@
         <item name="android:background">@drawable/input_background</item>
     </style>
 
+    <style name="Widget.LayoutSalaryInput" parent="Widget.LayoutSearchInput">
+        <item name="android:layout_marginVertical">@dimen/salary_layout_margin_vertical</item>
+    </style>
+
     <style name="Widget.SearchInput">
         <item name="android:background">@null</item>
         <item name="android:singleLine">true</item>
@@ -45,6 +49,24 @@
         <item name="android:paddingStart">@dimen/search_input_padding_left</item>
         <item name="android:paddingEnd">@dimen/search_input_padding_right</item>
         <item name="android:textCursorDrawable">@drawable/cursor_edit_text</item>
+    </style>
+
+    <style name="Widget.SalaryTitle">
+        <item name="android:paddingHorizontal">@dimen/search_input_padding_left</item>
+        <item name="android:paddingTop">@dimen/salary_input_padding_vertical</item>
+    </style>
+
+    <style name="TextAppearance.SalaryTitle" parent="font_regular">
+        <item name="android:textSize">@dimen/salary_title_font_size</item>
+        <item name="android:textColor">?attr/placeholder_color</item>
+    </style>
+
+    <style name="Widget.SalaryInput">
+        <item name="android:background">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginHorizontal">@dimen/search_input_padding_left</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_edit_text</item>
+        <item name="android:paddingBottom">@dimen/salary_input_padding_vertical</item>
     </style>
 
     <style name="bottom_nav_icon">
@@ -61,6 +83,12 @@
         <item name="android:layout_width">@dimen/icon_size</item>
         <item name="android:layout_height">@dimen/icon_size</item>
         <item name="android:layout_margin">@dimen/icon_padding</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="Widget.SalaryIconClear">
+        <item name="android:layout_width">@dimen/icon_size</item>
+        <item name="android:layout_height">@dimen/icon_size</item>
         <item name="android:scaleType">center</item>
     </style>
 
@@ -230,6 +258,33 @@
     <style name="VacancyDeyail.ListItemStyle" parent="font_regular">
         <item name="android:textSize">16sp</item>
         <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextAppearance.FilterLight" parent="font_regular">
+        <item name="android:fontWeight">400</item>
+        <item name="android:textColor">@color/filter_item_light_font</item>
+        <item name="android:textSize">@dimen/filter_item_font_size</item>
+    </style>
+
+    <style name="TextAppearance.FilterOnlySalaryItem" parent="font_regular">
+        <item name="android:fontWeight">400</item>
+        <item name="android:textColor">?attr/text_color</item>
+        <item name="android:textSize">@dimen/filter_item_font_size</item>
+    </style>
+
+    <style name="Widget.FilterItem">
+        <item name="android:paddingVertical">@dimen/filter_item_padding_vertical</item>
+        <item name="android:paddingLeft">@dimen/filter_item_padding_left</item>
+        <item name="android:paddingRight">@dimen/filter_item_padding_right</item>
+    </style>
+
+    <style name="Widget.FilterOnlySalaryItem">
+        <item name="android:paddingHorizontal">@dimen/filter_item_padding_left</item>
+    </style>
+
+    <style name="Widget.FilterIconDetails" parent="icon_center_vertical">
+        <item name="android:layout_margin">@dimen/null_size</item>
+        <item name="android:layout_marginRight">@dimen/filter_item_margin_right</item>
     </style>
 
 </resources>
