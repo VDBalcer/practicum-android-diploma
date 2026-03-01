@@ -72,28 +72,32 @@ class MainFragmentViewModel(
             is NetworkResult.Error -> mainStateLiveData.postValue(MainScreenState.ServerError)
             is NetworkResult.NetworkError -> mainStateLiveData.postValue(MainScreenState.NoInternet)
             is NetworkResult.Success -> {
-                val item = result.data.toItem()
-                val lastVacancies =
+                val response = result.data.toItem()
+                val lastResponse =
                     if (!isNewSearch && mainStateLiveData.value is MainScreenState.Content) {
-                        (mainStateLiveData.value as MainScreenState.Content).vacancies
+                        (mainStateLiveData.value as MainScreenState.Content).response
                     } else {
-                        emptyList()
+                        null
                     }
-                val updatedList = lastVacancies + item.vacancies
-                if (updatedList.isEmpty()) {
+                val updatedVacancies =
+                    if (lastResponse != null) {
+                        lastResponse.vacancies + response.vacancies
+                    } else {
+                        response.vacancies
+                    }
+                if (updatedVacancies.isEmpty()) {
                     mainStateLiveData.postValue(MainScreenState.JobNotFound)
-                } else {
-                    mainStateLiveData.postValue(
-                        MainScreenState.Content(
-                            vacancies = updatedList,
-                            currentPage = item.page,
-                            totalPages = item.pages,
-                            isPaginationLoading = false,
-                            filter = filter,
-                            found = item.found
-                        )
-                    )
+                    return
                 }
+                mainStateLiveData.postValue(
+                    MainScreenState.Content(
+                        response = response.copy(
+                            vacancies = updatedVacancies
+                        ),
+                        isPaginationLoading = false,
+                        filter = filter
+                    )
+                )
             }
         }
     }
@@ -102,7 +106,7 @@ class MainFragmentViewModel(
         if (
             currentState !is MainScreenState.Content ||
             currentState.isPaginationLoading ||
-            currentState.currentPage + 1 >= currentState.totalPages
+            currentState.response.page + 1 >= currentState.response.pages
         ) {
             return
         }
@@ -110,7 +114,9 @@ class MainFragmentViewModel(
             isPaginationLoading = true
         )
         loadPage(
-            filter = currentState.filter.copy(page = currentState.currentPage + 1),
+            filter = currentState.filter.copy(
+                page = currentState.response.page + 1
+            ),
             isNewSearch = false
         )
     }
