@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ItemVacancyBinding
 import ru.practicum.android.diploma.presentation.model.VacancyItem
 import ru.practicum.android.diploma.util.Converter
-import ru.practicum.android.diploma.util.formatSalary
+import ru.practicum.android.diploma.util.SalaryFormater
 
 class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -33,15 +33,22 @@ class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerV
             )
             .into(binding.imageLogo)
 
+        val salary = SalaryFormater.formatSalary(
+            from = item.salary?.from,
+            to = item.salary?.to,
+            currency = item.salary?.currency
+        )
+
         binding.apply {
-            vacancyName.text = item.name
-            companyName.text = item.employer.name
-            wages.text = formatSalary(
-                from = item.salary?.from,
-                to = item.salary?.to,
-                currency = item.salary?.currency
+            vacancyName.text = binding.root.resources.getString(
+                R.string.vacancy_name_and_address,
+                item.name,
+                item.address?.city ?: ""
             )
+            companyName.text = item.employer.name
+            wages.text = salary
         }
+
     }
 
     companion object {
