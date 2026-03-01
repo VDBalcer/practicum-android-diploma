@@ -24,6 +24,7 @@
     <string name="icon_filter">Icon filter off</string>
     <string name="icon_search">Job search</string>
     <string name="icon_clear">Clear text</string>
+    <string name="icon_arrow_back">Back</string>
     <string name="placeholder_image">Placeholder</string>
     <string name="company_logo">Company logo</string>
 

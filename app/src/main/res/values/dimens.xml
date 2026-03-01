@@ -2,6 +2,7 @@
 <resources>
     <dimen name="title_text_padding_left">16dp</dimen>
     <dimen name="title_text_padding_vertical">19dp</dimen>
+    <dimen name="title_text_array_padding_left">4dp</dimen>
 
     <dimen name="icon_padding">8dp</dimen>
     <dimen name="icon_size">48dp</dimen>

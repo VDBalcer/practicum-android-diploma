@@ -29,17 +29,24 @@ class FilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        toBackArrowButton()
 
-        binding.filterFieldButton.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_filterFragment_to_filterFieldFragment
-            )
-        }
-        binding.filterPlaceButton.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_filterFragment_to_filterPlaceFragment
-            )
-        }
+//        binding.filterFieldButton.setOnClickListener {
+//            findNavController().navigate(
+//                R.id.action_filterFragment_to_filterFieldFragment
+//            )
+//        }
+//        binding.filterPlaceButton.setOnClickListener {
+//            findNavController().navigate(
+//                R.id.action_filterFragment_to_filterPlaceFragment
+//            )
+//        }
 
+    }
+
+    private fun toBackArrowButton() {
+        binding.arrowBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 }

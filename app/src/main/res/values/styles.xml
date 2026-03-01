@@ -22,6 +22,10 @@
         <item name="android:paddingVertical">@dimen/title_text_padding_vertical</item>
     </style>
 
+    <style name="Widget.PageTitleWithArrow" parent="Widget.PageTitle">
+        <item name="android:paddingLeft">@dimen/title_text_array_padding_left</item>
+    </style>
+
     <style name="TextAppearance.Input" parent="font_regular">
         <item name="android:textSize">@dimen/search_input_font_size</item>
         <item name="android:textColor">@color/input_text</item>
