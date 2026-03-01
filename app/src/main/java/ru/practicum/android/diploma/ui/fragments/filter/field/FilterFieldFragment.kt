@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.databinding.FragmentFilterFieldBinding
 
 class FilterFieldFragment : Fragment() {
@@ -18,5 +19,12 @@ class FilterFieldFragment : Fragment() {
     ): View {
         _binding = FragmentFilterFieldBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.arrowBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 }

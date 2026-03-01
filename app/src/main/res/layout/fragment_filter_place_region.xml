@@ -28,7 +28,6 @@
             android:text="@string/filter_region_fragment_title"
             style="@style/Widget.PageTitleWithArrow"
             android:textAppearance="@style/TextAppearance.PageTitle"
-            android:textColor="@color/input_text"
             app:layout_constraintStart_toEndOf="@id/arrow_back"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -55,6 +54,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:textAppearance="@style/TextAppearance.Input"
+            android:textColor="@color/input_text"
             style="@style/Widget.SearchInput"/>
 
         <ImageView

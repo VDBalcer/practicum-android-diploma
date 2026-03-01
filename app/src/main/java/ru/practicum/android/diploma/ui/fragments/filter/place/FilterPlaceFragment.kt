@@ -30,6 +30,10 @@ class FilterPlaceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.arrowBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.filterAreaCountryItem.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterPlaceFragment_to_filterPlaceCountryFragment
