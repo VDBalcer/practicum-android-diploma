@@ -28,6 +28,7 @@
             android:text="@string/filter_field_title"
             style="@style/Widget.PageTitleWithArrow"
             android:textAppearance="@style/TextAppearance.PageTitle"
+            android:textColor="@color/input_text"
             app:layout_constraintStart_toEndOf="@id/arrow_back"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

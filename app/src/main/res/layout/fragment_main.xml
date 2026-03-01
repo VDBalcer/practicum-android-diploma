@@ -19,6 +19,7 @@
             android:text="@string/main_fragment_title"
             style="@style/Widget.PageTitle"
             android:textAppearance="@style/TextAppearance.PageTitle"
+            android:textColor="@color/input_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/filter"
             app:layout_constraintTop_toTopOf="parent"
