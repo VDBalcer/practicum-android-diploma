@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceCountryBinding
 
 class FilterPlaceCountryFragment : Fragment() {
@@ -23,5 +24,12 @@ class FilterPlaceCountryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.arrowBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 }

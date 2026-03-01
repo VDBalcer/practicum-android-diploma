@@ -17,6 +17,7 @@
     <color name="filter_section_text_color">@color/agate_gray</color>
     <color name="company_background">@color/platinum</color>
     <color name="progress_bar">@color/klein_blue</color>
+    <color name="filter_item_light_font">@color/agate_gray</color>
 
     <color name="activity_background_light">@color/white</color>
     <color name="text_color_light">@color/graphite_black</color>
