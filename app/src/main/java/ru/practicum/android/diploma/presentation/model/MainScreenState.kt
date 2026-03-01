@@ -8,6 +8,8 @@ sealed class MainScreenState {
     object ServerError : MainScreenState()
 
     data class Content(
-        val item: VacancyResponseItem
+        val response: VacancyResponseItem,
+        val isPaginationLoading: Boolean,
+        val filter: VacancyFilterItem
     ) : MainScreenState()
 }
