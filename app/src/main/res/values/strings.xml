@@ -3,6 +3,8 @@
 
     <string name="main_fragment_title">Поиск вакансий</string>
     <string name="edit_textbox_job_search">Введите запрос</string>
+    <string name="edit_textbox_region_search">Введите регион</string>
+
 
 
     <string name="main_fragment_nav_menu_title">Главная</string>
@@ -18,14 +20,18 @@
     <string name="filter_place_fragment_title">Выбор места работы</string>
     <string name="filter_country_fragment_title">Выбор страны</string>
     <string name="filter_region_fragment_title">Выбор региона</string>
-
     <string name="filter_field_title">Выбор отрасли</string>
-
     <string name="filter_area_item">Место работы</string>
+    <string name="filter_area_country_item">Страна</string>
+    <string name="filter_area_region_item">Регион</string>
     <string name="filter_industry_item">Отрасль</string>
     <string name="salary_title">Ожидаемая зарплата</string>
     <string name="edit_textbox_salary">Введите сумму</string>
     <string name="filter_only_salary">Не показывать без зарплаты</string>
+    <string name="filter_industry_fragment_title">Введите отрасль</string>
+
+    <string name="btn_apply">Применить</string>
+    <string name="btn_reset">Сбросить</string>
 
 
     <string name="icon_filter">Icon filter off</string>
