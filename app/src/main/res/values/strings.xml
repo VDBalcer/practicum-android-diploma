@@ -29,7 +29,7 @@
 
     <string name="title_not_internet">Нет интернета</string>
     <string name="title_server_error">Ошибка сервера</string>
-    <string name="title_job_not_found">Не удалось получить\nсписок вакансий</string>
+    <string name="title_vacancy_not_found">Не удалось получить\nсписок вакансий</string>
     <string name="result_not_found">Таких вакансий нет</string>
     <string name="salary_not_specify">Зарплата не указана</string>
     <string name="salary_from">от %1$d\ </string>

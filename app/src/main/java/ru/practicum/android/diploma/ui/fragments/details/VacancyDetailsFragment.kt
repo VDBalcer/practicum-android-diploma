@@ -21,7 +21,7 @@ import ru.practicum.android.diploma.domain.models.VacancyDetailModel
 import ru.practicum.android.diploma.presentation.model.VacancyDetailScreenState
 import ru.practicum.android.diploma.presentation.viewmodel.VacancyDetailsViewModel
 import ru.practicum.android.diploma.util.Converter
-import ru.practicum.android.diploma.util.SalaryFormater
+import ru.practicum.android.diploma.util.formatSalary
 
 class VacancyDetailsFragment : Fragment() {
     private var _binding: FragmentVacancyDetailsBinding? = null
@@ -122,7 +122,7 @@ class VacancyDetailsFragment : Fragment() {
     }
 
     private fun bindSalary(vacancy: VacancyDetailModel) {
-        binding.tvSalary.text = SalaryFormater.formatSalary(
+        binding.tvSalary.text = formatSalary(
             vacancy.salary?.from,
             vacancy.salary?.to,
             vacancy.salary?.currency

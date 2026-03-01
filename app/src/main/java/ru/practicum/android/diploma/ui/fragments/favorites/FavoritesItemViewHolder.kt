@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.fragments.main
+package ru.practicum.android.diploma.ui.fragments.favorites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.databinding.ItemVacancyBinding
+import ru.practicum.android.diploma.databinding.ItemFavoriteBinding
 import ru.practicum.android.diploma.presentation.model.VacancyItem
 import ru.practicum.android.diploma.util.Converter
 import ru.practicum.android.diploma.util.formatSalary
 
-class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerView.ViewHolder(binding.root) {
+class FavoritesItemViewHolder(private val binding: ItemFavoriteBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: VacancyItem) {
         val companyLogoUrl = item.employer.logo
@@ -31,16 +31,16 @@ class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerV
                     )
                 )
             )
-            .into(binding.imageLogo)
+            .into(binding.favoritesImageLogo)
 
         binding.apply {
-            vacancyName.text = binding.root.resources.getString(
+            favoritesVacancyName.text = binding.root.resources.getString(
                 R.string.vacancy_name_and_address,
                 item.name,
                 item.area.name
             )
-            companyName.text = item.employer.name
-            wages.text = formatSalary(
+            favoritesCompanyName.text = item.employer.name
+            favoritesWages.text = formatSalary(
                 from = item.salary?.from,
                 to = item.salary?.to,
                 currency = item.salary?.currency
@@ -49,10 +49,10 @@ class VacancyItemViewHolder(private val binding: ItemVacancyBinding) : RecyclerV
     }
 
     companion object {
-        fun from(parent: ViewGroup): VacancyItemViewHolder {
+        fun from(parent: ViewGroup): FavoritesItemViewHolder {
             val inflater = LayoutInflater.from(parent.context)
-            val binding = ItemVacancyBinding.inflate(inflater, parent, false)
-            return VacancyItemViewHolder(binding)
+            val binding = ItemFavoriteBinding.inflate(inflater, parent, false)
+            return FavoritesItemViewHolder(binding)
         }
     }
 }

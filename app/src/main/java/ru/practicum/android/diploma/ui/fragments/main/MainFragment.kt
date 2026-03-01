@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
-import ru.practicum.android.diploma.presentation.model.MainScreenState
+import ru.practicum.android.diploma.presentation.states.MainScreenState
 import ru.practicum.android.diploma.presentation.viewmodel.MainFragmentViewModel
 import ru.practicum.android.diploma.ui.fragments.details.VacancyDetailsFragment
 
@@ -96,14 +96,17 @@ class MainFragment : Fragment() {
             )
         }
     }
+
     private fun hideKeyboard() {
         val ims = requireContext().getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
         ims?.hideSoftInputFromWindow(binding.editTextboxJobSearch.windowToken, 0)
     }
+
     private fun updateIcons(hasText: Boolean) {
         binding.iconClear.isVisible = hasText
         binding.iconSearch.isVisible = !hasText
     }
+
     private fun render(state: MainScreenState) {
         when (state) {
             is MainScreenState.StartSearch -> showStart()
@@ -114,6 +117,7 @@ class MainFragment : Fragment() {
             is MainScreenState.Content -> showContent(state)
         }
     }
+
     private fun showStart() {
         binding.apply {
             containerPlaceholder.visibility = View.VISIBLE
@@ -124,6 +128,7 @@ class MainFragment : Fragment() {
             placeholderMessage.visibility = View.GONE
         }
     }
+
     private fun showLoading() {
         binding.apply {
             containerPlaceholder.visibility = View.GONE
@@ -161,7 +166,7 @@ class MainFragment : Fragment() {
             infoResult.text = getString(R.string.result_not_found)
             placeholderImage.setImageResource(R.drawable.placeholder_nothing_found)
             placeholderMessage.visibility = View.VISIBLE
-            placeholderMessage.text = getString(R.string.title_job_not_found)
+            placeholderMessage.text = getString(R.string.title_vacancy_not_found)
         }
     }
 
@@ -177,6 +182,7 @@ class MainFragment : Fragment() {
             placeholderMessage.text = getString(R.string.title_not_internet)
         }
     }
+
     private fun showServerError() {
         binding.apply {
             containerPlaceholder.visibility = View.VISIBLE
