@@ -145,7 +145,7 @@ class MainFragment : Fragment() {
             infoResult.text = resources.getQuantityString(
                 R.plurals.vacancies_found,
                 content.response.found,
-                    content.response.found
+                content.response.found
             )
             vacancyAdapter.setData(content.response.vacancies)
             vacancyAdapter.notifyDataSetChanged()
