@@ -282,12 +282,13 @@
     </style>
 
     <style name="Widget.FilterItem">
-        <item name="android:paddingVertical">@dimen/filter_item_padding_vertical</item>
+        <item name="android:minHeight">@dimen/filter_vertical</item>
         <item name="android:paddingLeft">@dimen/filter_item_padding_left</item>
         <item name="android:paddingRight">@dimen/filter_item_padding_right</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
-    <style name="Widget.FilterOnlySalaryItem">
+    <style name="Widget.FilterOnlySalaryItem" parent="Widget.FilterItem">
         <item name="android:paddingHorizontal">@dimen/filter_item_padding_left</item>
     </style>
 
