@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.domain.models
 
-data class VacancyFilterModel(
+data class VacancyRequestModel(
     val areaId: Int? = null,
     val industryId: Int? = null,
     val text: String? = null,
