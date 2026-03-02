@@ -7,18 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.presentation.model.MainScreenState
 import ru.practicum.android.diploma.presentation.viewmodel.MainFragmentViewModel
 import ru.practicum.android.diploma.ui.fragments.details.VacancyDetailsFragment
+import ru.practicum.android.diploma.ui.root.RootActivity
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
@@ -26,6 +29,9 @@ class MainFragment : Fragment() {
     private val viewModel: MainFragmentViewModel by viewModel()
     private var _vacancyAdapter: VacancyItemViewAdapter? = null
     private val vacancyAdapter get() = _vacancyAdapter!!
+
+    private var _rootToolbar: MaterialToolbar? = null
+    private val rootToolbar get() = _rootToolbar!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +45,7 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _vacancyAdapter = null
+        _rootToolbar = null
         _binding = null
     }
 
@@ -48,8 +55,30 @@ class MainFragment : Fragment() {
         viewModel.observeMainSate().observe(viewLifecycleOwner) {
             render(it)
         }
+        onInitToolbar()
         onInitListener()
         onInitAdapter()
+    }
+
+    private fun onInitToolbar() {
+        _rootToolbar = (activity as RootActivity).rootBinding.rootToolbar
+        rootToolbar.title = getString(R.string.main_fragment_title)
+        rootToolbar.navigationIcon = null
+        rootToolbar.menu.forEach { it.isVisible = false }
+        rootToolbar.menu.findItem(R.id.action_filter).isVisible = true
+
+        rootToolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_filter -> {
+                    findNavController().navigate(
+                        R.id.action_mainFragment_to_filterFragment
+                    )
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     private fun onInitAdapter() {
@@ -89,21 +118,18 @@ class MainFragment : Fragment() {
             binding.editTextboxJobSearch.text?.clear()
             hideKeyboard()
         }
-
-        binding.filter.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_mainFragment_to_filterFragment
-            )
-        }
     }
+
     private fun hideKeyboard() {
         val ims = requireContext().getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
         ims?.hideSoftInputFromWindow(binding.editTextboxJobSearch.windowToken, 0)
     }
+
     private fun updateIcons(hasText: Boolean) {
         binding.iconClear.isVisible = hasText
         binding.iconSearch.isVisible = !hasText
     }
+
     private fun render(state: MainScreenState) {
         when (state) {
             is MainScreenState.StartSearch -> showStart()
@@ -114,6 +140,7 @@ class MainFragment : Fragment() {
             is MainScreenState.Content -> showContent(state)
         }
     }
+
     private fun showStart() {
         binding.apply {
             containerPlaceholder.visibility = View.VISIBLE
@@ -124,6 +151,7 @@ class MainFragment : Fragment() {
             placeholderMessage.visibility = View.GONE
         }
     }
+
     private fun showLoading() {
         binding.apply {
             containerPlaceholder.visibility = View.GONE
@@ -177,6 +205,7 @@ class MainFragment : Fragment() {
             placeholderMessage.text = getString(R.string.title_not_internet)
         }
     }
+
     private fun showServerError() {
         binding.apply {
             containerPlaceholder.visibility = View.VISIBLE

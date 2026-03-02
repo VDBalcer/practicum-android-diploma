@@ -21,7 +21,7 @@ import ru.practicum.android.diploma.domain.models.VacancyFilterModel
 
 class RootActivity : AppCompatActivity() {
     private var _binding: ActivityRootBinding? = null
-    private val binding get() = _binding!!
+    val rootBinding get() = _binding!!
     private val repository: ApiInteractor by inject()
     private val topLevelDestinations = setOf(
         R.id.main_fragment,
@@ -33,16 +33,16 @@ class RootActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityRootBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(binding.root)
+        setContentView(rootBinding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(rootBinding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             v.updatePadding(
                 left = systemBars.left,
                 top = systemBars.top,
                 right = systemBars.right,
-                bottom = if (binding.rootBottomNavMenu.isVisible) 0 else systemBars.bottom
+                bottom = if (this@RootActivity.rootBinding.rootBottomNavMenu.isVisible) 0 else systemBars.bottom
             )
 
             insets
@@ -53,12 +53,12 @@ class RootActivity : AppCompatActivity() {
             ?: error("NavHostFragment not found")
         val navController = navHostFragment.navController
 
-        binding.rootBottomNavMenu.setupWithNavController(navController)
+        rootBinding.rootBottomNavMenu.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.rootBottomNavMenu.isVisible =
+            this@RootActivity.rootBinding.rootBottomNavMenu.isVisible =
                 destination.id in topLevelDestinations
-            ViewCompat.requestApplyInsets(binding.root)
+            ViewCompat.requestApplyInsets(rootBinding.root)
         }
 
         // Пример запроса к API
