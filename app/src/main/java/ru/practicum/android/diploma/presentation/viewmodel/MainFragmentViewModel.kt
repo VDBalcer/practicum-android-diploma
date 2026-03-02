@@ -96,7 +96,6 @@ class MainFragmentViewModel(
                         emptyList()
                     }
 
-
                 val updatedVacancies = previousVacancies + response.vacancies
 
                 if (updatedVacancies.isEmpty()) {
