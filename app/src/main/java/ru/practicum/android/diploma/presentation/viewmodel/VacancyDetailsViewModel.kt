@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.ExternalNavigator
@@ -29,30 +30,44 @@ class VacancyDetailsViewModel(
 
     init {
         viewModelScope.launch {
+            val isFavorite = favoriteInteractor
+                .isVacancyInFavorite(vacancyId)
+                .first()
             when (val result: NetworkResult<VacancyDetailModel> = apiInteractor.getVacancy(vacancyId)) {
-                is NetworkResult.Error -> vacancyDetailsStateLiveData
-                    .postValue(
-                        VacancyDetailScreenState.JobNotFound
-                    )
+                is NetworkResult.Error -> {
+                    if (isFavorite) favoriteInteractor.deleteFromFavorite(vacancyId)
+                    vacancyDetailsStateLiveData
+                        .postValue(
+                            VacancyDetailScreenState.JobNotFound
+                        )
+                }
 
-                is NetworkResult.NetworkError -> vacancyDetailsStateLiveData
-                    .postValue(
-                        VacancyDetailScreenState.ServerError
-                    )
+                is NetworkResult.NetworkError -> {
+                    viewModelScope.launch {
+                        favoriteInteractor
+                            .getFavoriteVacancyById(vacancyId)
+                            .collect { cachedVacancy ->
+                                if (cachedVacancy != null) {
+                                    vacancyDetailsStateLiveData.postValue(
+                                        VacancyDetailScreenState.Content(cachedVacancy, true)
+                                    )
+                                } else {
+                                    vacancyDetailsStateLiveData.postValue(
+                                        VacancyDetailScreenState.ServerError
+                                    )
+                                }
+                            }
+                    }
+                }
 
                 is NetworkResult.Success<VacancyDetailModel> -> {
-                    favoriteInteractor
-                        .isVacancyInFavorite(result.data.id)
-                        .collect { isFavorite ->
-                            vacancyDetailsStateLiveData
-                                .postValue(
-                                    VacancyDetailScreenState.Content(
-                                        result.data,
-                                        isFavorite
-                                    )
-                                )
-                        }
-
+                    vacancyDetailsStateLiveData
+                        .postValue(
+                            VacancyDetailScreenState.Content(
+                                result.data,
+                                isFavorite
+                            )
+                        )
                 }
 
             }
