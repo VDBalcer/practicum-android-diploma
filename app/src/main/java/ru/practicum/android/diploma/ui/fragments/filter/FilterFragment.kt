@@ -56,7 +56,5 @@ class FilterFragment : Fragment() {
         rootToolbar.title = getString(R.string.filter_fragment_title)
         rootToolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         rootToolbar.menu.forEach { it.isVisible = false }
-
-
     }
 }
