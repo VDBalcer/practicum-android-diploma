@@ -5,10 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.NetworkResult
 import ru.practicum.android.diploma.domain.models.VacancyResponseModel
+import ru.practicum.android.diploma.presentation.events.ErrorType
+import ru.practicum.android.diploma.presentation.events.MainScreenEvent
 import ru.practicum.android.diploma.presentation.mapper.toDomain
 import ru.practicum.android.diploma.presentation.mapper.toItem
 import ru.practicum.android.diploma.presentation.model.VacancyFilterItem
@@ -16,7 +20,7 @@ import ru.practicum.android.diploma.presentation.states.MainScreenState
 import ru.practicum.android.diploma.util.debounce
 
 class MainFragmentViewModel(
-    private val interactor: ApiInteractor
+    private val interactor: ApiInteractor,
 ) : ViewModel() {
     private var latestSearchQuery: String? = null
     private val vacancySearchDebounce = debounce<String>(
@@ -33,6 +37,15 @@ class MainFragmentViewModel(
 
     private val mainStateLiveData =
         MutableLiveData<MainScreenState>(MainScreenState.StartSearch)
+
+    private val _events = MutableSharedFlow<MainScreenEvent>()
+    val events = _events.asSharedFlow()
+
+    private fun sendErrorEvent(errorType: ErrorType) {
+        viewModelScope.launch {
+            _events.emit(MainScreenEvent.ShowError(errorType))
+        }
+    }
 
     fun observeMainSate(): LiveData<MainScreenState> = mainStateLiveData
     private var searchJob: Job? = null
@@ -57,7 +70,7 @@ class MainFragmentViewModel(
 
     private fun loadPage(
         filter: VacancyFilterItem,
-        isNewSearch: Boolean
+        isNewSearch: Boolean,
     ) {
         searchJob = viewModelScope.launch {
             val result = interactor.getVacancies(filter.toDomain())
@@ -68,39 +81,62 @@ class MainFragmentViewModel(
     private fun processResult(
         result: NetworkResult<VacancyResponseModel>,
         filter: VacancyFilterItem,
-        isNewSearch: Boolean
+        isNewSearch: Boolean,
     ) {
+        val currentState = mainStateLiveData.value
+
         when (result) {
-            is NetworkResult.Error -> mainStateLiveData.postValue(MainScreenState.ServerError)
-            is NetworkResult.NetworkError -> mainStateLiveData.postValue(MainScreenState.NoInternet)
+
             is NetworkResult.Success -> {
                 val response = result.data.toItem()
-                val lastResponse =
-                    if (!isNewSearch && mainStateLiveData.value is MainScreenState.Content) {
-                        (mainStateLiveData.value as MainScreenState.Content).response
-                    } else {
-                        null
-                    }
-                val updatedVacancies =
-                    if (lastResponse != null) {
-                        lastResponse.vacancies + response.vacancies
-                    } else {
-                        response.vacancies
-                    }
+
+                val previousVacancies =
+                    if (!isNewSearch && currentState is MainScreenState.Content)
+                        currentState.response.vacancies
+                    else
+                        emptyList()
+
+                val updatedVacancies = previousVacancies + response.vacancies
+
                 if (updatedVacancies.isEmpty()) {
                     mainStateLiveData.postValue(MainScreenState.JobNotFound)
                     return
                 }
+
                 mainStateLiveData.postValue(
                     MainScreenState.Content(
-                        response = response.copy(
-                            vacancies = updatedVacancies
-                        ),
+                        response = response.copy(vacancies = updatedVacancies),
                         isPaginationLoading = false,
                         filter = filter
                     )
                 )
             }
+
+            is NetworkResult.NetworkError -> {
+                if (isNewSearch) {
+                    mainStateLiveData.postValue(MainScreenState.NoInternet)
+                } else {
+                    finishPagination()
+                    sendErrorEvent(ErrorType.NO_INTERNET)
+                }
+            }
+
+            is NetworkResult.Error -> {
+                if (isNewSearch) {
+                    mainStateLiveData.postValue(MainScreenState.ServerError)
+                } else {
+                    finishPagination()
+                    sendErrorEvent(ErrorType.NETWORK)
+                }
+            }
+        }
+    }
+    private fun finishPagination() {
+        val current = mainStateLiveData.value
+        if (current is MainScreenState.Content) {
+            mainStateLiveData.postValue(
+                current.copy(isPaginationLoading = false)
+            )
         }
     }
 
