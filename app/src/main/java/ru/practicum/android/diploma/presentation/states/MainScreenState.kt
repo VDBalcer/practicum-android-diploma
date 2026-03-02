@@ -1,4 +1,7 @@
-package ru.practicum.android.diploma.presentation.model
+package ru.practicum.android.diploma.presentation.states
+
+import ru.practicum.android.diploma.presentation.model.VacancyFilterItem
+import ru.practicum.android.diploma.presentation.model.VacancyResponseItem
 
 sealed class MainScreenState {
     object StartSearch : MainScreenState()
