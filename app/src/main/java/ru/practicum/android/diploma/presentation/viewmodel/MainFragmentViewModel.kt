@@ -86,15 +86,16 @@ class MainFragmentViewModel(
         val currentState = mainStateLiveData.value
 
         when (result) {
-
             is NetworkResult.Success -> {
                 val response = result.data.toItem()
 
                 val previousVacancies =
-                    if (!isNewSearch && currentState is MainScreenState.Content)
+                    if (!isNewSearch && currentState is MainScreenState.Content) {
                         currentState.response.vacancies
-                    else
+                    } else {
                         emptyList()
+                    }
+
 
                 val updatedVacancies = previousVacancies + response.vacancies
 
@@ -131,6 +132,7 @@ class MainFragmentViewModel(
             }
         }
     }
+
     private fun finishPagination() {
         val current = mainStateLiveData.value
         if (current is MainScreenState.Content) {
