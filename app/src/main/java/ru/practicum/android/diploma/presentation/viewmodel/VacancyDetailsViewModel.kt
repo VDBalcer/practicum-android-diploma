@@ -30,19 +30,38 @@ class VacancyDetailsViewModel(
     init {
         viewModelScope.launch {
             when (val result: NetworkResult<VacancyDetailModel> = apiInteractor.getVacancy(vacancyId)) {
-                is NetworkResult.Error -> vacancyDetailsStateLiveData
-                    .postValue(
-                        VacancyDetailScreenState.JobNotFound
-                    )
+                is NetworkResult.Error -> {
+                    vacancyDetailsStateLiveData
+                        .postValue(
+                            VacancyDetailScreenState.JobNotFound
+                        )
+                }
 
-                is NetworkResult.NetworkError -> vacancyDetailsStateLiveData
-                    .postValue(
-                        VacancyDetailScreenState.ServerError
-                    )
+                is NetworkResult.NetworkError -> {
+                    viewModelScope.launch {
+                        favoriteInteractor
+                            .getFavoriteVacancyById(vacancyId)
+                            .collect { cachedVacancy ->
+                                if (cachedVacancy != null) {
+                                    favoriteInteractor
+                                        .isVacancyInFavorite(vacancyId)
+                                        .collect { isFavorite ->
+                                            vacancyDetailsStateLiveData.postValue(
+                                                VacancyDetailScreenState.Content(cachedVacancy, isFavorite)
+                                            )
+                                        }
+                                } else {
+                                    vacancyDetailsStateLiveData.postValue(
+                                        VacancyDetailScreenState.ServerError
+                                    )
+                                }
+                            }
+                    }
+                }
 
                 is NetworkResult.Success<VacancyDetailModel> -> {
                     favoriteInteractor
-                        .isVacancyInFavorite(result.data.id)
+                        .isVacancyInFavorite(vacancyId)
                         .collect { isFavorite ->
                             vacancyDetailsStateLiveData
                                 .postValue(
@@ -52,9 +71,7 @@ class VacancyDetailsViewModel(
                                     )
                                 )
                         }
-
                 }
-
             }
         }
     }

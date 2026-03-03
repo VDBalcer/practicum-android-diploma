@@ -1,10 +1,10 @@
 package ru.practicum.android.diploma.data.mapper
 
-import ru.practicum.android.diploma.data.dto.VacancyFilterDto
-import ru.practicum.android.diploma.domain.models.VacancyFilterModel
+import ru.practicum.android.diploma.data.dto.VacancyRequestDto
+import ru.practicum.android.diploma.domain.models.VacancyRequestModel
 
-fun VacancyFilterModel.toDto(): VacancyFilterDto =
-    VacancyFilterDto(
+fun VacancyRequestModel.toDto(): VacancyRequestDto =
+    VacancyRequestDto(
         area = areaId,
         industry = industryId,
         text = text,

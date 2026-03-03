@@ -57,6 +57,8 @@
     <string name="not_fount_vacancy_info_message">Вакансия не найдена или удалена</string>
     <string name="contacts_format">%1$s\n%2$s</string>
     <string name="email">email: %1$s</string>
+    <string name="network_error_toast_text">Произошла ошибка</string>
+    <string name="no_internet_error_toast_text">Проверьте подключение к интернету</string>
 
     <plurals name="vacancies_found">
         <item quantity="one">Найдена %d вакансия</item>
