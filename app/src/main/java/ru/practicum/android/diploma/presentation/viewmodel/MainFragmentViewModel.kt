@@ -15,7 +15,7 @@ import ru.practicum.android.diploma.presentation.events.ErrorType
 import ru.practicum.android.diploma.presentation.events.MainScreenEvent
 import ru.practicum.android.diploma.presentation.mapper.toDomain
 import ru.practicum.android.diploma.presentation.mapper.toItem
-import ru.practicum.android.diploma.presentation.model.VacancyFilterItem
+import ru.practicum.android.diploma.presentation.model.VacancyRequestItem
 import ru.practicum.android.diploma.presentation.states.MainScreenState
 import ru.practicum.android.diploma.util.debounce
 
@@ -28,7 +28,7 @@ class MainFragmentViewModel(
         viewModelScope,
         true
     ) { query ->
-        val filter = VacancyFilterItem(
+        val filter = VacancyRequestItem(
             text = query,
             page = 1
         )
@@ -59,7 +59,7 @@ class MainFragmentViewModel(
         }
     }
 
-    fun searchRequest(filter: VacancyFilterItem) {
+    fun searchRequest(filter: VacancyRequestItem) {
         mainStateLiveData.value = MainScreenState.Loading
         searchJob?.cancel()
         loadPage(
@@ -69,7 +69,7 @@ class MainFragmentViewModel(
     }
 
     private fun loadPage(
-        filter: VacancyFilterItem,
+        filter: VacancyRequestItem,
         isNewSearch: Boolean,
     ) {
         searchJob = viewModelScope.launch {
@@ -80,7 +80,7 @@ class MainFragmentViewModel(
 
     private fun processResult(
         result: NetworkResult<VacancyResponseModel>,
-        filter: VacancyFilterItem,
+        filter: VacancyRequestItem,
         isNewSearch: Boolean,
     ) {
         val currentState = mainStateLiveData.value

@@ -1,9 +1,9 @@
 package ru.practicum.android.diploma.presentation.mapper
 
 import ru.practicum.android.diploma.domain.models.VacancyRequestModel
-import ru.practicum.android.diploma.presentation.model.VacancyFilterItem
+import ru.practicum.android.diploma.presentation.model.VacancyRequestItem
 
-fun VacancyFilterItem.toDomain(): VacancyRequestModel =
+fun VacancyRequestItem.toDomain(): VacancyRequestModel =
     VacancyRequestModel(
         areaId = areaId,
         industryId = industryId,
