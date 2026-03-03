@@ -31,11 +31,6 @@ class VacancyDetailsViewModel(
         viewModelScope.launch {
             when (val result: NetworkResult<VacancyDetailModel> = apiInteractor.getVacancy(vacancyId)) {
                 is NetworkResult.Error -> {
-                    favoriteInteractor
-                        .isVacancyInFavorite(vacancyId)
-                        .collect { isFavorite ->
-                            if (isFavorite) favoriteInteractor.deleteFromFavorite(vacancyId)
-                        }
                     vacancyDetailsStateLiveData
                         .postValue(
                             VacancyDetailScreenState.JobNotFound

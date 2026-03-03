@@ -7,15 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
+import ru.practicum.android.diploma.presentation.events.ErrorType
+import ru.practicum.android.diploma.presentation.events.MainScreenEvent
 import ru.practicum.android.diploma.presentation.states.MainScreenState
 import ru.practicum.android.diploma.presentation.viewmodel.MainFragmentViewModel
 import ru.practicum.android.diploma.ui.fragments.details.VacancyDetailsFragment
@@ -30,7 +34,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
@@ -50,6 +54,7 @@ class MainFragment : Fragment() {
         }
         onInitListener()
         onInitAdapter()
+        onInitPaginationErrorHandler()
     }
 
     private fun onInitAdapter() {
@@ -192,6 +197,30 @@ class MainFragment : Fragment() {
             placeholderImage.setImageResource(R.drawable.placeholder_server_error)
             placeholderMessage.visibility = View.VISIBLE
             placeholderMessage.text = getString(R.string.title_server_error)
+        }
+    }
+
+    private fun onInitPaginationErrorHandler() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.events.collect { event ->
+                when (event) {
+                    is MainScreenEvent.ShowError -> {
+                        val message = when (event.type) {
+                            ErrorType.NETWORK ->
+                                getString(R.string.network_error_toast_text)
+
+                            ErrorType.NO_INTERNET ->
+                                getString(R.string.no_internet_error_toast_text)
+                        }
+
+                        Toast.makeText(
+                            requireContext(),
+                            message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
         }
     }
 }
