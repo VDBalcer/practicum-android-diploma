@@ -19,7 +19,6 @@ class FilterFragment : Fragment() {
     private var _rootToolbar: MaterialToolbar? = null
     private val rootToolbar get() = _rootToolbar!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
