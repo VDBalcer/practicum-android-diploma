@@ -11,7 +11,7 @@ import ru.practicum.android.diploma.domain.api.NetworkResult
 import ru.practicum.android.diploma.domain.models.FilterAreaModel
 import ru.practicum.android.diploma.domain.models.FilterIndustryModel
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel
-import ru.practicum.android.diploma.domain.models.VacancyFilterModel
+import ru.practicum.android.diploma.domain.models.VacancyRequestModel
 import ru.practicum.android.diploma.domain.models.VacancyResponseModel
 import java.io.IOException
 
@@ -30,7 +30,7 @@ class YPApiRepositoryImpl(
         safeApiCall { api.getIndustries().map { it.toDomain() } }
 
     override suspend fun getVacancies(
-        filter: VacancyFilterModel,
+        filter: VacancyRequestModel,
     ): NetworkResult<VacancyResponseModel> =
         safeApiCall {
             val dto = filter.toDto()

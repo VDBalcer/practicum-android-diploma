@@ -17,7 +17,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.NetworkResult
-import ru.practicum.android.diploma.domain.models.VacancyFilterModel
+import ru.practicum.android.diploma.domain.models.VacancyRequestModel
 
 class RootActivity : AppCompatActivity() {
     private var _binding: ActivityRootBinding? = null
@@ -72,7 +72,7 @@ class RootActivity : AppCompatActivity() {
 
     private fun networkRequestExample() {
         lifecycleScope.launch {
-            val result = repository.getVacancies(VacancyFilterModel()) // Любой тестируемый запрос
+            val result = repository.getVacancies(VacancyRequestModel()) // Любой тестируемый запрос
 
             when (result) {
                 is NetworkResult.Success -> {

@@ -6,7 +6,7 @@ import ru.practicum.android.diploma.domain.api.NetworkResult
 import ru.practicum.android.diploma.domain.models.FilterAreaModel
 import ru.practicum.android.diploma.domain.models.FilterIndustryModel
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel
-import ru.practicum.android.diploma.domain.models.VacancyFilterModel
+import ru.practicum.android.diploma.domain.models.VacancyRequestModel
 import ru.practicum.android.diploma.domain.models.VacancyResponseModel
 
 class YPApiInteractorImpl(
@@ -21,6 +21,6 @@ class YPApiInteractorImpl(
     override suspend fun getIndustries(): NetworkResult<List<FilterIndustryModel>> =
         repository.getIndustries()
 
-    override suspend fun getVacancies(filter: VacancyFilterModel): NetworkResult<VacancyResponseModel> =
+    override suspend fun getVacancies(filter: VacancyRequestModel): NetworkResult<VacancyResponseModel> =
         repository.getVacancies(filter)
 }
