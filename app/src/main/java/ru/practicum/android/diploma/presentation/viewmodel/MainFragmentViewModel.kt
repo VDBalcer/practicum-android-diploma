@@ -84,30 +84,23 @@ class MainFragmentViewModel(
         isNewSearch: Boolean,
     ) {
         val currentState = mainStateLiveData.value
-
         when (result) {
             is NetworkResult.Success -> {
                 val response = result.data.toItem()
-
-                val previousVacancies =
-                    if (!isNewSearch && currentState is MainScreenState.Content) {
-                        currentState.response.vacancies
-                    } else {
-                        emptyList()
-                    }
-
+                val previousVacancies = if (!isNewSearch && currentState is MainScreenState.Content) {
+                    currentState.response.vacancies
+                } else {
+                    emptyList()
+                }
                 val updatedVacancies = previousVacancies + response.vacancies
-
                 if (updatedVacancies.isEmpty()) {
                     mainStateLiveData.postValue(MainScreenState.JobNotFound)
                     return
                 }
-
                 mainStateLiveData.postValue(
                     MainScreenState.Content(
                         response = response.copy(vacancies = updatedVacancies),
-                        isPaginationLoading = false,
-                        filter = filter
+                        isPaginationLoading = false, filter = filter
                     )
                 )
             }
