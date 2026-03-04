@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.forEach
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -15,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
@@ -23,6 +25,7 @@ import ru.practicum.android.diploma.presentation.events.MainScreenEvent
 import ru.practicum.android.diploma.presentation.states.MainScreenState
 import ru.practicum.android.diploma.presentation.viewmodel.MainFragmentViewModel
 import ru.practicum.android.diploma.ui.fragments.details.VacancyDetailsFragment
+import ru.practicum.android.diploma.ui.root.RootActivity
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
@@ -30,6 +33,9 @@ class MainFragment : Fragment() {
     private val viewModel: MainFragmentViewModel by viewModel()
     private var _vacancyAdapter: VacancyItemViewAdapter? = null
     private val vacancyAdapter get() = _vacancyAdapter!!
+
+    private var _rootToolbar: MaterialToolbar? = null
+    private val rootToolbar get() = _rootToolbar!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +49,7 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _vacancyAdapter = null
+        _rootToolbar = null
         _binding = null
     }
 
@@ -52,9 +59,31 @@ class MainFragment : Fragment() {
         viewModel.observeMainSate().observe(viewLifecycleOwner) {
             render(it)
         }
+        onInitToolbar()
         onInitListener()
         onInitAdapter()
         onInitPaginationErrorHandler()
+    }
+
+    private fun onInitToolbar() {
+        _rootToolbar = (activity as RootActivity).rootBinding.rootToolbar
+        rootToolbar.title = getString(R.string.main_fragment_title)
+        rootToolbar.navigationIcon = null
+        rootToolbar.menu.forEach { it.isVisible = false }
+        rootToolbar.menu.findItem(R.id.action_filter).isVisible = true
+
+        rootToolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_filter -> {
+                    findNavController().navigate(
+                        R.id.action_mainFragment_to_filterFragment
+                    )
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     private fun onInitAdapter() {
@@ -93,12 +122,6 @@ class MainFragment : Fragment() {
         binding.iconClear.setOnClickListener {
             binding.editTextboxJobSearch.text?.clear()
             hideKeyboard()
-        }
-
-        binding.filter.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_mainFragment_to_filterFragment
-            )
         }
     }
 

@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.MaterialToolbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
@@ -15,6 +17,7 @@ import ru.practicum.android.diploma.presentation.model.VacancyItem
 import ru.practicum.android.diploma.presentation.states.FavoritesScreenState
 import ru.practicum.android.diploma.presentation.viewmodel.FavoritesViewModel
 import ru.practicum.android.diploma.ui.fragments.details.VacancyDetailsFragment
+import ru.practicum.android.diploma.ui.root.RootActivity
 
 class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
@@ -24,6 +27,9 @@ class FavoritesFragment : Fragment() {
 
     private var _favoritesAdapter: FavoritesItemViewAdapter? = null
     private val favoritesAdapter get() = _favoritesAdapter!!
+
+    private var _rootToolbar: MaterialToolbar? = null
+    private val rootToolbar get() = _rootToolbar!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,12 +42,15 @@ class FavoritesFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _rootToolbar = null
         _favoritesAdapter = null
         _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        onInitToolbar()
 
         viewModel.observeFavoriteState().observe(viewLifecycleOwner) {
             render(it)
@@ -108,5 +117,12 @@ class FavoritesFragment : Fragment() {
             favoritesPlaceholderImage.setImageResource(R.drawable.placeholder_empty_list)
             favoritesPlaceholderMessage.text = getString(R.string.title_empty_list)
         }
+    }
+
+    private fun onInitToolbar() {
+        _rootToolbar = (activity as RootActivity).rootBinding.rootToolbar
+        rootToolbar.title = getString(R.string.favorites_fragment_title)
+        rootToolbar.navigationIcon = null
+        rootToolbar.menu.forEach { it.isVisible = false }
     }
 }
