@@ -70,7 +70,7 @@ class FavoritesFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showContent(content: List<VacancyItem>) {
-        binding.apply {
+        with(binding) {
             favoritesProgressbar.visibility = View.GONE
             favoritesRecyclerView.visibility = View.VISIBLE
             favoritesContainerPlaceholder.visibility = View.GONE
@@ -81,7 +81,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun showLoading() {
-        binding.apply {
+        with(binding) {
             favoritesProgressbar.visibility = View.VISIBLE
             favoritesRecyclerView.visibility = View.GONE
             favoritesContainerPlaceholder.visibility = View.GONE
@@ -89,7 +89,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun showError() {
-        binding.apply {
+        with(binding) {
             favoritesProgressbar.visibility = View.GONE
             favoritesRecyclerView.visibility = View.GONE
             favoritesContainerPlaceholder.visibility = View.VISIBLE
@@ -100,7 +100,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun showEmpty() {
-        binding.apply {
+        with(binding) {
             favoritesProgressbar.visibility = View.GONE
             favoritesRecyclerView.visibility = View.GONE
             favoritesContainerPlaceholder.visibility = View.VISIBLE

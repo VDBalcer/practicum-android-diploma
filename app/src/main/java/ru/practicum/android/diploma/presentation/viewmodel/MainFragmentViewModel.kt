@@ -112,23 +112,24 @@ class MainFragmentViewModel(
                 )
             }
 
-            is NetworkResult.NetworkError -> {
-                if (isNewSearch) {
-                    mainStateLiveData.postValue(MainScreenState.NoInternet)
-                } else {
-                    finishPagination()
-                    sendErrorEvent(ErrorType.NO_INTERNET)
-                }
-            }
+            is NetworkResult.NetworkError -> handleError(isNewSearch, ErrorType.NO_INTERNET)
+            is NetworkResult.Error -> handleError(isNewSearch, ErrorType.NETWORK)
+        }
+    }
 
-            is NetworkResult.Error -> {
-                if (isNewSearch) {
-                    mainStateLiveData.postValue(MainScreenState.ServerError)
-                } else {
-                    finishPagination()
-                    sendErrorEvent(ErrorType.NETWORK)
-                }
+    private fun handleError(
+        isNewSearch: Boolean,
+        type: ErrorType,
+    ) {
+        if (isNewSearch) {
+            val state = when (type) {
+                ErrorType.NO_INTERNET -> MainScreenState.NoInternet
+                ErrorType.NETWORK -> MainScreenState.ServerError
             }
+            mainStateLiveData.postValue(state)
+        } else {
+            finishPagination()
+            sendErrorEvent(type)
         }
     }
 
