@@ -3,5 +3,5 @@
     android:shape="rectangle">
     <solid android:color="?attr/input_background" />
     <corners
-        android:radius="@dimen/search_input_radius" />
+        android:radius="@dimen/search_layout_radius" />
 </shape>

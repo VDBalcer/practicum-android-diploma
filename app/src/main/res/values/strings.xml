@@ -2,6 +2,9 @@
     <string name="app_name">Practicum-Android-Diploma</string>
 
     <string name="main_fragment_title">Поиск вакансий</string>
+    <string name="edit_textbox_job_search">Введите запрос</string>
+
+
     <string name="main_fragment_nav_menu_title">Главная</string>
 
     <string name="team_fragment_title">Команда</string>
@@ -17,4 +20,50 @@
     <string name="filter_region_fragment_title">Выбор региона</string>
 
     <string name="filter_field_title">Выбор отрасли</string>
+
+    <string name="icon_filter">Icon filter off</string>
+    <string name="icon_search">Job search</string>
+    <string name="icon_clear">Clear text</string>
+    <string name="placeholder_image">Placeholder</string>
+    <string name="company_logo">Company logo</string>
+
+    <string name="title_not_internet">Нет интернета</string>
+    <string name="title_server_error">Ошибка сервера</string>
+    <string name="title_vacancy_not_found">Не удалось получить\nсписок вакансий</string>
+    <string name="result_not_found">Таких вакансий нет</string>
+    <string name="salary_not_specify">Зарплата не указана</string>
+    <string name="salary_from">от %1$d\ </string>
+    <string name="salary_to">до %1$d\ </string>
+    <string name="currency_rub">\u20bd</string>
+    <string name="currency_euro">\u20ac</string>
+    <string name="currency_usd">$</string>
+    
+    <string name="vacancy_name_and_address">%1$s, %2$s </string>
+
+    <string name="title_empty_list">Список пуст</string>
+
+    <string name="app_team">Над приложением работали</string>
+    <string name="developer_1">Вадим Бальцер</string>
+    <string name="developer_2">Роман Татаренко</string>
+    <string name="developer_3">Никита Янцен</string>
+
+    <string name="vacancy_detail_toolbar_title">Вакансия</string>
+    <string name="vacancy_detail_experience_title">Требуемый опыт</string>
+    <string name="vacancy_detail_description_title">Описание вакансии</string>
+    <string name="vacancy_detail_responsibilities_title">Обязанности</string>
+    <string name="vacancy_detail_requirements_title">Требования</string>
+    <string name="vacancy_detail_conditions_title">Условия</string>
+    <string name="vacancy_detail_skills_title">Ключевые навыки</string>
+    <string name="not_fount_vacancy_info_message">Вакансия не найдена или удалена</string>
+    <string name="contacts_format">%1$s\n%2$s</string>
+    <string name="email">email: %1$s</string>
+    <string name="network_error_toast_text">Произошла ошибка</string>
+    <string name="no_internet_error_toast_text">Проверьте подключение к интернету</string>
+
+    <plurals name="vacancies_found">
+        <item quantity="one">Найдена %d вакансия</item>
+        <item quantity="few">Найдено %d вакансии</item>
+        <item quantity="many">Найдено %d вакансий</item>
+        <item quantity="other">Найдено %d вакансий</item>
+    </plurals>
 </resources>

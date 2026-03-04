@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.di
 
 import androidx.room.Room
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -11,6 +12,10 @@ import ru.practicum.android.diploma.data.dao.VacancyDao
 import ru.practicum.android.diploma.data.database.VacancyDatabase
 import ru.practicum.android.diploma.data.dto.NetworkMonitor
 import ru.practicum.android.diploma.data.network.YPApiService
+import ru.practicum.android.diploma.data.repository.DatabaseFavoriteRepositoryImpl
+import ru.practicum.android.diploma.data.repository.ExternalNavigatorImpl
+import ru.practicum.android.diploma.domain.api.ExternalNavigator
+import ru.practicum.android.diploma.domain.database.FavoriteRepository
 
 val dataModule = module {
 
@@ -29,7 +34,7 @@ val dataModule = module {
 
     single<YPApiService> {
         Retrofit.Builder()
-            .baseUrl("https://practicum-diploma-8bc38133faba.herokuapp.com/")
+            .baseUrl("http://155.212.163.151/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -43,5 +48,15 @@ val dataModule = module {
     single<VacancyDao> {
         get<VacancyDatabase>().vacancyDao()
     }
+    single { Gson() }
+
     single { NetworkMonitor(get()) }
+
+    factory<ExternalNavigator> {
+        ExternalNavigatorImpl(androidContext())
+    }
+
+    factory<FavoriteRepository> {
+        DatabaseFavoriteRepositoryImpl(get(), get())
+    }
 }

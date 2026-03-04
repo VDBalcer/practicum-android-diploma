@@ -51,6 +51,9 @@ dependencies {
     implementation(libs.bundles.ui)
     implementation(libs.koin)
 
+    implementation(libs.bundles.glide)
+    annotationProcessor(libs.glide.compiler)
+
     testImplementation(libs.bundles.unitTests)
     androidTestImplementation(libs.bundles.uiTests)
 
