@@ -11,7 +11,7 @@ class FilterLocalDataSource(
         sharedPreferences.edit()
             .putInt(KEY_SALARY_FROM, filter.salaryFrom ?: NO_SALARY)
             .putBoolean(KEY_INCLUDE_WITHOUT_SALARY, filter.includeWithoutSalary)
-            .putString(KEY_INDUSTRY_ID, filter.industryId)
+            .putString(KEY_INDUSTRY_ID, filter.industry)
             .apply()
     }
 
@@ -24,7 +24,7 @@ class FilterLocalDataSource(
                 KEY_INCLUDE_WITHOUT_SALARY,
                 false
             ),
-            industryId = sharedPreferences.getString(KEY_INDUSTRY_ID, null)
+            industry = sharedPreferences.getString(KEY_INDUSTRY_ID, null)
         )
     }
 
