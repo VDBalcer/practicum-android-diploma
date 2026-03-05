@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
 
-class FilterFragment: FilterBaseFragment() {
+class FilterFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding get() = _binding!!
 

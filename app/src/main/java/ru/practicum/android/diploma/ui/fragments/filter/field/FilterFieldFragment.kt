@@ -10,7 +10,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterFieldBinding
 import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
 
-class FilterFieldFragment: FilterBaseFragment() {
+class FilterFieldFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterFieldBinding? = null
     private val binding get() = _binding!!
 

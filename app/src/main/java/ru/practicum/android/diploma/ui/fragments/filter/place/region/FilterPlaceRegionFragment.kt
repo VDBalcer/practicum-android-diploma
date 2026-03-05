@@ -8,7 +8,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceRegionBinding
 import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
 
-class FilterPlaceRegionFragment: FilterBaseFragment()  {
+class FilterPlaceRegionFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterPlaceRegionBinding? = null
     private val binding get() = _binding!!
 
