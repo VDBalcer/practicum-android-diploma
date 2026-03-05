@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -9,6 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.data.dao.VacancyDao
+import ru.practicum.android.diploma.data.database.FilterLocalDataSource
 import ru.practicum.android.diploma.data.database.VacancyDatabase
 import ru.practicum.android.diploma.data.dto.NetworkMonitor
 import ru.practicum.android.diploma.data.network.YPApiService
@@ -58,5 +61,16 @@ val dataModule = module {
 
     factory<FavoriteRepository> {
         DatabaseFavoriteRepositoryImpl(get(), get())
+    }
+
+    single<SharedPreferences> {
+        androidContext().getSharedPreferences(
+            "filter_prefs",
+            Context.MODE_PRIVATE
+        )
+    }
+
+    single {
+        FilterLocalDataSource(get())
     }
 }
