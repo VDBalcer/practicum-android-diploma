@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragments.filter.place.country.FilterPlaceCountryFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/filter_country_fragment_title" />
-</FrameLayout>
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/arrow_back"
+        android:src="@drawable/icon_arrow_back"
+        android:contentDescription="@string/icon_arrow_back"
+        style="@style/icon_center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/title_page"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_country_fragment_title"
+        style="@style/Widget.PageTitleWithArrow"
+        android:textAppearance="@style/TextAppearance.PageTitle"
+        app:layout_constraintStart_toEndOf="@id/arrow_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
