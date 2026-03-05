@@ -4,18 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
+import ru.practicum.android.diploma.presentation.viewmodel.FilterViewModel
 
 class FilterFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: FilterViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentFilterBinding.inflate(inflater, container, false)
         return binding.root
@@ -23,6 +28,7 @@ class FilterFragment : FilterBaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        viewModel.saveFilter()
         _binding = null
     }
 
@@ -30,6 +36,7 @@ class FilterFragment : FilterBaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         initSalaryInput()
         initToolbar(R.string.filter_fragment_title)
+        initFilterObserver()
         binding.filterAreaItem.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterFragment_to_filterPlaceFragment
@@ -41,31 +48,47 @@ class FilterFragment : FilterBaseFragment() {
                 R.id.action_filterFragment_to_filterFieldFragment
             )
         }
-        binding.filterOnlySalary.setOnClickListener {
-            binding.filterOnlySalary.isSelected =
-                !binding.filterOnlySalary.isSelected
-        }
     }
 
     private fun initSalaryInput() {
-        val activeColor = requireContext().getColor(R.color.button_background)
-        val defaultColor = requireContext().getColor(R.color.input_text)
-        fun updateUi() {
-            val hasFocus = binding.editTextboxSalary.hasFocus()
-            val textNotEmpty = binding.editTextboxSalary.text?.isNotEmpty() == true
-            binding.salaryTitle.setTextColor(
-                if (hasFocus || textNotEmpty) activeColor else defaultColor
-            )
-            binding.iconClear.visibility =
-                if (hasFocus && textNotEmpty) View.VISIBLE else View.GONE
+        binding.salaryInputLayout.setEndIconOnClickListener {
+            val editText = binding.salaryInputEditText
+            editText.text?.clear()
+            val imm = requireContext()
+                .getSystemService(InputMethodManager::class.java)
+            imm.hideSoftInputFromWindow(editText.windowToken, 0)
+            editText.clearFocus()
         }
-        binding.editTextboxSalary.setOnFocusChangeListener { _, _ ->
-            updateUi()
-        }
+        binding.salaryInputEditText.doAfterTextChanged { text ->
+            binding.salaryInputLayout.isEndIconVisible = !text.isNullOrEmpty()
 
-        binding.iconClear.setOnClickListener {
-            binding.editTextboxSalary.text?.clear()
+            val salary = text?.toString()?.toIntOrNull()
+            viewModel.changeSalary(salary)
+
+        }
+    }
+
+    private fun initFilterObserver() {
+        viewModel.observeFilterState().observe(viewLifecycleOwner) {
+            with(binding) {
+                filterOnlySalary.setOnCheckedChangeListener(null)
+                filterOnlySalary.isChecked = it.includeWithoutSalary
+                filterOnlySalary.setOnCheckedChangeListener { _, isChecked ->
+                    viewModel.changeIncludeWithoutSalary(isChecked)
+                }
+
+                if (!salaryInputEditText.isFocused) {
+                    val text = it.salaryFrom?.toString().orEmpty()
+
+                    if (salaryInputEditText.text.toString() != text) {
+                        salaryInputEditText.setText(text)
+                    }
+                }
+
+                it.industry?.name
+                    ?.takeIf { name -> name.isNotBlank() }
+                    ?.let { name -> filterIndustryItem.text = name }
+            }
         }
     }
 }
-

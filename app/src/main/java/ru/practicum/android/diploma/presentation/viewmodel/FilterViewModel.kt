@@ -7,48 +7,38 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.database.FilterInteractor
-import ru.practicum.android.diploma.domain.models.FilterIndustryModel
 import ru.practicum.android.diploma.domain.models.VacancyFilterModel
-import ru.practicum.android.diploma.presentation.model.FilterState
-import ru.practicum.android.diploma.presentation.model.FilteredIndustryItem
 
 class FilterViewModel(
     private val apiInteractor: ApiInteractor,
     private val filterSharedPref: FilterInteractor,
 ) : ViewModel() {
-    private val filterLiveData = MutableLiveData<FilterState>()
-    fun observeFilterState(): LiveData<FilterState> = filterLiveData
+    private val filterLiveData = MutableLiveData<VacancyFilterModel>()
+    fun observeFilterState(): LiveData<VacancyFilterModel> = filterLiveData
 
 
     init {
         viewModelScope.launch {
             val filter = filterSharedPref.getFilter()
-
-            if (
-                filter.salaryFrom != null ||
-                filter.includeWithoutSalary ||
-                filter.industry != null
-            ) {
-                filterLiveData.postValue(FilterState.EditedState(filter))
-            } else {
-                filterLiveData.postValue(FilterState.NotEditedState)
-            }
+            filterLiveData.postValue(filter)
         }
     }
 
-    fun saveFilter() {
-        val current = filterLiveData.value
+    fun changeSalary(value: Int?) {
+        val current = filterLiveData.value ?: return
+        filterLiveData.value = current.copy(salaryFrom = value)
+    }
 
-        if (current is FilterState.EditedState) {
-            viewModelScope.launch {
-                filterSharedPref.saveFilter(
-                    VacancyFilterModel(
-                        salaryFrom = current.filter.salaryFrom,
-                        includeWithoutSalary = current.filter.includeWithoutSalary,
-                        industry = current.filter.industry
-                    )
-                )
-            }
+    fun changeIncludeWithoutSalary(value: Boolean) {
+        val current = filterLiveData.value ?: return
+        filterLiveData.value = current.copy(includeWithoutSalary = value)
+    }
+
+    fun saveFilter() {
+        val currentFilter = filterLiveData.value ?: return
+
+        viewModelScope.launch {
+            filterSharedPref.saveFilter(currentFilter)
         }
     }
 }
