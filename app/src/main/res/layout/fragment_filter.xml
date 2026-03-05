@@ -19,7 +19,6 @@
             android:id="@+id/filter_area_item"
             android:drawableEnd="@drawable/arrow_forward"
             android:text="@string/filter_area_item"
-            android:layout_marginTop="@dimen/filter_area_item_margin_top"
             style="@style/Widget.FilterItem"
             android:textAppearance="@style/TextAppearance.FilterLight" />
 
