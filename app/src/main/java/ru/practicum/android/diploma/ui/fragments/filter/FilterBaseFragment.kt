@@ -30,4 +30,8 @@ abstract class FilterBaseFragment : Fragment() {
             rootToolbar.menu.forEach { it.isVisible = false }
         }
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _rootToolbar = null
+    }
 }
