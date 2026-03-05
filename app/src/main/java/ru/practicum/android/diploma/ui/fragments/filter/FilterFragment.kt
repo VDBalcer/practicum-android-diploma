@@ -4,16 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.forEach
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.appbar.MaterialToolbar
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
+import ru.practicum.android.diploma.ui.root.RootActivity
 
 class FilterFragment : Fragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding get() = _binding!!
     private var isOnlySalaryChecked = false
+
+    private var _rootToolbar: MaterialToolbar? = null
+    private val rootToolbar get() = _rootToolbar!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,14 +37,23 @@ class FilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toBackArrowButton()
+//        toBackArrowButton()
         initSalaryInput()
 
+        onInitToolbar()
+
+//        binding.filterFieldButton.setOnClickListener {
+//            findNavController().navigate(
+//                R.id.action_filterFragment_to_filterFieldFragment
+//            )
+//        }
+//        binding.filterPlaceButton.setOnClickListener {}
         binding.filterAreaItem.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterFragment_to_filterPlaceFragment
             )
         }
+
         binding.filterIndustryItem.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterFragment_to_filterFieldFragment
@@ -50,9 +65,13 @@ class FilterFragment : Fragment() {
         }
     }
 
-    private fun toBackArrowButton() {
-        binding.arrowBack.setOnClickListener {
-            findNavController().popBackStack()
+    private fun onInitToolbar() {
+        _rootToolbar = (activity as RootActivity).rootBinding.rootToolbar
+        rootToolbar.title = getString(R.string.filter_fragment_title)
+        rootToolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        rootToolbar.menu.forEach { it.isVisible = false }
+        rootToolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
         }
     }
 
@@ -68,12 +87,7 @@ class FilterFragment : Fragment() {
             binding.iconClear.visibility =
                 if (hasFocus && textNotEmpty) View.VISIBLE else View.GONE
         }
-
         binding.editTextboxSalary.setOnFocusChangeListener { _, _ ->
-            updateUi()
-        }
-
-        binding.editTextboxSalary.doOnTextChanged { text, _, _, _ ->
             updateUi()
         }
 
@@ -82,3 +96,4 @@ class FilterFragment : Fragment() {
         }
     }
 }
+

@@ -26,4 +26,3 @@ fun formatSalary(
             "до $to $currencySymbol"
     }
 }
-
