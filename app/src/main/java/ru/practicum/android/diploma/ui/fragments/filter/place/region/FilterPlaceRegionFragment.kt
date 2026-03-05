@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceRegionBinding
+import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
 
-class FilterPlaceRegionFragment : Fragment() {
+class FilterPlaceRegionFragment: FilterBaseFragment()  {
     private var _binding: FragmentFilterPlaceRegionBinding? = null
     private val binding get() = _binding!!
 
@@ -28,8 +28,6 @@ class FilterPlaceRegionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.arrowBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
+        initToolbar(R.string.filter_region_fragment_title)
     }
 }

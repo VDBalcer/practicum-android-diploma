@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterFieldBinding
+import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
 
-class FilterFieldFragment : Fragment() {
+class FilterFieldFragment: FilterBaseFragment() {
     private var _binding: FragmentFilterFieldBinding? = null
     private val binding get() = _binding!!
 
@@ -23,8 +25,6 @@ class FilterFieldFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.arrowBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
+        initToolbar(R.string.filter_field_title)
     }
 }

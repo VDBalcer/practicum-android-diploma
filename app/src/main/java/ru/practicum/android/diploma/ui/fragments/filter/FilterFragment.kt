@@ -4,19 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.forEach
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.appbar.MaterialToolbar
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
-import ru.practicum.android.diploma.ui.root.RootActivity
 
-class FilterFragment : Fragment() {
+class FilterFragment: FilterBaseFragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding get() = _binding!!
-    private var _rootToolbar: MaterialToolbar? = null
-    private val rootToolbar get() = _rootToolbar!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +29,7 @@ class FilterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initSalaryInput()
-        onInitToolbar()
+        initToolbar(R.string.filter_fragment_title)
         binding.filterAreaItem.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterFragment_to_filterPlaceFragment
@@ -50,16 +44,6 @@ class FilterFragment : Fragment() {
         binding.filterOnlySalary.setOnClickListener {
             binding.filterOnlySalary.isSelected =
                 !binding.filterOnlySalary.isSelected
-        }
-    }
-
-    private fun onInitToolbar() {
-        _rootToolbar = (activity as RootActivity).rootBinding.rootToolbar
-        rootToolbar.title = getString(R.string.filter_fragment_title)
-        rootToolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-        rootToolbar.menu.forEach { it.isVisible = false }
-        rootToolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
         }
     }
 

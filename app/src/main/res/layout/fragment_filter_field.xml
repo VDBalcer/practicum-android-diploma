@@ -8,33 +8,6 @@
     tools:context=".ui.fragments.filter.field.FilterFieldFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/header_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/arrow_back"
-            android:src="@drawable/icon_arrow_back"
-            android:contentDescription="@string/icon_arrow_back"
-            style="@style/icon_center_vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <TextView
-            android:id="@+id/title_page"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_field_title"
-            style="@style/Widget.PageTitleWithArrow"
-            android:textAppearance="@style/TextAppearance.PageTitle"
-            app:layout_constraintStart_toEndOf="@id/arrow_back"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
