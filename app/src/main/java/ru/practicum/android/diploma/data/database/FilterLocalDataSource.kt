@@ -21,16 +21,23 @@ class FilterLocalDataSource(
         val salary = sharedPreferences.getInt(KEY_SALARY_FROM, NO_SALARY)
         val industryId = sharedPreferences.getInt(KEY_INDUSTRY_ID, 0)
         return VacancyFilterModel(
-            salaryFrom = if (salary == NO_SALARY) null else salary,
+            salaryFrom = if (salary == NO_SALARY) {
+                null
+            } else {
+                salary
+            },
             includeWithoutSalary = sharedPreferences.getBoolean(
                 KEY_INCLUDE_WITHOUT_SALARY,
                 false
             ),
-            industry = if (industryId == NO_INDUSTRY) null
-            else FilterIndustryModel(
-                id = sharedPreferences.getInt(KEY_INDUSTRY_ID, 0),
-                name = sharedPreferences.getString(KEY_INDUSTRY_NAME, "") ?: ""
-            )
+            industry = if (industryId == NO_INDUSTRY) {
+                null
+            } else {
+                FilterIndustryModel(
+                    id = sharedPreferences.getInt(KEY_INDUSTRY_ID, 0),
+                    name = sharedPreferences.getString(KEY_INDUSTRY_NAME, "") ?: ""
+                )
+            }
         )
     }
 

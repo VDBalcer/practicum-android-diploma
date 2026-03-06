@@ -10,7 +10,7 @@ data class VacancyRequestItem(
 ) {
     fun hasActiveFilters(): Boolean {
         return onlyWithSalary ||
-            (salary != null && salary > 0) ||
-            (industryId != null && industryId > 0)
+            salary != null && salary > 0 ||
+            industryId != null && industryId > 0
     }
 }
