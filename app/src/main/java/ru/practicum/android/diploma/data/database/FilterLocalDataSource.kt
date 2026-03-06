@@ -31,7 +31,6 @@ class FilterLocalDataSource(
                 name = sharedPreferences.getString(KEY_INDUSTRY_NAME, "") ?: ""
             )
 
-
         )
     }
 

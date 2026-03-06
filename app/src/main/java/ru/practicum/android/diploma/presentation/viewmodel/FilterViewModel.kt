@@ -16,7 +16,6 @@ class FilterViewModel(
     private val filterLiveData = MutableLiveData<VacancyFilterModel>()
     fun observeFilterState(): LiveData<VacancyFilterModel> = filterLiveData
 
-
     init {
         viewModelScope.launch {
             val filter = filterSharedPref.getFilter()
