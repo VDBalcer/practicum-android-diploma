@@ -5,12 +5,10 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.data.dao.VacancyDao
 import ru.practicum.android.diploma.data.database.FilterLocalDataSource
 import ru.practicum.android.diploma.data.database.VacancyDatabase
@@ -23,23 +21,7 @@ import ru.practicum.android.diploma.domain.database.FavoriteRepository
 
 val dataModule = module {
 
-    val logging = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.HEADERS
-    }
-
     val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor(logging)// TODO: удалить при отправке
-        .addInterceptor { chain ->
-            val request = chain.request()
-                .newBuilder()
-                .addHeader(
-                    "Authorization",
-                    "Bearer ${BuildConfig.API_ACCESS_TOKEN}"
-                )
-                .build()
-
-            chain.proceed(request)
-        }
         .build()
 
     single<YPApiService> {

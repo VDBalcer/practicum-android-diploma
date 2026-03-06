@@ -9,15 +9,12 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import org.koin.android.ext.android.inject
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
-import ru.practicum.android.diploma.domain.api.ApiInteractor
 
 class RootActivity : AppCompatActivity() {
     private var _binding: ActivityRootBinding? = null
     val rootBinding get() = _binding!!
-    private val repository: ApiInteractor by inject()
     private val topLevelDestinations = setOf(
         R.id.main_fragment,
         R.id.favorites_fragment,
