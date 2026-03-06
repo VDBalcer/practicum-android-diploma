@@ -61,7 +61,9 @@ class MainFragmentViewModel(
 
     fun isFilterEdited(): Boolean {
         updateFilter()
-        return currentFilter.hasActiveFilters()
+        return currentFilter.onlyWithSalary ||
+            currentFilter.salary != null && currentFilter.salary!! > 0 ||
+            currentFilter.industryId != null && currentFilter.industryId!! > 0
     }
 
     private fun sendErrorEvent(errorType: ErrorType) {
