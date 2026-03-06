@@ -10,7 +10,7 @@ sealed class MainScreenState {
     object ServerError : MainScreenState()
 
     data class Content(
-        var response: VacancyResponseItem,
-        var isPaginationLoading: Boolean,
+        val response: VacancyResponseItem,
+        val isPaginationLoading: Boolean,
     ) : MainScreenState()
 }
