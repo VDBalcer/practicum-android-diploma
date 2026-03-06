@@ -7,10 +7,4 @@ data class VacancyRequestItem(
     val salary: Int? = null,
     val page: Int = 1,
     val onlyWithSalary: Boolean = false,
-) {
-    fun hasActiveFilters(): Boolean {
-        return onlyWithSalary ||
-            salary != null && salary > 0 ||
-            industryId != null && industryId > 0
-    }
-}
+)
