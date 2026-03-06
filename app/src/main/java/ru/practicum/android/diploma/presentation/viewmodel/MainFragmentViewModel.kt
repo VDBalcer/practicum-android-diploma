@@ -31,11 +31,10 @@ class MainFragmentViewModel(
         true
     ) { query ->
         updateFilter()
-        val currentState = mainStateLiveData.value
-        val filter = currentState?.filter?.copy(
+        val filter = currentFilter.copy(
             page = 1,
             text = query,
-        ) ?: VacancyRequestItem()
+        )
         searchRequest(filter)
     }
 
@@ -52,16 +51,17 @@ class MainFragmentViewModel(
     fun updateFilter() {
         viewModelScope.launch {
             val savedFilter = filterSharedPref.getFilter()
-
             currentFilter = currentFilter.copy(
                 salary = savedFilter.salaryFrom,
                 onlyWithSalary = savedFilter.includeWithoutSalary,
                 industryId = savedFilter.industry?.id
             )
-
-            mainStateLiveData.value?.filter = currentFilter
-            mainStateLiveData.value = mainStateLiveData.value
         }
+    }
+
+    fun isFilterEdited(): Boolean {
+        updateFilter()
+        return currentFilter.hasActiveFilters()
     }
 
     private fun sendErrorEvent(errorType: ErrorType) {
@@ -97,13 +97,12 @@ class MainFragmentViewModel(
     ) {
         searchJob = viewModelScope.launch {
             val result = interactor.getVacancies(filter.toDomain())
-            processResult(result, filter, isNewSearch)
+            processResult(result, isNewSearch)
         }
     }
 
     private fun processResult(
         result: NetworkResult<VacancyResponseModel>,
-        filter: VacancyRequestItem,
         isNewSearch: Boolean,
     ) {
         val currentState = mainStateLiveData.value
@@ -130,7 +129,6 @@ class MainFragmentViewModel(
                     MainScreenState.Content(
                         response = response.copy(vacancies = updatedVacancies),
                         isPaginationLoading = false,
-                        filter = filter
                     )
                 )
             }
@@ -178,9 +176,9 @@ class MainFragmentViewModel(
             isPaginationLoading = true
         )
         loadPage(
-            filter = currentState.filter?.copy(
+            filter = currentFilter.copy(
                 page = currentState.response.page + 1
-            ) ?: VacancyRequestItem(),
+            ),
             isNewSearch = false
         )
     }

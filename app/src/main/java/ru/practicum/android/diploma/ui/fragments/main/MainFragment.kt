@@ -69,7 +69,16 @@ class MainFragment : Fragment() {
         super.onResume()
 
         // Обновление фильтра при возврате на страницу
-        viewModel.updateFilter()
+        updateFilterState()
+    }
+
+    private fun updateFilterState() {
+        val icon = if (viewModel.isFilterEdited()) {
+            R.drawable.ic_filter_enabled
+        } else {
+            R.drawable.ic_filter_24
+        }
+        rootToolbar.menu.findItem(R.id.action_filter).setIcon(icon)
     }
 
     private fun onInitToolbar() {
@@ -87,6 +96,7 @@ class MainFragment : Fragment() {
                     )
                     true
                 }
+
                 else -> false
             }
         }
@@ -142,13 +152,6 @@ class MainFragment : Fragment() {
     }
 
     private fun render(state: MainScreenState) {
-        val icon = if (state.filter?.hasActiveFilters() == true) {
-            R.drawable.ic_filter_enabled
-        } else {
-            R.drawable.ic_filter_24
-        }
-        rootToolbar.menu.findItem(R.id.action_filter).setIcon(icon)
-
         when (state) {
             is MainScreenState.StartSearch -> showStart()
             is MainScreenState.NoInternet -> showNotInternetPlaceholder()

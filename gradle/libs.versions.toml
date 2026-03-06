@@ -14,6 +14,7 @@ detektTwitterComposeRules = "0.0.26"
 
 # Core libraries
 retrofit = "2.9.0"
+logging-interceptor = "4.12.0"
 room = "2.5.1"
 koin = "3.3.0"
 glide = "4.14.2"
@@ -70,6 +71,7 @@ ui-constraintLayout = { group = "androidx.constraintlayout", name = "constraintl
 # Networking
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+logging-interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging-interceptor"}
 
 # Room
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
@@ -124,7 +126,8 @@ room = [
 # Networking
 retrofit = [
     "retrofit",
-    "retrofit-gson"
+    "retrofit-gson",
+    "logging-interceptor"
 ]
 
 # UI
