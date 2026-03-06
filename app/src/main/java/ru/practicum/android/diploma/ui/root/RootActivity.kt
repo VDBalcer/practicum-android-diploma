@@ -1,28 +1,20 @@
 package ru.practicum.android.diploma.ui.root
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
-import ru.practicum.android.diploma.domain.api.ApiInteractor
-import ru.practicum.android.diploma.domain.api.NetworkResult
-import ru.practicum.android.diploma.domain.models.VacancyRequestModel
 
 class RootActivity : AppCompatActivity() {
     private var _binding: ActivityRootBinding? = null
     val rootBinding get() = _binding!!
-    private val repository: ApiInteractor by inject()
     private val topLevelDestinations = setOf(
         R.id.main_fragment,
         R.id.favorites_fragment,
@@ -60,38 +52,10 @@ class RootActivity : AppCompatActivity() {
                 destination.id in topLevelDestinations
             ViewCompat.requestApplyInsets(rootBinding.root)
         }
-
-        // Пример запроса к API
-        networkRequestExample()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
-    private fun networkRequestExample() {
-        lifecycleScope.launch {
-            val result = repository.getVacancies(VacancyRequestModel()) // Любой тестируемый запрос
-
-            when (result) {
-                is NetworkResult.Success -> {
-                    Log.d(NETWORK_DEBUG_TAG, "Success: ${result.data}")
-                }
-
-                is NetworkResult.Error -> {
-                    Log.e(NETWORK_DEBUG_TAG, "HTTP error: ${result.code}")
-                }
-
-                is NetworkResult.NetworkError -> {
-                    Log.e(NETWORK_DEBUG_TAG, "Network error")
-                }
-            }
-        }
-    }
-
-    companion object {
-        private const val NETWORK_DEBUG_TAG = "NETWORK_TEST"
-    }
-
 }
