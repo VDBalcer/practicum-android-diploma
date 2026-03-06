@@ -31,6 +31,11 @@
         <item name="android:textColor">@color/input_text</item>
         <item name="android:textColorHint">?attr/placeholder_color</item>
     </style>
+    <style name="TextAppearance.Hint" parent="font_regular">
+        <item name="android:textSize">@dimen/salary_title_font_size</item>
+        <item name="android:textColor">@color/input_text</item>
+        <item name="android:textColorHint">?attr/placeholder_color</item>
+    </style>
 
     <style name="Widget.LayoutSearchInput">
         <item name="android:layout_marginHorizontal">@dimen/search_layout_margin_horizontal</item>

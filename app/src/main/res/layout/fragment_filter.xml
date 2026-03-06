@@ -14,109 +14,106 @@
         android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_area_item"
+            style="@style/Widget.FilterItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/filter_area_item"
             android:drawableEnd="@drawable/arrow_forward"
             android:text="@string/filter_area_item"
-            style="@style/Widget.FilterItem"
             android:textAppearance="@style/TextAppearance.FilterLight" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_industry_item"
+            style="@style/Widget.FilterItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/filter_industry_item"
             android:drawableEnd="@drawable/arrow_forward"
             android:text="@string/filter_industry_item"
-            style="@style/Widget.FilterItem"
             android:textAppearance="@style/TextAppearance.FilterLight" />
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/search_container"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/salary_input_layout"
+            style="?attr/textInputStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.LayoutSalaryInput">
+            android:layout_marginHorizontal="@dimen/salary_margin_horizontal"
+            android:layout_marginVertical="@dimen/salary_margin_vertical"
+            android:hint="@string/salary_title"
+            android:paddingVertical="@dimen/salary_padding_vertical"
+            app:boxBackgroundColor="?attr/input_background"
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusBottomEnd="@dimen/salary_edit_text_corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/salary_edit_text_corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/salary_edit_text_corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/salary_edit_text_corner_radius"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:cursorColor="@color/salary_hint_text_color"
+            app:endIconDrawable="@drawable/icon_clear"
+            app:endIconMode="custom"
+            app:expandedHintEnabled="false"
+            app:hintTextColor="@color/salary_hint_text_color"
+            app:hintTextAppearance="@style/TextAppearance.Hint"
+            app:placeholderText="@string/edit_textbox_salary"
+            app:placeholderTextAppearance="@style/TextAppearance.Input"
+            app:placeholderTextColor="?attr/placeholder_color">
 
-            <TextView
-                android:id="@+id/salary_title"
-                android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/salary_input_edit_text"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/salary_title"
-                style="@style/Widget.SalaryTitle"
-                android:textAppearance="@style/TextAppearance.SalaryTitle"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <EditText
-                android:id="@+id/edit_textbox_salary"
-                style="@style/Widget.SalaryInput"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/edit_textbox_salary"
+                android:fontFamily="@font/ys_display_regular"
+                android:gravity="center_vertical"
                 android:imeOptions="actionDone"
-                android:importantForAutofill="no"
-                android:inputType="text|textNoSuggestions"
-                android:maxLines="1"
+                android:inputType="number"
+                android:paddingStart="@dimen/salary_edit_text_padding_start"
+                android:paddingEnd="@dimen/salary_edit_text_padding_end"
+                android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.Input"
-                android:textColor="@color/input_text"
-                app:layout_constraintTop_toBottomOf="@id/salary_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                android:textColor="@color/input_text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:visibility="gone"
-                    android:id="@+id/icon_clear"
-                    android:src="@drawable/icon_clear"
-                    android:contentDescription="@string/icon_clear"
-                    style="@style/Widget.SalaryIconClear"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.google.android.material.textview.MaterialTextView
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/filter_only_salary"
+            style="@style/Widget.FilterOnlySalaryItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/filter_only_salary"
+            android:background="@null"
+            android:button="@null"
             android:drawableEnd="@drawable/check_box_selector"
             android:text="@string/filter_only_salary"
-            style="@style/Widget.FilterOnlySalaryItem"
             android:textAppearance="@style/TextAppearance.FilterOnlySalaryItem" />
 
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="gone"
         android:id="@+id/btn_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/button_margin_bottom">
+        android:paddingBottom="@dimen/button_margin_bottom"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/btn_apply"
+            style="@style/Widget.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/btn_apply"
-            style="@style/Widget.Button"
             android:textAppearance="@style/TextAppearance.Button"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/btn_reset"
+            style="@style/Widget.ButtonReset"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/btn_reset"
-            style="@style/Widget.ButtonReset"
             android:textAppearance="@style/TextAppearance.ButtonReset"
-            app:layout_constraintTop_toBottomOf="@id/btn_apply"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/btn_apply" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

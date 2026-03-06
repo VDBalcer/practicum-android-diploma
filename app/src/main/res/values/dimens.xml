@@ -100,5 +100,11 @@
     <dimen name="vacancy_salary_font_size">22sp</dimen>
     <dimen name="filter_item_font_size">16sp</dimen>
     <dimen name="filter_item_margin_right">4sp</dimen>
+    <dimen name="salary_edit_text_corner_radius">12sp</dimen>
+    <dimen name="salary_margin_horizontal">16dp</dimen>
+    <dimen name="salary_margin_vertical">24dp</dimen>
+    <dimen name="salary_padding_vertical">8dp</dimen>
+    <dimen name="salary_edit_text_padding_start">16dp</dimen>
+    <dimen name="salary_edit_text_padding_end">40dp</dimen>
 
 </resources>

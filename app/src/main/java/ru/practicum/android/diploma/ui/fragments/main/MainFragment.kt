@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.view.forEach
 import android.widget.Toast
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -63,6 +63,22 @@ class MainFragment : Fragment() {
         onInitListener()
         onInitAdapter()
         onInitPaginationErrorHandler()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Обновление фильтра при возврате на страницу
+        updateFilterState()
+    }
+
+    private fun updateFilterState() {
+        val icon = if (viewModel.isFilterEdited()) {
+            R.drawable.ic_filter_enabled
+        } else {
+            R.drawable.ic_filter_24
+        }
+        rootToolbar.menu.findItem(R.id.action_filter).setIcon(icon)
     }
 
     private fun onInitToolbar() {
