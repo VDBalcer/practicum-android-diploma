@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.view.forEach
 import android.widget.Toast
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -65,6 +65,13 @@ class MainFragment : Fragment() {
         onInitPaginationErrorHandler()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        // Обновление фильтра при возврате на страницу
+        viewModel.updateFilter()
+    }
+
     private fun onInitToolbar() {
         _rootToolbar = (activity as RootActivity).rootBinding.rootToolbar
         rootToolbar.title = getString(R.string.main_fragment_title)
@@ -80,7 +87,6 @@ class MainFragment : Fragment() {
                     )
                     true
                 }
-
                 else -> false
             }
         }
@@ -136,6 +142,13 @@ class MainFragment : Fragment() {
     }
 
     private fun render(state: MainScreenState) {
+        val icon = if (state.filter?.hasActiveFilters() == true) {
+            R.drawable.ic_filter_enabled
+        } else {
+            R.drawable.ic_filter_24
+        }
+        rootToolbar.menu.findItem(R.id.action_filter).setIcon(icon)
+
         when (state) {
             is MainScreenState.StartSearch -> showStart()
             is MainScreenState.NoInternet -> showNotInternetPlaceholder()

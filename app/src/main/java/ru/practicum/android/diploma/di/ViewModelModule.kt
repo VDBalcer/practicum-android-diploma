@@ -15,6 +15,7 @@ val viewModelModule = module {
 
     viewModel {
         MainFragmentViewModel(
+            get(),
             get()
         )
     }

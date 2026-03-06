@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.bundles.retrofit)
     implementation(libs.bundles.ui)
     implementation(libs.koin)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0") // TODO: удалить при отправке
 
     implementation(libs.bundles.glide)
     annotationProcessor(libs.glide.compiler)

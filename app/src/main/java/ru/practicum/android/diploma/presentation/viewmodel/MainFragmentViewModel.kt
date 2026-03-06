@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.NetworkResult
+import ru.practicum.android.diploma.domain.database.FilterInteractor
 import ru.practicum.android.diploma.domain.models.VacancyResponseModel
 import ru.practicum.android.diploma.presentation.events.ErrorType
 import ru.practicum.android.diploma.presentation.events.MainScreenEvent
@@ -21,6 +22,7 @@ import ru.practicum.android.diploma.util.debounce
 
 class MainFragmentViewModel(
     private val interactor: ApiInteractor,
+    private val filterSharedPref: FilterInteractor,
 ) : ViewModel() {
     private var latestSearchQuery: String? = null
     private val vacancySearchDebounce = debounce<String>(
@@ -28,18 +30,39 @@ class MainFragmentViewModel(
         viewModelScope,
         true
     ) { query ->
-        val filter = VacancyRequestItem(
+        updateFilter()
+        val currentState = mainStateLiveData.value
+        val filter = currentState?.filter?.copy(
+            page = 1,
             text = query,
-            page = 1
-        )
+        ) ?: VacancyRequestItem()
         searchRequest(filter)
     }
 
     private val mainStateLiveData =
         MutableLiveData<MainScreenState>(MainScreenState.StartSearch)
 
+    fun observeMainSate(): LiveData<MainScreenState> = mainStateLiveData
+
     private val _events = MutableSharedFlow<MainScreenEvent>()
     val events = _events.asSharedFlow()
+
+    private var currentFilter = VacancyRequestItem()
+
+    fun updateFilter() {
+        viewModelScope.launch {
+            val savedFilter = filterSharedPref.getFilter()
+
+            currentFilter = currentFilter.copy(
+                salary = savedFilter.salaryFrom,
+                onlyWithSalary = savedFilter.includeWithoutSalary,
+                industryId = savedFilter.industry?.id
+            )
+
+            mainStateLiveData.value?.filter = currentFilter
+            mainStateLiveData.value = mainStateLiveData.value
+        }
+    }
 
     private fun sendErrorEvent(errorType: ErrorType) {
         viewModelScope.launch {
@@ -47,7 +70,6 @@ class MainFragmentViewModel(
         }
     }
 
-    fun observeMainSate(): LiveData<MainScreenState> = mainStateLiveData
     private var searchJob: Job? = null
     fun searchDebounce(currentSearchQuery: String) {
         if (latestSearchQuery == currentSearchQuery) {
@@ -60,6 +82,7 @@ class MainFragmentViewModel(
     }
 
     fun searchRequest(filter: VacancyRequestItem) {
+        updateFilter()
         mainStateLiveData.value = MainScreenState.Loading
         searchJob?.cancel()
         loadPage(
@@ -155,9 +178,9 @@ class MainFragmentViewModel(
             isPaginationLoading = true
         )
         loadPage(
-            filter = currentState.filter.copy(
+            filter = currentState.filter?.copy(
                 page = currentState.response.page + 1
-            ),
+            ) ?: VacancyRequestItem(),
             isNewSearch = false
         )
     }
