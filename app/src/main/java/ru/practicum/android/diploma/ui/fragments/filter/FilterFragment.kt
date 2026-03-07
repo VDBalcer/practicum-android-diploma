@@ -49,6 +49,7 @@ class FilterFragment : FilterBaseFragment() {
                 R.id.action_filterFragment_to_filterFieldFragment
             )
         }
+
         binding.btnApply.setOnClickListener {
             viewModel.saveFilter()
             parentFragmentManager.setFragmentResult(
