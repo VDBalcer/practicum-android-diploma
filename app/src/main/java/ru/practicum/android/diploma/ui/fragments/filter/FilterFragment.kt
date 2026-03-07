@@ -60,6 +60,7 @@ class FilterFragment : FilterBaseFragment() {
             findNavController().popBackStack()
         }
         binding.btnReset.setOnClickListener {
+            view.findFocus()?.clearFocus()
             viewModel.resetFilter()
         }
     }
