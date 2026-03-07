@@ -47,4 +47,11 @@ class FilterViewModel(
             filterLiveData.postValue(filterSharedPref.getFilter())
         }
     }
+
+    fun isBtnsVisible(): Boolean {
+        val currentFilter = filterLiveData.value ?: return false
+        return currentFilter.includeWithoutSalary ||
+            currentFilter.salaryFrom != null && currentFilter.salaryFrom > 0 ||
+            currentFilter.industry != null && currentFilter.industry.id > 0 && currentFilter.industry.name.isNotEmpty()
+    }
 }
