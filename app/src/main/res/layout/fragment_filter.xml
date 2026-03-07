@@ -91,6 +91,7 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_apply"
         android:textAppearance="@style/TextAppearance.Button"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_reset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -102,6 +103,7 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_reset"
         android:textAppearance="@style/TextAppearance.ButtonReset"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
