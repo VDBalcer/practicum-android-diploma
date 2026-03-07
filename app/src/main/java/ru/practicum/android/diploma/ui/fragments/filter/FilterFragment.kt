@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,6 +48,17 @@ class FilterFragment : FilterBaseFragment() {
             findNavController().navigate(
                 R.id.action_filterFragment_to_filterFieldFragment
             )
+        }
+        binding.btnApply.setOnClickListener {
+            viewModel.saveFilter()
+            parentFragmentManager.setFragmentResult(
+                "filter_result",
+                bundleOf("apply_filter" to true)
+            )
+            findNavController().popBackStack()
+        }
+        binding.btnReset.setOnClickListener {
+            viewModel.resetFilter()
         }
     }
 

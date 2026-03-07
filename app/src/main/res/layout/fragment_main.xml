@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_textbox_job_search"
             android:maxLines="1"
-            android:imeOptions="actionDone"
+            android:imeOptions="actionSearch"
             android:inputType="text|textNoSuggestions"
             android:importantForAutofill="no"
             app:layout_constraintStart_toStartOf="parent"

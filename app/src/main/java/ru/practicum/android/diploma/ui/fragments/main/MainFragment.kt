@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.forEach
@@ -63,6 +64,17 @@ class MainFragment : Fragment() {
         onInitListener()
         onInitAdapter()
         onInitPaginationErrorHandler()
+
+        parentFragmentManager.setFragmentResultListener(
+            "filter_result", viewLifecycleOwner
+        ) { _, bundle ->
+
+            val shouldApply = bundle.getBoolean("apply_filter")
+            val searchText = binding.editTextboxJobSearch.text
+            if (shouldApply && searchText.isNotEmpty()) {
+                viewModel.searchDebounce(searchText?.toString() ?: "", true)
+            }
+        }
     }
 
     override fun onResume() {
@@ -106,8 +118,7 @@ class MainFragment : Fragment() {
         binding.vacanciesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         _vacancyAdapter = VacancyItemViewAdapter { vacancy ->
             findNavController().navigate(
-                R.id.action_mainFragment_to_vacancyDetailsFragment,
-                VacancyDetailsFragment.createArgs(vacancy.id)
+                R.id.action_mainFragment_to_vacancyDetailsFragment, VacancyDetailsFragment.createArgs(vacancy.id)
             )
         }
         binding.vacanciesRecyclerView.adapter = vacancyAdapter
@@ -116,9 +127,7 @@ class MainFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0) {
-                    val layoutManager =
-                        binding.vacanciesRecyclerView.layoutManager as? LinearLayoutManager
-                            ?: return
+                    val layoutManager = binding.vacanciesRecyclerView.layoutManager as? LinearLayoutManager ?: return
                     val pos = layoutManager.findLastVisibleItemPosition()
                     val itemsCount = vacancyAdapter.itemCount
                     if (pos >= itemsCount - 1) {
@@ -134,7 +143,14 @@ class MainFragment : Fragment() {
             updateIcons(!text.isNullOrEmpty())
             viewModel.searchDebounce(text?.toString() ?: "")
         }
-
+        binding.editTextboxJobSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                viewModel.searchDebounce(binding.editTextboxJobSearch.text?.toString() ?: "")
+                true
+            } else {
+                false
+            }
+        }
         binding.iconClear.setOnClickListener {
             binding.editTextboxJobSearch.text?.clear()
             hideKeyboard()
@@ -192,9 +208,7 @@ class MainFragment : Fragment() {
             infoResult.visibility = View.VISIBLE
             progressBarPagination.isVisible = content.isPaginationLoading
             infoResult.text = resources.getQuantityString(
-                R.plurals.vacancies_found,
-                content.response.found,
-                content.response.found
+                R.plurals.vacancies_found, content.response.found, content.response.found
             )
             vacancyAdapter.setData(content.response.vacancies)
             vacancyAdapter.notifyDataSetChanged()
@@ -245,17 +259,13 @@ class MainFragment : Fragment() {
                 when (event) {
                     is MainScreenEvent.ShowError -> {
                         val message = when (event.type) {
-                            ErrorType.NETWORK ->
-                                getString(R.string.network_error_toast_text)
+                            ErrorType.NETWORK -> getString(R.string.network_error_toast_text)
 
-                            ErrorType.NO_INTERNET ->
-                                getString(R.string.no_internet_error_toast_text)
+                            ErrorType.NO_INTERNET -> getString(R.string.no_internet_error_toast_text)
                         }
 
                         Toast.makeText(
-                            requireContext(),
-                            message,
-                            Toast.LENGTH_SHORT
+                            requireContext(), message, Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
