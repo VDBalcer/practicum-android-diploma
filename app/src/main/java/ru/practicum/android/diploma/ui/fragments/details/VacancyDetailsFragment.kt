@@ -181,36 +181,18 @@ class VacancyDetailsFragment : Fragment() {
         val hasContacts = contacts != null
         val email = contacts?.email.orEmpty()
         val hasEmail = email.isNotBlank()
-
         binding.tvContactsTitle.isVisible = hasContacts
         binding.tvContactsName.isVisible = hasContacts
         binding.tvContactsEmail.isVisible = hasContacts
-
         if (hasContacts) {
             binding.tvContactsName.text = contacts!!.name
         }
-
         if (hasEmail) {
             binding.tvContactsEmail.text = getString(R.string.email, email)
-
             binding.tvContactsEmail.setOnClickListener {
                 viewModel.onEmailClicked(email)
             }
         }
-
-//        if (hasContacts) {
-//            binding.tvContactsName.text = contacts!!.name
-//
-//            val email = contacts.email
-//            binding.tvContactsEmail.text =
-//                getString(R.string.email, email)
-//
-//            if (email.isNotEmpty()) {
-//                binding.tvContactsEmail.setOnClickListener {
-//                    viewModel.onEmailClicked(email)
-//                }
-//            }
-//        }
     }
 
     private fun bindPhones(vacancy: VacancyDetailModel) {
