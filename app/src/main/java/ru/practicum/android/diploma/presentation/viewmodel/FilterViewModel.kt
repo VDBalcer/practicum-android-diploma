@@ -40,4 +40,11 @@ class FilterViewModel(
             filterSharedPref.saveFilter(currentFilter)
         }
     }
+
+    fun resetFilter() {
+        viewModelScope.launch {
+            filterSharedPref.clearFilter()
+            filterLiveData.postValue(filterSharedPref.getFilter())
+        }
+    }
 }

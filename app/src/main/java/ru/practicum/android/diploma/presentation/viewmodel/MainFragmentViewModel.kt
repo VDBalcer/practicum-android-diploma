@@ -73,8 +73,8 @@ class MainFragmentViewModel(
     }
 
     private var searchJob: Job? = null
-    fun searchDebounce(currentSearchQuery: String) {
-        if (latestSearchQuery == currentSearchQuery) {
+    fun searchDebounce(currentSearchQuery: String, forceSearch: Boolean = false) {
+        if (latestSearchQuery == currentSearchQuery && !forceSearch) {
             return
         }
         if (currentSearchQuery.isNotBlank()) {
