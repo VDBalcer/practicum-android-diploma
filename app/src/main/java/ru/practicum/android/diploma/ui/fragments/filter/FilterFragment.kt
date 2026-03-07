@@ -63,6 +63,7 @@ class FilterFragment : FilterBaseFragment() {
     }
 
     private fun initSalaryInput() {
+        binding.salaryInputLayout.isEndIconVisible = false
         binding.salaryInputLayout.setEndIconOnClickListener {
             val editText = binding.salaryInputEditText
             editText.text?.clear()
