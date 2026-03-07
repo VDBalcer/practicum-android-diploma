@@ -66,7 +66,8 @@ class MainFragment : Fragment() {
         onInitPaginationErrorHandler()
 
         parentFragmentManager.setFragmentResultListener(
-            "filter_result", viewLifecycleOwner
+            "filter_result",
+            viewLifecycleOwner
         ) { _, bundle ->
 
             val shouldApply = bundle.getBoolean("apply_filter")
@@ -265,7 +266,9 @@ class MainFragment : Fragment() {
                         }
 
                         Toast.makeText(
-                            requireContext(), message, Toast.LENGTH_SHORT
+                            requireContext(),
+                            message,
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
