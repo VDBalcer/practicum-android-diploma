@@ -18,17 +18,16 @@ import ru.practicum.android.diploma.presentation.mapper.toDomain
 import ru.practicum.android.diploma.presentation.mapper.toItem
 import ru.practicum.android.diploma.presentation.model.VacancyRequestItem
 import ru.practicum.android.diploma.presentation.states.MainScreenState
-import ru.practicum.android.diploma.util.debounce
+import ru.practicum.android.diploma.util.Debouncer
 
 class MainFragmentViewModel(
     private val interactor: ApiInteractor,
     private val filterSharedPref: FilterInteractor,
 ) : ViewModel() {
     private var latestSearchQuery: String? = null
-    private val vacancySearchDebounce = debounce<String>(
+    private val vacancySearchDebouncer = Debouncer<String>(
         SEARCH_DEBOUNCE_DELAY,
         viewModelScope,
-        true
     ) { query ->
         updateFilter()
         val filter = currentFilter.copy(
@@ -74,12 +73,17 @@ class MainFragmentViewModel(
 
     private var searchJob: Job? = null
     fun searchDebounce(currentSearchQuery: String, forceSearch: Boolean = false) {
+        if (currentSearchQuery.isBlank()) {
+            latestSearchQuery = ""
+            vacancySearchDebouncer.cancel() // отменяем debounce
+            return
+        }
         if (latestSearchQuery == currentSearchQuery && !forceSearch) {
             return
         }
         if (currentSearchQuery.isNotBlank()) {
             this.latestSearchQuery = currentSearchQuery
-            vacancySearchDebounce(currentSearchQuery)
+            vacancySearchDebouncer.submit(currentSearchQuery)
         }
     }
 
