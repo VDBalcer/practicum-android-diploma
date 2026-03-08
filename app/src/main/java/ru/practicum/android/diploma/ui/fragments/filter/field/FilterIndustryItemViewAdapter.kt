@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.presentation.model.FilteredIndustryItem
 
 class FilterIndustryItemViewAdapter(
-    private val cLickListener: IndustryCLickListener
+    private val clickListener: IndustryCLickListener
 ) : RecyclerView.Adapter<FilterIndustryItemViewHolder>() {
 
     private val industryList = mutableListOf<FilteredIndustryItem>()
@@ -29,7 +29,7 @@ class FilterIndustryItemViewAdapter(
         holder.bind(industryList[position])
 
         holder.itemView.setOnClickListener {
-            cLickListener.onIndustryClick(industryList[position])
+            clickListener.onIndustryClick(industryList[position])
         }
     }
 
