@@ -55,7 +55,7 @@
 
     <fragment
         android:id="@+id/filter_field_fragment"
-        android:name="ru.practicum.android.diploma.ui.fragments.filter.field.FilterFieldFragment"
+        android:name="ru.practicum.android.diploma.ui.fragments.filter.field.FilterIndustryFragment"
         android:label="fragment_filter_field"
         tools:layout="@layout/fragment_filter_field" />
 

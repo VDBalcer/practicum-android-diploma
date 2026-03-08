@@ -7,4 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class FilteredIndustryItem(
     val id: Int,
     val name: String,
+    val isChecked: Boolean = false
 ) : Parcelable

@@ -5,8 +5,6 @@
     <string name="edit_textbox_job_search">Введите запрос</string>
     <string name="edit_textbox_region_search">Введите регион</string>
 
-
-
     <string name="main_fragment_nav_menu_title">Главная</string>
 
     <string name="team_fragment_title">Команда</string>
@@ -32,7 +30,7 @@
 
     <string name="btn_apply">Применить</string>
     <string name="btn_reset">Сбросить</string>
-
+    <string name="btn_choose">Выбрать</string>
 
     <string name="icon_filter">Icon filter off</string>
     <string name="icon_search">Job search</string>

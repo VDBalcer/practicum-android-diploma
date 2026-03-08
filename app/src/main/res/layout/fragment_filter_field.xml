@@ -5,48 +5,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragments.filter.field.FilterFieldFragment">
+    tools:context=".ui.fragments.filter.field.FilterIndustryFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search_container"
+        style="@style/Widget.LayoutSearchInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.LayoutSearchInput">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/edit_textbox_job_search"
+            style="@style/Widget.SearchInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/filter_industry_fragment_title"
-            android:maxLines="1"
             android:imeOptions="actionDone"
-            android:inputType="text|textNoSuggestions"
             android:importantForAutofill="no"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/icon_search"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:inputType="text|textNoSuggestions"
+            android:maxLines="1"
             android:textAppearance="@style/TextAppearance.Input"
             android:textColor="@color/input_text"
-            style="@style/Widget.SearchInput"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/icon_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/icon_search"
-            android:src="@drawable/icon_search"
-            android:contentDescription="@string/icon_search"
             style="@style/icon_center_vertical"
+            android:contentDescription="@string/icon_search"
+            android:src="@drawable/icon_search"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/icon_clear"
-            android:visibility="gone"
-            android:src="@drawable/icon_clear"
-            android:contentDescription="@string/icon_clear"
             style="@style/icon_center_vertical"
+            android:contentDescription="@string/icon_clear"
+            android:src="@drawable/icon_clear"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/filter_field_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/filter_field_recycler_margin_vertical"
+        android:layout_weight="1"
+        tools:listitem="@layout/item_filter_field"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        android:id="@+id/filter_field_button_choose"
+        style="@style/Widget.Button"
+        app:backgroundTint="@color/button_background"
+        android:layout_marginBottom="@dimen/button_margin_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_choose" />
 </LinearLayout>
