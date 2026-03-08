@@ -19,4 +19,8 @@ class FilterRepositoryImpl(
     override suspend fun clearFilter() {
         localDataSource.clearFilter()
     }
+
+    override suspend fun getFilteredIndustryId(): Int {
+        return localDataSource.getFilter().industry?.id ?: -1
+    }
 }

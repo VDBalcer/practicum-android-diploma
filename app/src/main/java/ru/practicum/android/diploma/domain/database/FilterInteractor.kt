@@ -6,4 +6,6 @@ interface FilterInteractor {
     suspend fun saveFilter(filter: VacancyFilterModel)
     suspend fun getFilter(): VacancyFilterModel
     suspend fun clearFilter()
+
+    suspend fun getFilteredIndustryId(): Int
 }

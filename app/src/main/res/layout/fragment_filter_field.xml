@@ -50,21 +50,76 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/filter_field_recycler"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filter_field_content_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/filter_field_recycler_margin_vertical"
-        android:layout_weight="1"
-        tools:listitem="@layout/item_filter_field"/>
+        android:layout_weight="1">
 
-    <com.google.android.material.button.MaterialButton
-        android:visibility="gone"
-        android:id="@+id/filter_field_button_choose"
-        style="@style/Widget.Button"
-        app:backgroundTint="@color/button_background"
-        android:layout_marginBottom="@dimen/button_margin_bottom"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filter_field_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/filter_field_recycler_margin_vertical"
+            app:layout_constraintBottom_toTopOf="@id/filter_field_button_choose"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_filter_field" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filter_field_button_choose"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/button_margin_bottom"
+            android:text="@string/btn_choose"
+            android:visibility="gone"
+            app:backgroundTint="@color/button_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filter_field_placeholder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_choose" />
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/placeholder_margin_horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/filter_field_placeholder_image"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:contentDescription="@string/placeholder_image"
+            android:src="@drawable/placeholder_not_internet"
+            app:layout_constraintBottom_toTopOf="@id/filter_field_placeholder_message"
+            app:layout_constraintDimensionRatio="h, 1.47:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/filter_field_placeholder_message"
+            style="@style/Widget.ErrorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_not_internet"
+            android:textAppearance="@style/TextAppearance.ErrorText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_field_placeholder_image" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/filter_field_progress_bar"
+        android:layout_width="@dimen/size_progress_bar"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:indeterminateTint="@color/progress_bar"
+        android:visibility="gone" />
 </LinearLayout>
