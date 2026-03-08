@@ -5,7 +5,6 @@
     <dimen name="title_text_padding_vertical">19dp</dimen>
     <dimen name="title_text_array_padding_left">4dp</dimen>
 
-
     <dimen name="icon_padding">8dp</dimen>
     <dimen name="icon_size">48dp</dimen>
     <dimen name="toolbar_menu_padding">8dp</dimen>
@@ -47,6 +46,8 @@
     <dimen name="button_selected_radius">12dp</dimen>
     <dimen name="button_margin_top">8dp</dimen>
     <dimen name="button_margin_bottom">24dp</dimen>
+
+    <dimen name="filter_field_recycler_margin_vertical">8dp</dimen>
 
     <dimen name="info_padding_horizontal">16dp</dimen>
     <dimen name="info_padding_vertical">8dp</dimen>
