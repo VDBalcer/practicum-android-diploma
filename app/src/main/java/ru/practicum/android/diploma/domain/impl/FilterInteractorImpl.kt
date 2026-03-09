@@ -21,6 +21,10 @@ class FilterInteractorImpl(
         repository.clearFilter()
     }
 
+    override suspend fun getFilteredIndustryId(): Int {
+        return repository.getFilteredIndustryId()
+    }
+
     private fun validate(filter: VacancyFilterModel): VacancyFilterModel {
         val salary = filter.salaryFrom?.takeIf { it > 0 }
 
