@@ -60,6 +60,8 @@ class FilterPlaceFragment : FilterBaseFragment() {
             if (filter.country != null) {
                 viewModel.clearCountry()
                 viewModel.clearRegion()
+                binding.btnApply.isVisible = false
+
             }
         }
 
@@ -68,6 +70,10 @@ class FilterPlaceFragment : FilterBaseFragment() {
             if (filter.region != null) {
                 viewModel.clearRegion()
             }
+        }
+
+        binding.btnApply.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
@@ -87,6 +93,7 @@ class FilterPlaceFragment : FilterBaseFragment() {
             arrow = binding.arrowRegion,
             defaultText = R.string.filter_area_region_item
         )
+        binding.btnApply.isVisible = filter.country!=null
     }
 
     private fun renderAreaItem(

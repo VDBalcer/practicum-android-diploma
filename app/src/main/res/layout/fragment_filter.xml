@@ -1,37 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.fragments.filter.FilterFragment">
 
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/filter_area_item"
-        style="@style/Widget.FilterItem"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filter_area_container"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/arrow_forward"
-        android:text="@string/filter_area_item"
-        android:textAppearance="@style/TextAppearance.FilterLight"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:minHeight="@dimen/filter_vertical"
+        android:paddingStart="@dimen/filter_item_padding_left"
+        android:paddingEnd="@dimen/filter_item_padding_right"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/filter_industry_item"
-        style="@style/Widget.FilterItem"
-        android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/filter_area_label"
+            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_area_item"
+            android:textAppearance="@style/TextAppearance.Hint"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/filter_area_item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/arrow_area"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+        <TextView
+            android:id="@+id/filter_area_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_area_item"
+            android:textAppearance="@style/TextAppearance.FilterLight"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toBottomOf="@id/filter_area_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/arrow_area"/>
+
+        <ImageView
+            android:id="@+id/arrow_area"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_forward"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filter_industry_container"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/arrow_forward"
-        android:text="@string/filter_industry_item"
-        android:textAppearance="@style/TextAppearance.FilterLight"
-        app:layout_constraintTop_toBottomOf="@+id/filter_area_item" />
+        android:minHeight="@dimen/filter_vertical"
+        android:paddingStart="@dimen/filter_item_padding_left"
+        android:paddingEnd="@dimen/filter_item_padding_right"
+        app:layout_constraintTop_toBottomOf="@id/filter_area_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/filter_industry_label"
+            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_industry_item"
+            android:textAppearance="@style/TextAppearance.Hint"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/filter_industry_item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/arrow_industry"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+        <TextView
+            android:id="@+id/filter_industry_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_industry_item"
+            android:textAppearance="@style/TextAppearance.FilterLight"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toBottomOf="@id/filter_industry_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/arrow_industry"/>
+
+        <ImageView
+            android:id="@+id/arrow_industry"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_forward"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/salary_input_layout"
         style="?attr/textInputStyle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/salary_margin_horizontal"
         android:layout_marginVertical="@dimen/salary_margin_vertical"
@@ -51,10 +126,12 @@
         app:expandedHintEnabled="false"
         app:hintTextAppearance="@style/TextAppearance.Hint"
         app:hintTextColor="@color/salary_hint_text_color"
-        app:layout_constraintTop_toBottomOf="@+id/filter_industry_item"
         app:placeholderText="@string/edit_textbox_salary"
         app:placeholderTextAppearance="@style/TextAppearance.Input"
-        app:placeholderTextColor="?attr/placeholder_color">
+        app:placeholderTextColor="?attr/placeholder_color"
+        app:layout_constraintTop_toBottomOf="@id/filter_industry_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/salary_input_edit_text"
@@ -69,20 +146,22 @@
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.Input"
             android:textColor="@color/input_text" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/filter_only_salary"
         style="@style/Widget.FilterOnlySalaryItem"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@null"
         android:button="@null"
         android:drawableEnd="@drawable/check_box_selector"
         android:text="@string/filter_only_salary"
         android:textAppearance="@style/TextAppearance.FilterOnlySalaryItem"
-        app:layout_constraintTop_toBottomOf="@+id/salary_input_layout" />
-
+        app:layout_constraintTop_toBottomOf="@id/salary_input_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/btn_apply"
@@ -92,9 +171,9 @@
         android:text="@string/btn_apply"
         android:textAppearance="@style/TextAppearance.Button"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btn_reset"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/btn_reset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/btn_reset"
@@ -105,8 +184,7 @@
         android:textAppearance="@style/TextAppearance.ButtonReset"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
