@@ -54,6 +54,21 @@ class FilterPlaceFragment : FilterBaseFragment() {
                 R.id.action_filterPlaceFragment_to_filterPlaceRegionFragment
             )
         }
+
+        binding.arrowCountry.setOnClickListener {
+            val filter = viewModel.observeFilterState().value ?: return@setOnClickListener
+            if (filter.country != null) {
+                viewModel.clearCountry()
+                viewModel.clearRegion()
+            }
+        }
+
+        binding.arrowRegion.setOnClickListener {
+            val filter = viewModel.observeFilterState().value ?: return@setOnClickListener
+            if (filter.region != null) {
+                viewModel.clearRegion()
+            }
+        }
     }
 
     private fun renderContent(filter: VacancyFilterModel) {

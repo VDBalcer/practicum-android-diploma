@@ -109,6 +109,7 @@ class FilterPlaceRegionFragment : FilterBaseFragment() {
     private fun onInitAdapter() {
         _placeRegionAdapter = FilterPlaceItemViewAdapter { region ->
             filterViewModel.changeRegion(region)
+            findNavController().popBackStack()
         }
 
         binding.placeRecyclerView.apply {

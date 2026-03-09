@@ -68,4 +68,19 @@ class FilterViewModel(
         val current = filterLiveData.value ?: return
         filterLiveData.value = current.copy(region = region)
     }
+
+    fun clearCountry() {
+        val current = filterLiveData.value ?: return
+        filterLiveData.value = current.copy(
+            country = null,
+            region = null
+        )
+    }
+
+    fun clearRegion() {
+        val current = filterLiveData.value ?: return
+        filterLiveData.value = current.copy(
+            region = null
+        )
+    }
 }
