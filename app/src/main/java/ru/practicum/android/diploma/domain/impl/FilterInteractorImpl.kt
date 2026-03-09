@@ -22,9 +22,9 @@ class FilterInteractorImpl(
         repository.clearFilter()
     }
 
-//    override suspend fun getFilteredIndustryId(): Int {
-//        return repository.getFilteredIndustryId()
-//    }
+    override suspend fun getFilteredIndustryId(): Int {
+        return repository.getFilteredIndustryId()
+    }
 
     override suspend fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel) {
         repository.saveFilteredIndustry(filteredIndustry)

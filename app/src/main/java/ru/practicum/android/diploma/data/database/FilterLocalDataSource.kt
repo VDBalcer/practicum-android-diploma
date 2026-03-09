@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.data.database
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import ru.practicum.android.diploma.domain.models.FilterIndustryModel
 import ru.practicum.android.diploma.domain.models.VacancyFilterModel
 
@@ -12,9 +13,16 @@ class FilterLocalDataSource(
         sharedPreferences.edit()
             .putInt(KEY_SALARY_FROM, filter.salaryFrom ?: NO_SALARY)
             .putBoolean(KEY_INCLUDE_WITHOUT_SALARY, filter.includeWithoutSalary)
-            .putInt(KEY_INDUSTRY_ID, filter.industry?.id ?: 0)
+            .putInt(KEY_INDUSTRY_ID, filter.industry?.id ?: -1)
             .putString(KEY_INDUSTRY_NAME, filter.industry?.name)
             .apply()
+    }
+
+    fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel) {
+        sharedPreferences.edit {
+            putInt(KEY_INDUSTRY_ID, filteredIndustry.id)
+            putString(KEY_INDUSTRY_NAME, filteredIndustry.name)
+        }
     }
 
     fun getFilter(): VacancyFilterModel {
