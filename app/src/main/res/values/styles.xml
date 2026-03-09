@@ -280,6 +280,10 @@
         <item name="android:textSize">@dimen/filter_item_font_size</item>
     </style>
 
+    <style name="TextAppearance.FilterNormal" parent="TextAppearance.FilterLight">
+        <item name="android:textColor">@color/filter_item_normal_font</item>
+    </style>
+
     <style name="TextAppearance.FilterOnlySalaryItem" parent="font_regular">
         <item name="android:fontWeight">400</item>
         <item name="android:textColor">?attr/text_color</item>
