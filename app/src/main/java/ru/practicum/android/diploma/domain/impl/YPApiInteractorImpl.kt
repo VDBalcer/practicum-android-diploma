@@ -18,6 +18,14 @@ class YPApiInteractorImpl(
     override suspend fun getAreas(): NetworkResult<List<FilterAreaModel>> =
         repository.getAreas()
 
+    override suspend fun getCountries(): NetworkResult<List<FilterAreaModel>> {
+        return when (val result = repository.getAreas()) {
+            is NetworkResult.Success ->
+                NetworkResult.Success(result.data.filter { it.parentId == 0 })
+            else -> result
+        }
+    }
+
     override suspend fun getIndustries(): NetworkResult<List<FilterIndustryModel>> =
         repository.getIndustries()
 

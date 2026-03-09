@@ -10,7 +10,7 @@ interface ApiInteractor {
     suspend fun getVacancy(id: String): NetworkResult<VacancyDetailModel>
 
     suspend fun getAreas(): NetworkResult<List<FilterAreaModel>>
-
+    suspend fun getCountries(): NetworkResult<List<FilterAreaModel>>
     suspend fun getIndustries(): NetworkResult<List<FilterIndustryModel>>
 
     suspend fun getVacancies(
