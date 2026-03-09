@@ -8,13 +8,13 @@
     tools:context=".ui.fragments.filter.field.FilterIndustryFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/search_container"
+        android:id="@+id/filter_field_search_container"
         style="@style/Widget.LayoutSearchInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/edit_textbox_job_search"
+            android:id="@+id/edit_textbox_field_search"
             style="@style/Widget.SearchInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -26,12 +26,12 @@
             android:textAppearance="@style/TextAppearance.Input"
             android:textColor="@color/input_text"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/icon_search"
+            app:layout_constraintEnd_toStartOf="@id/filter_field_icon_search"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/icon_search"
+            android:id="@+id/filter_field_icon_search"
             style="@style/icon_center_vertical"
             android:contentDescription="@string/icon_search"
             android:src="@drawable/icon_search"
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/icon_clear"
+            android:id="@+id/filter_field_icon_clear"
             style="@style/icon_center_vertical"
             android:contentDescription="@string/icon_clear"
             android:src="@drawable/icon_clear"

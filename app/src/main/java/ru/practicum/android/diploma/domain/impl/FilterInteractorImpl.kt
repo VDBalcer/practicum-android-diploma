@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.domain.impl
 
 import ru.practicum.android.diploma.domain.database.FilterInteractor
 import ru.practicum.android.diploma.domain.database.FilterRepository
+import ru.practicum.android.diploma.domain.models.FilterIndustryModel
 import ru.practicum.android.diploma.domain.models.VacancyFilterModel
 
 class FilterInteractorImpl(
@@ -23,6 +24,10 @@ class FilterInteractorImpl(
 
     override suspend fun getFilteredIndustryId(): Int {
         return repository.getFilteredIndustryId()
+    }
+
+    override suspend fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel) {
+        repository.saveFilteredIndustry(filteredIndustry)
     }
 
     private fun validate(filter: VacancyFilterModel): VacancyFilterModel {

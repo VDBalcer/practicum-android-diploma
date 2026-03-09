@@ -84,7 +84,7 @@ fun VacancyDetailModel.toItem(): VacancyItem =
         area = area.toItem(),
         skills = skills,
         url = url,
-        industry = industry.toItem()
+        industry = industry.toItem(false)
     )
 
 fun VacancyDetailModel.SalaryModel.toItem(): VacancyItem.SalaryItem =

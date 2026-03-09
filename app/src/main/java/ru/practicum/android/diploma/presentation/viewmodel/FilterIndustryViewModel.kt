@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.NetworkResult
@@ -22,11 +23,19 @@ class FilterIndustryViewModel(
 
     val industriesList = mutableListOf<FilteredIndustryItem>()
 
-    init {
-        viewModelScope.launch {
+    var latestSelectedIndustryId: Int = -1
+
+    private var loadJob: Job? = null
+    fun loadIndustries() {
+        loadJob = viewModelScope.launch {
+            latestSelectedIndustryId = filterSharedPref.getFilteredIndustryId()
             val result = apiInteractor.getIndustries()
             processResult(result)
         }
+    }
+
+    fun cancelJob() {
+        loadJob?.cancel()
     }
 
     private fun processResult(
@@ -38,12 +47,28 @@ class FilterIndustryViewModel(
             is NetworkResult.Success -> {
                 industriesList.addAll(
                     result.data.map {
-                        it.toItem()
+                        it.toItem(it.id == latestSelectedIndustryId)
                     }
                 )
                 IndustryScreenState.Content(industriesList, false)
             }
         }
         industryLiveData.postValue(state)
+    }
+
+    fun searchIndustry(query: String) {
+        val current = industryLiveData.value as? IndustryScreenState.Content ?: return
+        val newIndustriesList = if (query.isNotBlank()) {
+            industriesList.filter { item ->
+                item.name.contains(query, true)
+            }
+        } else {
+            industriesList
+        }
+
+        industryLiveData.value = IndustryScreenState.Content(
+            newIndustriesList,
+            current.isIndustryReSelected
+        )
     }
 }
