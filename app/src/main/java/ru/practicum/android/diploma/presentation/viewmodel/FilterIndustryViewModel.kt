@@ -22,11 +22,30 @@ class FilterIndustryViewModel(
 
     val industriesList = mutableListOf<FilteredIndustryItem>()
 
+    var latestSelectedIndustryId: Int = -1
+
     init {
         viewModelScope.launch {
+            latestSelectedIndustryId = filterSharedPref.getFilteredIndustryId()
             val result = apiInteractor.getIndustries()
             processResult(result)
         }
+    }
+
+    fun searchIndustry(query: String) {
+        val current = (industryLiveData.value as? IndustryScreenState.Content) ?: return
+        val newIndustriesList = if (query.isNotBlank()) {
+            industriesList.filter { item ->
+                item.name.contains(query, true)
+            }
+        } else {
+            industriesList
+        }
+
+        industryLiveData.value = IndustryScreenState.Content(
+            newIndustriesList,
+            current.isIndustryReSelected
+        )
     }
 
     private fun processResult(
@@ -38,7 +57,7 @@ class FilterIndustryViewModel(
             is NetworkResult.Success -> {
                 industriesList.addAll(
                     result.data.map {
-                        it.toItem()
+                        it.toItem(it.id == latestSelectedIndustryId)
                     }
                 )
                 IndustryScreenState.Content(industriesList, false)

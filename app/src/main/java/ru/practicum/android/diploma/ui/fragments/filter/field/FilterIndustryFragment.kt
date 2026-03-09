@@ -1,11 +1,14 @@
 package ru.practicum.android.diploma.ui.fragments.filter.field
 
 import android.annotation.SuppressLint
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
@@ -42,9 +45,43 @@ class FilterIndustryFragment : FilterBaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(R.string.filter_field_title)
         initAdapter()
+        initListeners()
 
         viewModel.observeIndustryState().observe(viewLifecycleOwner) {
             render(it)
+        }
+    }
+
+    private fun initAdapter() {
+        binding.filterFieldRecycler.layoutManager = LinearLayoutManager(requireContext())
+        _industryAdapter = FilterIndustryItemViewAdapter {
+
+        }
+        binding.filterFieldRecycler.adapter = industryAdapter
+    }
+
+    private fun initListeners() {
+        binding.editTextboxFieldSearch.doOnTextChanged { s, _, _, _ ->
+            val industryFilterQuery = s?.toString() ?: ""
+            updateIcon(industryFilterQuery.isNotBlank())
+            viewModel.searchIndustry(industryFilterQuery)
+        }
+
+        binding.filterFieldIconClear.setOnClickListener {
+            binding.editTextboxFieldSearch.text?.clear()
+            hideKeyboard()
+        }
+    }
+
+    private fun hideKeyboard() {
+        val ims = requireContext().getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
+        ims?.hideSoftInputFromWindow(binding.editTextboxFieldSearch.windowToken, 0)
+    }
+
+    private fun updateIcon(hasText: Boolean) {
+        binding.apply {
+            filterFieldIconClear.isVisible = hasText
+            filterFieldIconSearch.isVisible = !hasText
         }
     }
 
@@ -98,11 +135,5 @@ class FilterIndustryFragment : FilterBaseFragment() {
             industryAdapter.setData(state.industries)
             industryAdapter.notifyDataSetChanged()
         }
-    }
-
-    private fun initAdapter() {
-        binding.filterFieldRecycler.layoutManager = LinearLayoutManager(requireContext())
-        _industryAdapter = FilterIndustryItemViewAdapter { }
-        binding.filterFieldRecycler.adapter = industryAdapter
     }
 }

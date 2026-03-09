@@ -9,8 +9,9 @@ fun FilteredIndustryItem.toDomain(): FilterIndustryModel =
         name = name
     )
 
-fun FilterIndustryModel.toItem(): FilteredIndustryItem =
+fun FilterIndustryModel.toItem(isChecked: Boolean): FilteredIndustryItem =
     FilteredIndustryItem(
         id = id,
-        name = name
+        name = name,
+        isChecked = isChecked
     )
