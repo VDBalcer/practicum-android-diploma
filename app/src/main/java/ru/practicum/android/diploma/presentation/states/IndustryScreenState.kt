@@ -8,7 +8,6 @@ sealed class IndustryScreenState {
     object ServerError : IndustryScreenState()
 
     data class Content(
-        val industries: List<FilteredIndustryItem>,
-        val isIndustryReSelected: Boolean
+        val industries: List<FilteredIndustryItem>
     ) : IndustryScreenState()
 }
