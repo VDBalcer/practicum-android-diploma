@@ -37,12 +37,14 @@ class FilterIndustryFragment : FilterBaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        viewModel.cancelJob()
         _industryAdapter = null
         _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.loadIndustries()
         initToolbar(R.string.filter_field_title)
         initAdapter()
         initListeners()

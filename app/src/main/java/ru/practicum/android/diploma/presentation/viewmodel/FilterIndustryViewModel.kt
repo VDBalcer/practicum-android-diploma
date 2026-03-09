@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.NetworkResult
@@ -24,28 +25,17 @@ class FilterIndustryViewModel(
 
     var latestSelectedIndustryId: Int = -1
 
-    init {
-        viewModelScope.launch {
+    private var loadJob: Job? = null
+    fun loadIndustries() {
+        loadJob = viewModelScope.launch {
             latestSelectedIndustryId = filterSharedPref.getFilteredIndustryId()
             val result = apiInteractor.getIndustries()
             processResult(result)
         }
     }
 
-    fun searchIndustry(query: String) {
-        val current = industryLiveData.value as? IndustryScreenState.Content ?: return
-        val newIndustriesList = if (query.isNotBlank()) {
-            industriesList.filter { item ->
-                item.name.contains(query, true)
-            }
-        } else {
-            industriesList
-        }
-
-        industryLiveData.value = IndustryScreenState.Content(
-            newIndustriesList,
-            current.isIndustryReSelected
-        )
+    fun cancelJob() {
+        loadJob?.cancel()
     }
 
     private fun processResult(
@@ -64,5 +54,21 @@ class FilterIndustryViewModel(
             }
         }
         industryLiveData.postValue(state)
+    }
+
+    fun searchIndustry(query: String) {
+        val current = industryLiveData.value as? IndustryScreenState.Content ?: return
+        val newIndustriesList = if (query.isNotBlank()) {
+            industriesList.filter { item ->
+                item.name.contains(query, true)
+            }
+        } else {
+            industriesList
+        }
+
+        industryLiveData.value = IndustryScreenState.Content(
+            newIndustriesList,
+            current.isIndustryReSelected
+        )
     }
 }
