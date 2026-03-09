@@ -33,7 +33,7 @@ class FilterIndustryViewModel(
     }
 
     fun searchIndustry(query: String) {
-        val current = (industryLiveData.value as? IndustryScreenState.Content) ?: return
+        val current = industryLiveData.value as? IndustryScreenState.Content ?: return
         val newIndustriesList = if (query.isNotBlank()) {
             industriesList.filter { item ->
                 item.name.contains(query, true)

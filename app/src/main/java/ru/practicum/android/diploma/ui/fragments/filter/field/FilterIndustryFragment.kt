@@ -54,9 +54,7 @@ class FilterIndustryFragment : FilterBaseFragment() {
 
     private fun initAdapter() {
         binding.filterFieldRecycler.layoutManager = LinearLayoutManager(requireContext())
-        _industryAdapter = FilterIndustryItemViewAdapter {
-
-        }
+        _industryAdapter = FilterIndustryItemViewAdapter {}
         binding.filterFieldRecycler.adapter = industryAdapter
     }
 
