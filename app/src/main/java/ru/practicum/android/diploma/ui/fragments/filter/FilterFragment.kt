@@ -9,15 +9,18 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
+import ru.practicum.android.diploma.domain.models.VacancyFilterModel
 import ru.practicum.android.diploma.presentation.viewmodel.FilterViewModel
+import ru.practicum.android.diploma.util.renderAreaItem
 
 class FilterFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: FilterViewModel by viewModel()
+    private val viewModel: FilterViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,30 +88,48 @@ class FilterFragment : FilterBaseFragment() {
     }
 
     private fun initFilterObserver() {
-        viewModel.observeFilterState().observe(viewLifecycleOwner) {
+        viewModel.observeFilterState().observe(viewLifecycleOwner) { filter ->
             with(binding) {
                 filterOnlySalary.setOnCheckedChangeListener(null)
-                filterOnlySalary.isChecked = it.includeWithoutSalary
+                filterOnlySalary.isChecked = filter.includeWithoutSalary
                 filterOnlySalary.setOnCheckedChangeListener { _, isChecked ->
                     viewModel.changeIncludeWithoutSalary(isChecked)
                 }
-
                 if (!salaryInputEditText.isFocused) {
-                    val text = it.salaryFrom?.toString().orEmpty()
-
+                    val text = filter.salaryFrom?.toString().orEmpty()
                     if (salaryInputEditText.text.toString() != text) {
                         salaryInputEditText.setText(text)
                     }
                 }
-
-                it.industry?.name
-                    ?.takeIf { name -> name.isNotBlank() }
+                filter.industry?.name
+                    ?.takeIf { it.isNotBlank() }
                     ?.let { name -> filterIndustryItem.text = name }
-
                 val btnsVisibility = viewModel.isBtnsVisible()
                 btnReset.isVisible = btnsVisibility
                 btnApply.isVisible = btnsVisibility
+                renderContent(filter)
             }
         }
+    }
+
+    private fun renderContent(filter: VacancyFilterModel) {
+        val countryItem = filter.country?.let { country ->
+            val name = if (filter.region != null) {
+                "${country.name}, ${filter.region.name}"
+            } else {
+                country.name
+            }
+            country.copy(name = name)
+        }
+        renderAreaItem(
+            item = countryItem,
+            label = binding.filterAreaLabel,
+            value = binding.filterAreaItem,
+            arrow = binding.arrowArea,
+            defaultText = R.string.filter_area_item
+        )
+
+        binding.btnApply.isVisible = filter.country != null
+        binding.btnReset.isVisible = filter.country != null
     }
 }

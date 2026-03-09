@@ -4,18 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceBinding
 import ru.practicum.android.diploma.domain.models.VacancyFilterModel
-import ru.practicum.android.diploma.presentation.model.FilteredAreaItem
 import ru.practicum.android.diploma.presentation.viewmodel.FilterViewModel
 import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
+import ru.practicum.android.diploma.util.renderAreaItem
 
 class FilterPlaceFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterPlaceBinding? = null
@@ -94,27 +91,5 @@ class FilterPlaceFragment : FilterBaseFragment() {
             defaultText = R.string.filter_area_region_item
         )
         binding.btnApply.isVisible = filter.country!=null
-    }
-
-    private fun renderAreaItem(
-        item: FilteredAreaItem?,
-        label: TextView,
-        value: TextView,
-        arrow: ImageView,
-        @StringRes defaultText: Int
-    ) {
-        val context = value.context
-
-        if (item != null) {
-            label.isVisible = true
-            value.text = item.name
-            value.setTextColor(context.getColor(R.color.input_text))
-            arrow.setImageResource(R.drawable.icon_close)
-        } else {
-            label.isVisible = false
-            value.setText(defaultText)
-            value.setTextColor(context.getColor(R.color.filter_item_light_font))
-            arrow.setImageResource(R.drawable.arrow_forward)
-        }
     }
 }
