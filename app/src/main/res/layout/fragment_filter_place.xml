@@ -7,21 +7,90 @@
     android:orientation="vertical"
     tools:context=".ui.fragments.filter.place.FilterPlaceFragment">
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/filter_area_country_item"
-        android:drawableEnd="@drawable/arrow_forward"
-        android:text="@string/filter_area_country_item"
-        style="@style/Widget.FilterItem"
-        android:textAppearance="@style/TextAppearance.FilterLight" />
+        android:minHeight="@dimen/filter_vertical"
+        android:paddingStart="@dimen/filter_item_padding_left"
+        android:paddingEnd="@dimen/filter_item_padding_right">
 
-    <com.google.android.material.textview.MaterialTextView
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/filter_country_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_area_country_item"
+            android:textAppearance="@style/TextAppearance.Hint"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/filter_area_country_item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/arrow_country"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+        <TextView
+            android:id="@+id/filter_area_country_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_area_country_item"
+            android:textAppearance="@style/TextAppearance.FilterLight"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toBottomOf="@id/filter_country_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/arrow_country"/>
+
+        <ImageView
+            android:id="@+id/arrow_country"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_forward"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/filter_area_region_item"
-        android:drawableEnd="@drawable/arrow_forward"
-        android:text="@string/filter_area_region_item"
-        style="@style/Widget.FilterItem"
-        android:textAppearance="@style/TextAppearance.FilterLight" />
+        android:minHeight="@dimen/filter_vertical"
+        android:paddingStart="@dimen/filter_item_padding_left"
+        android:paddingEnd="@dimen/filter_item_padding_right">
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/filter_region_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_area_region_item"
+            android:textAppearance="@style/TextAppearance.Hint"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/filter_area_region_item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/arrow_region"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+        <TextView
+            android:id="@+id/filter_area_region_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_area_region_item"
+            android:textAppearance="@style/TextAppearance.FilterLight"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toBottomOf="@id/filter_region_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/arrow_region"/>
+
+        <ImageView
+            android:id="@+id/arrow_region"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_forward"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

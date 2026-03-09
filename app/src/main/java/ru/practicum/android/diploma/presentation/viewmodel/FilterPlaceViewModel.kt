@@ -17,12 +17,7 @@ class FilterPlaceViewModel(
 ) : ViewModel() {
     private val stateLiveData = MutableLiveData<FilterPlaceState>()
     fun observeState(): LiveData<FilterPlaceState> = stateLiveData
-    private var selectedCountry: FilteredAreaItem? = null
     private var countries: List<FilteredAreaItem> = emptyList()
-
-    fun selectCountry(country: FilteredAreaItem) {
-        selectedCountry = country
-    }
 
     fun loadCountries() {
         if (countries.isNotEmpty()) {
@@ -44,8 +39,8 @@ class FilterPlaceViewModel(
         }
     }
 
-    fun loadRegions() {
-        val regions = selectedCountry?.areas ?: emptyList()
+    fun loadRegions(country: FilteredAreaItem) {
+        val regions = country.areas
         if (regions.isEmpty()) {
             stateLiveData.value = FilterPlaceState.PlaceNotFound
         } else {

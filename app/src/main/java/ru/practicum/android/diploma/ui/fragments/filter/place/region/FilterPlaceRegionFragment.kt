@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceRegionBinding
 import ru.practicum.android.diploma.presentation.states.FilterPlaceState
 import ru.practicum.android.diploma.presentation.viewmodel.FilterPlaceViewModel
+import ru.practicum.android.diploma.presentation.viewmodel.FilterViewModel
 import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
 import ru.practicum.android.diploma.ui.fragments.filter.place.FilterPlaceItemViewAdapter
 import kotlin.getValue
@@ -21,6 +23,7 @@ class FilterPlaceRegionFragment : FilterBaseFragment() {
     private val binding get() = _binding!!
 
     private val viewModel: FilterPlaceViewModel by viewModel()
+    private val filterViewModel: FilterViewModel by activityViewModel()
     private var _placeRegionAdapter: FilterPlaceItemViewAdapter? = null
     private val placeRegionAdapter get() = _placeRegionAdapter!!
 
@@ -48,7 +51,10 @@ class FilterPlaceRegionFragment : FilterBaseFragment() {
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-        viewModel.loadRegions()
+        val country = filterViewModel.observeFilterState().value?.country
+        country?.let {
+            viewModel.loadRegions(it)
+        }
     }
 
     private fun render(state: FilterPlaceState) {
@@ -102,7 +108,7 @@ class FilterPlaceRegionFragment : FilterBaseFragment() {
 
     private fun onInitAdapter() {
         _placeRegionAdapter = FilterPlaceItemViewAdapter { region ->
-            // здесь можно сохранить выбранный регион
+            filterViewModel.changeRegion(region)
         }
 
         binding.placeRecyclerView.apply {

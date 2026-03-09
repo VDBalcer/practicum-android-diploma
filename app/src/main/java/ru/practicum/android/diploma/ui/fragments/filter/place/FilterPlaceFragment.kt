@@ -4,14 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceBinding
+import ru.practicum.android.diploma.domain.models.VacancyFilterModel
+import ru.practicum.android.diploma.presentation.model.FilteredAreaItem
+import ru.practicum.android.diploma.presentation.viewmodel.FilterViewModel
 import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
 
 class FilterPlaceFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterPlaceBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: FilterViewModel by activityViewModel ()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +39,11 @@ class FilterPlaceFragment : FilterBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(R.string.filter_place_fragment_title)
+
+        viewModel.observeFilterState().observe(viewLifecycleOwner) { filter ->
+            renderContent(filter)
+        }
+
         binding.filterAreaCountryItem.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterPlaceFragment_to_filterPlaceCountryFragment
@@ -39,6 +53,46 @@ class FilterPlaceFragment : FilterBaseFragment() {
             findNavController().navigate(
                 R.id.action_filterPlaceFragment_to_filterPlaceRegionFragment
             )
+        }
+    }
+
+    private fun renderContent(filter: VacancyFilterModel) {
+        renderAreaItem(
+            item = filter.country,
+            label = binding.filterCountryLabel,
+            value = binding.filterAreaCountryItem,
+            arrow = binding.arrowCountry,
+            defaultText = R.string.filter_area_country_item
+        )
+
+        renderAreaItem(
+            item = filter.region,
+            label = binding.filterRegionLabel,
+            value = binding.filterAreaRegionItem,
+            arrow = binding.arrowRegion,
+            defaultText = R.string.filter_area_region_item
+        )
+    }
+
+    private fun renderAreaItem(
+        item: FilteredAreaItem?,
+        label: TextView,
+        value: TextView,
+        arrow: ImageView,
+        @StringRes defaultText: Int
+    ) {
+        val context = value.context
+
+        if (item != null) {
+            label.isVisible = true
+            value.text = item.name
+            value.setTextColor(context.getColor(R.color.input_text))
+            arrow.setImageResource(R.drawable.icon_close)
+        } else {
+            label.isVisible = false
+            value.setText(defaultText)
+            value.setTextColor(context.getColor(R.color.filter_item_light_font))
+            arrow.setImageResource(R.drawable.arrow_forward)
         }
     }
 }

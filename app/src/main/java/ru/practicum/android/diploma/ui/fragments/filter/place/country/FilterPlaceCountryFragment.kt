@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceCountryBinding
 import ru.practicum.android.diploma.presentation.states.FilterPlaceState
 import ru.practicum.android.diploma.presentation.viewmodel.FilterPlaceViewModel
+import ru.practicum.android.diploma.presentation.viewmodel.FilterViewModel
 import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
 import ru.practicum.android.diploma.ui.fragments.filter.place.FilterPlaceItemViewAdapter
 import kotlin.getValue
@@ -21,6 +23,7 @@ class FilterPlaceCountryFragment : FilterBaseFragment() {
     private val binding get() = _binding!!
 
     private val viewModel: FilterPlaceViewModel by viewModel()
+    private val filterViewModel: FilterViewModel by activityViewModel()
     private var _placeCountryAdapter: FilterPlaceItemViewAdapter? = null
     private val placeCountryAdapter get() = _placeCountryAdapter!!
 
@@ -101,7 +104,7 @@ class FilterPlaceCountryFragment : FilterBaseFragment() {
 
     private fun onInitAdapter() {
         _placeCountryAdapter = FilterPlaceItemViewAdapter {  country ->
-            viewModel.selectCountry(country)
+            filterViewModel.changeCountry(country)
             findNavController().popBackStack()
         }
 

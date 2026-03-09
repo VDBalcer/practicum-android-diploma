@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.database.FilterInteractor
 import ru.practicum.android.diploma.domain.models.VacancyFilterModel
+import ru.practicum.android.diploma.presentation.model.FilteredAreaItem
 
 class FilterViewModel(
     private val apiInteractor: ApiInteractor,
@@ -53,5 +54,18 @@ class FilterViewModel(
         return currentFilter.includeWithoutSalary ||
             currentFilter.salaryFrom != null && currentFilter.salaryFrom > 0 ||
             currentFilter.industry != null && currentFilter.industry.id > 0 && currentFilter.industry.name.isNotEmpty()
+    }
+
+    fun changeCountry(country: FilteredAreaItem) {
+        val current = filterLiveData.value ?: return
+        filterLiveData.value = current.copy(
+            country = country,
+            region = null
+        )
+    }
+
+    fun changeRegion(region: FilteredAreaItem) {
+        val current = filterLiveData.value ?: return
+        filterLiveData.value = current.copy(region = region)
     }
 }
