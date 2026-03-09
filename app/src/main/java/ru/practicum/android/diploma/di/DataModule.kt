@@ -20,7 +20,7 @@ import ru.practicum.android.diploma.data.repository.DatabaseFavoriteRepositoryIm
 import ru.practicum.android.diploma.data.repository.ExternalNavigatorImpl
 import ru.practicum.android.diploma.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.domain.database.FavoriteRepository
-import ru.practicum.android.diploma.presentation.viewmodel.FilterPlaceCountryViewModel
+import ru.practicum.android.diploma.presentation.viewmodel.FilterPlaceViewModel
 
 val dataModule = module {
 
@@ -83,6 +83,6 @@ val dataModule = module {
     }
 
     single {
-        FilterPlaceCountryViewModel(get())
+        FilterPlaceViewModel(get())
     }
 }

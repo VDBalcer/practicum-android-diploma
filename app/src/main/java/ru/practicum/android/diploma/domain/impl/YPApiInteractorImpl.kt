@@ -26,6 +26,27 @@ class YPApiInteractorImpl(
         }
     }
 
+    override suspend fun searchRegions(
+        countryId: Int?,
+        query: String?
+    ): NetworkResult<List<FilterAreaModel>> {
+        return when (val result = repository.getAreas()) {
+            is NetworkResult.Success -> {
+                var regions = result.data
+                countryId?.let { id ->
+                    regions = regions.filter { it.parentId == id }
+                }
+                query?.takeIf { it.isNotBlank() }?.let { text ->
+                    regions = regions.filter {
+                        it.name.contains(text, ignoreCase = true)
+                    }
+                }
+                NetworkResult.Success(regions)
+            }
+            else -> result
+        }
+    }
+
     override suspend fun getIndustries(): NetworkResult<List<FilterIndustryModel>> =
         repository.getIndustries()
 

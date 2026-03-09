@@ -1,16 +1,28 @@
 package ru.practicum.android.diploma.ui.fragments.filter.place.region
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceRegionBinding
+import ru.practicum.android.diploma.presentation.states.FilterPlaceState
+import ru.practicum.android.diploma.presentation.viewmodel.FilterPlaceViewModel
 import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
+import ru.practicum.android.diploma.ui.fragments.filter.place.FilterPlaceItemViewAdapter
+import kotlin.getValue
 
 class FilterPlaceRegionFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterPlaceRegionBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: FilterPlaceViewModel by viewModel()
+    private var _placeRegionAdapter: FilterPlaceItemViewAdapter? = null
+    private val placeRegionAdapter get() = _placeRegionAdapter!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,10 +36,80 @@ class FilterPlaceRegionFragment : FilterBaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _placeRegionAdapter = null
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(R.string.filter_region_fragment_title)
+        onInitAdapter()
+
+        viewModel.observeState().observe(viewLifecycleOwner) {
+            render(it)
+        }
+        viewModel.loadRegions()
     }
+
+    private fun render(state: FilterPlaceState) {
+        when (state) {
+            is FilterPlaceState.ServerError -> showServerError()
+            is FilterPlaceState.PlaceNotFound -> showEmpty()
+            is FilterPlaceState.Loading -> showLoading()
+            is FilterPlaceState.Content -> showContent(state)
+        }
+    }
+
+    private fun showServerError() {
+        binding.apply {
+            progressBar.visibility = View.GONE
+            placeRecyclerView.visibility = View.GONE
+//            infoResult.visibility = View.GONE
+//            placeholderImage.setImageResource(R.drawable.placeholder_server_error)
+//            placeholderMessage.visibility = View.VISIBLE
+//            placeholderMessage.text = getString(R.string.title_server_error)
+        }
+    }
+
+    private fun showLoading() {
+        binding.apply {
+            placeRecyclerView.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+        }
+//        hideKeyboard()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun showContent(state: FilterPlaceState.Content) {
+        placeRegionAdapter.setData(state.areas)
+        placeRegionAdapter.notifyDataSetChanged()
+        binding.apply {
+            progressBar.visibility = View.GONE
+            placeRecyclerView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showEmpty() {
+        binding.apply {
+            progressBar.visibility = View.GONE
+            placeRecyclerView.visibility = View.GONE
+//            infoResult.visibility = View.GONE
+//            placeholderImage.setImageResource(R.drawable.placeholder_server_error)
+//            placeholderMessage.visibility = View.VISIBLE
+//            placeholderMessage.text = getString(R.string.title_server_error)
+        }
+    }
+
+    private fun onInitAdapter() {
+        _placeRegionAdapter = FilterPlaceItemViewAdapter { region ->
+            // здесь можно сохранить выбранный регион
+        }
+
+        binding.placeRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = placeRegionAdapter
+        }
+    }
+
+
 }

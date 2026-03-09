@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceCountryBinding
 import ru.practicum.android.diploma.presentation.states.FilterPlaceState
-import ru.practicum.android.diploma.presentation.states.MainScreenState
-import ru.practicum.android.diploma.presentation.viewmodel.FilterPlaceCountryViewModel
+import ru.practicum.android.diploma.presentation.viewmodel.FilterPlaceViewModel
 import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
 import ru.practicum.android.diploma.ui.fragments.filter.place.FilterPlaceItemViewAdapter
 import kotlin.getValue
@@ -21,8 +20,7 @@ class FilterPlaceCountryFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterPlaceCountryBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: FilterPlaceCountryViewModel by viewModel()
-
+    private val viewModel: FilterPlaceViewModel by viewModel()
     private var _placeCountryAdapter: FilterPlaceItemViewAdapter? = null
     private val placeCountryAdapter get() = _placeCountryAdapter!!
 
@@ -49,6 +47,7 @@ class FilterPlaceCountryFragment : FilterBaseFragment() {
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
+        viewModel.loadCountries()
     }
 
     private fun render(state: FilterPlaceState) {
@@ -101,8 +100,9 @@ class FilterPlaceCountryFragment : FilterBaseFragment() {
     }
 
     private fun onInitAdapter() {
-        _placeCountryAdapter = FilterPlaceItemViewAdapter {
-            // обработка клика по стране
+        _placeCountryAdapter = FilterPlaceItemViewAdapter {  country ->
+            viewModel.selectCountry(country)
+            findNavController().popBackStack()
         }
 
         binding.countryRecyclerView.apply {
