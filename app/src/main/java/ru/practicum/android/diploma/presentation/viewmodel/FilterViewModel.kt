@@ -38,7 +38,7 @@ class FilterViewModel(
     fun clearIndustry() {
         val current = filterLiveData.value ?: return
         filterLiveData.value = current.copy(industry = null)
-
+        saveFilter()
     }
 
     fun saveFilter() {
