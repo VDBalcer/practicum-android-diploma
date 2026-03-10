@@ -18,10 +18,10 @@ class FilterLocalDataSource(
             .apply()
     }
 
-    fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel) {
+    fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel?) {
         sharedPreferences.edit {
-            putInt(KEY_INDUSTRY_ID, filteredIndustry.id)
-            putString(KEY_INDUSTRY_NAME, filteredIndustry.name)
+            putInt(KEY_INDUSTRY_ID, filteredIndustry?.id ?: NO_INDUSTRY)
+            putString(KEY_INDUSTRY_NAME, filteredIndustry?.name ?: "")
         }
     }
 

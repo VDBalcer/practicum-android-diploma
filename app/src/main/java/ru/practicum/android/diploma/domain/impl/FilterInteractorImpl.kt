@@ -26,7 +26,7 @@ class FilterInteractorImpl(
         return repository.getFilteredIndustryId()
     }
 
-    override suspend fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel) {
+    override suspend fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel?) {
         repository.saveFilteredIndustry(filteredIndustry)
     }
 

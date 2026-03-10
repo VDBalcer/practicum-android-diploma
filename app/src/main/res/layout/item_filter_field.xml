@@ -9,9 +9,10 @@
         android:id="@+id/filter_field_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:button="@null"
-        android:foreground="?attr/selectableItemBackground"
         android:drawableEnd="@drawable/radio_button_selector"
+        android:foreground="?attr/selectableItemBackground"
         android:textAppearance="@style/filter_section_text_color"
-        tools:text="Авиастроение"/>
+        tools:text="Авиастроение" />
 </FrameLayout>

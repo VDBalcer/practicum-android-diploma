@@ -9,5 +9,5 @@ interface FilterInteractor {
     suspend fun clearFilter()
 
     suspend fun getFilteredIndustryId(): Int
-    suspend fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel)
+    suspend fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel?)
 }

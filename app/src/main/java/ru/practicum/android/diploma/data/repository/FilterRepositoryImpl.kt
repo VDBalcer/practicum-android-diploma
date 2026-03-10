@@ -25,7 +25,7 @@ class FilterRepositoryImpl(
         return localDataSource.getFilter().industry?.id ?: -1
     }
 
-    override suspend fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel) {
+    override suspend fun saveFilteredIndustry(filteredIndustry: FilterIndustryModel?) {
         localDataSource.saveFilteredIndustry(filteredIndustry)
     }
 }
