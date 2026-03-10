@@ -17,6 +17,10 @@ class FilterViewModel(
     fun observeFilterState(): LiveData<VacancyFilterModel> = filterLiveData
 
     init {
+        updateFilter()
+    }
+
+    fun updateFilter() {
         viewModelScope.launch {
             val filter = filterSharedPref.getFilter()
             filterLiveData.postValue(filter)
@@ -44,8 +48,8 @@ class FilterViewModel(
     fun resetFilter() {
         viewModelScope.launch {
             filterSharedPref.clearFilter()
-            filterLiveData.postValue(filterSharedPref.getFilter())
         }
+        updateFilter()
     }
 
     fun isBtnsVisible(): Boolean {

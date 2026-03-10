@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
@@ -52,11 +53,17 @@ class FilterIndustryFragment : FilterBaseFragment() {
         viewModel.observeIndustryState().observe(viewLifecycleOwner) {
             render(it)
         }
+
+        viewModel.observeReSelectState().observe(viewLifecycleOwner) {
+            binding.filterFieldButtonChoose.isVisible = it
+        }
     }
 
     private fun initAdapter() {
         binding.filterFieldRecycler.layoutManager = LinearLayoutManager(requireContext())
-        _industryAdapter = FilterIndustryItemViewAdapter {}
+        _industryAdapter = FilterIndustryItemViewAdapter {
+            checkItem(it.id)
+        }
         binding.filterFieldRecycler.adapter = industryAdapter
     }
 
@@ -71,6 +78,18 @@ class FilterIndustryFragment : FilterBaseFragment() {
             binding.editTextboxFieldSearch.text?.clear()
             hideKeyboard()
         }
+
+        binding.filterFieldButtonChoose.setOnClickListener {
+            viewModel.saveFilteredIndustry()
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun checkItem(id: Int) {
+        viewModel.checkIndustry(
+            id,
+            binding.editTextboxFieldSearch.text?.toString() ?: ""
+        )
     }
 
     private fun hideKeyboard() {
@@ -130,7 +149,6 @@ class FilterIndustryFragment : FilterBaseFragment() {
             filterFieldProgressBar.visibility = View.GONE
             filterFieldPlaceholder.visibility = View.GONE
             filterFieldContentContainer.visibility = View.VISIBLE
-            filterFieldButtonChoose.isVisible = state.isIndustryReSelected
 
             industryAdapter.setData(state.industries)
             industryAdapter.notifyDataSetChanged()

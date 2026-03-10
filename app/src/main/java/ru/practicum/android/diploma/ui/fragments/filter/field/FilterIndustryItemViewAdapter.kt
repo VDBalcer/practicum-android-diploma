@@ -28,7 +28,7 @@ class FilterIndustryItemViewAdapter(
     ) {
         holder.bind(industryList[position])
 
-        holder.itemView.setOnClickListener {
+        holder.radioButton.setOnClickListener {
             clickListener.onIndustryClick(industryList[position])
         }
     }

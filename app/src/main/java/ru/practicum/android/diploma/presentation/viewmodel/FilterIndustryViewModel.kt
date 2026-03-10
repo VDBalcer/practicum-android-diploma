@@ -10,7 +10,6 @@ import ru.practicum.android.diploma.domain.api.ApiInteractor
 import ru.practicum.android.diploma.domain.api.NetworkResult
 import ru.practicum.android.diploma.domain.database.FilterInteractor
 import ru.practicum.android.diploma.domain.models.FilterIndustryModel
-import ru.practicum.android.diploma.presentation.mapper.toItem
 import ru.practicum.android.diploma.presentation.model.FilteredIndustryItem
 import ru.practicum.android.diploma.presentation.states.IndustryScreenState
 
@@ -21,12 +20,16 @@ class FilterIndustryViewModel(
     private val industryLiveData = MutableLiveData<IndustryScreenState>(IndustryScreenState.Loading)
     fun observeIndustryState(): LiveData<IndustryScreenState> = industryLiveData
 
-    val industriesList = mutableListOf<FilteredIndustryItem>()
+    private val reselectLiveData = MutableLiveData(false)
+    fun observeReSelectState(): LiveData<Boolean> = reselectLiveData
 
-    var latestSelectedIndustryId: Int = -1
+    private val industriesList = mutableListOf<FilteredIndustryItem>()
+
+    private var latestSelectedIndustryId: Int = -1
 
     private var loadJob: Job? = null
     fun loadIndustries() {
+        cancelJob()
         loadJob = viewModelScope.launch {
             latestSelectedIndustryId = filterSharedPref.getFilteredIndustryId()
             val result = apiInteractor.getIndustries()
@@ -47,17 +50,20 @@ class FilterIndustryViewModel(
             is NetworkResult.Success -> {
                 industriesList.addAll(
                     result.data.map {
-                        it.toItem(it.id == latestSelectedIndustryId)
+                        FilteredIndustryItem(
+                            it.id,
+                            it.name,
+                            isChecked = it.id == latestSelectedIndustryId
+                        )
                     }
                 )
-                IndustryScreenState.Content(industriesList, false)
+                IndustryScreenState.Content(industriesList)
             }
         }
         industryLiveData.postValue(state)
     }
 
     fun searchIndustry(query: String) {
-        val current = industryLiveData.value as? IndustryScreenState.Content ?: return
         val newIndustriesList = if (query.isNotBlank()) {
             industriesList.filter { item ->
                 item.name.contains(query, true)
@@ -67,8 +73,40 @@ class FilterIndustryViewModel(
         }
 
         industryLiveData.value = IndustryScreenState.Content(
-            newIndustriesList,
-            current.isIndustryReSelected
+            newIndustriesList
         )
+    }
+
+    private fun reSelect(checkedIndustryId: Int) {
+        reselectLiveData.value = latestSelectedIndustryId != checkedIndustryId
+    }
+
+    fun checkIndustry(checkedIndustryId: Int, filterQuery: String) {
+        reSelect(checkedIndustryId)
+        latestSelectedIndustryId = checkedIndustryId
+
+        val newIndustryList = industriesList.map { item ->
+            FilteredIndustryItem(
+                item.id,
+                item.name,
+                isChecked = item.id == latestSelectedIndustryId
+            )
+        }
+        industriesList.clear()
+        industriesList.addAll(newIndustryList)
+
+        searchIndustry(filterQuery)
+    }
+
+    fun saveFilteredIndustry() {
+        val filteredIndustry = industriesList.find { it.id == latestSelectedIndustryId }!!
+        viewModelScope.launch {
+            filterSharedPref.saveFilteredIndustry(
+                FilterIndustryModel(
+                    filteredIndustry.id,
+                    filteredIndustry.name
+                )
+            )
+        }
     }
 }

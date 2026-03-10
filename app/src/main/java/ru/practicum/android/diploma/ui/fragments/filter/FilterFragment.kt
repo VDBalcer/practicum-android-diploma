@@ -39,6 +39,15 @@ class FilterFragment : FilterBaseFragment() {
         initSalaryInput()
         initToolbar(R.string.filter_fragment_title)
         initFilterObserver()
+        initListeners(view)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateFilter()
+    }
+
+    private fun initListeners(view: View) {
         binding.filterAreaItem.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterFragment_to_filterPlaceFragment
@@ -101,9 +110,19 @@ class FilterFragment : FilterBaseFragment() {
                     }
                 }
 
-                it.industry?.name
-                    ?.takeIf { name -> name.isNotBlank() }
-                    ?.let { name -> filterIndustryItem.text = name }
+                val industry = it.industry?.name ?: ""
+
+                if (industry.isNotBlank()) {
+                    binding.filterIndustryItem.text = industry
+                    binding.filterIndustryItem.setTextColor(
+                        resources.getColor(R.color.graphite_black, null)
+                    )
+                } else {
+                    binding.filterIndustryItem.text = getString(R.string.filter_industry_item)
+                    binding.filterIndustryItem.setTextColor(
+                        resources.getColor(R.color.agate_gray, null)
+                    )
+                }
 
                 val btnsVisibility = viewModel.isBtnsVisible()
                 btnReset.isVisible = btnsVisibility

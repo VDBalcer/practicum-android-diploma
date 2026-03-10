@@ -8,10 +8,11 @@ import ru.practicum.android.diploma.presentation.model.FilteredIndustryItem
 
 class FilterIndustryItemViewHolder(private val binding: ItemFilterFieldBinding) :
     RecyclerView.ViewHolder(binding.root) {
+    val radioButton = binding.filterFieldName
 
     fun bind(field: FilteredIndustryItem) {
-        binding.filterFieldName.text = field.name
-        binding.filterFieldName.isChecked = field.isChecked
+        radioButton.text = field.name
+        radioButton.isChecked = field.isChecked
     }
 
     companion object {
