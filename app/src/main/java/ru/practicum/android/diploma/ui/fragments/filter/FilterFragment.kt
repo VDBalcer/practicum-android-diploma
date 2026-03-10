@@ -54,7 +54,7 @@ class FilterFragment : FilterBaseFragment() {
             )
         }
 
-        binding.filterIndustryItem.setOnClickListener {
+        binding.filterIndustryEditText.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterFragment_to_filterFieldFragment
             )
@@ -89,7 +89,6 @@ class FilterFragment : FilterBaseFragment() {
 
             val salary = text?.toString()?.toIntOrNull()
             viewModel.changeSalary(salary)
-
         }
     }
 
@@ -111,24 +110,23 @@ class FilterFragment : FilterBaseFragment() {
                 }
 
                 val industry = it.industry?.name ?: ""
-
                 if (industry.isNotBlank()) {
-                    filterIndustryItem.text = industry
-                    filterIndustryItem.setTextColor(
+                    filterIndustryEditText.setText(industry)
+                    filterIndustryEditText.setTextColor(
                         resources.getColor(R.color.graphite_black, null)
                     )
-                    filterIndustryCheckIcon.setImageResource(R.drawable.icon_clear)
-                    filterIndustryCheckIcon.setOnClickListener {
+                    filterIndustryContainer.setEndIconDrawable(R.drawable.icon_clear)
+                    filterIndustryContainer.setEndIconOnClickListener {
                         viewModel.clearIndustry()
                     }
 
                 } else {
-                    filterIndustryItem.text = getString(R.string.filter_industry_item)
-                    filterIndustryItem.setTextColor(
+                    filterIndustryEditText.setText("")
+                    filterIndustryEditText.setTextColor(
                         resources.getColor(R.color.agate_gray, null)
                     )
-                    filterIndustryCheckIcon.setImageResource(R.drawable.arrow_forward)
-                    filterIndustryCheckIcon.setOnClickListener(null)
+                    filterIndustryContainer.setEndIconDrawable(R.drawable.arrow_forward)
+                    filterIndustryContainer.setEndIconOnClickListener(null)
                 }
 
                 val btnsVisibility = viewModel.isBtnsVisible()
