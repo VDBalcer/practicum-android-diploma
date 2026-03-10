@@ -38,7 +38,7 @@ class FilterLocalDataSource(
                 KEY_INCLUDE_WITHOUT_SALARY,
                 false
             ),
-            industry = if (industryId == NO_INDUSTRY) {
+            industry = if (industryId <= NO_INDUSTRY) {
                 null
             } else {
                 FilterIndustryModel(
