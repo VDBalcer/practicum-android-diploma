@@ -45,10 +45,7 @@ class VacancyDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         onInitToolbar()
-
-
         viewModel.observeMainState().observe(viewLifecycleOwner) {
             render(it)
         }

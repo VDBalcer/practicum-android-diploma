@@ -5,6 +5,7 @@ import retrofit2.HttpException
 import ru.practicum.android.diploma.data.dto.NetworkMonitor
 import ru.practicum.android.diploma.data.mapper.toDomain
 import ru.practicum.android.diploma.data.mapper.toDto
+import ru.practicum.android.diploma.data.mapper.toQueryMap
 import ru.practicum.android.diploma.data.network.YPApiService
 import ru.practicum.android.diploma.domain.api.ApiRepository
 import ru.practicum.android.diploma.domain.api.NetworkResult
@@ -17,7 +18,7 @@ import java.io.IOException
 
 class YPApiRepositoryImpl(
     private val api: YPApiService,
-    private val networkMonitor: NetworkMonitor
+    private val networkMonitor: NetworkMonitor,
 ) : ApiRepository {
 
     override suspend fun getVacancy(id: String): NetworkResult<VacancyDetailModel> =
@@ -33,16 +34,8 @@ class YPApiRepositoryImpl(
         filter: VacancyRequestModel,
     ): NetworkResult<VacancyResponseModel> =
         safeApiCall {
-            val dto = filter.toDto()
-
-            api.getVacancies(
-                area = dto.area,
-                industry = dto.industry,
-                text = dto.text,
-                salary = dto.salary,
-                page = dto.page,
-                onlyWithSalary = dto.onlyWithSalary
-            ).toDomain()
+            val dto = filter.toDto().toQueryMap()
+            api.getVacancies(dto).toDomain()
         }
 
     private suspend fun <T> safeApiCall(

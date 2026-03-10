@@ -12,3 +12,14 @@ fun VacancyRequestModel.toDto(): VacancyRequestDto =
         page = page,
         onlyWithSalary = onlyWithSalary
     )
+
+fun VacancyRequestDto.toQueryMap(): Map<String, String> {
+    return buildMap {
+        area?.let { put("area", it.toString()) }
+        industry?.let { put("industry", it.toString()) }
+        text?.let { put("text", it) }
+        salary?.let { put("salary", it.toString()) }
+        page?.let { put("page", it.toString()) }
+        onlyWithSalary?.let { put("only_with_salary", it.toString()) }
+    }
+}
