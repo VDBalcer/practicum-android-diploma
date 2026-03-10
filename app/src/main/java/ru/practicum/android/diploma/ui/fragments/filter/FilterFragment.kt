@@ -113,15 +113,22 @@ class FilterFragment : FilterBaseFragment() {
                 val industry = it.industry?.name ?: ""
 
                 if (industry.isNotBlank()) {
-                    binding.filterIndustryItem.text = industry
-                    binding.filterIndustryItem.setTextColor(
+                    filterIndustryItem.text = industry
+                    filterIndustryItem.setTextColor(
                         resources.getColor(R.color.graphite_black, null)
                     )
+                    filterIndustryCheckIcon.setImageResource(R.drawable.icon_clear)
+                    filterIndustryCheckIcon.setOnClickListener {
+                        viewModel.clearIndustry()
+                    }
+
                 } else {
-                    binding.filterIndustryItem.text = getString(R.string.filter_industry_item)
-                    binding.filterIndustryItem.setTextColor(
+                    filterIndustryItem.text = getString(R.string.filter_industry_item)
+                    filterIndustryItem.setTextColor(
                         resources.getColor(R.color.agate_gray, null)
                     )
+                    filterIndustryCheckIcon.setImageResource(R.drawable.arrow_forward)
+                    filterIndustryCheckIcon.setOnClickListener(null)
                 }
 
                 val btnsVisibility = viewModel.isBtnsVisible()

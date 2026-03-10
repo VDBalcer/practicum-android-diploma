@@ -16,17 +16,39 @@
         android:drawableEnd="@drawable/arrow_forward"
         android:text="@string/filter_area_item"
         android:textAppearance="@style/TextAppearance.FilterLight"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/filter_industry_item"
-        style="@style/Widget.FilterItem"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filter_industry_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/arrow_forward"
-        android:text="@string/filter_industry_item"
-        android:textAppearance="@style/TextAppearance.FilterLight"
-        app:layout_constraintTop_toBottomOf="@+id/filter_area_item" />
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/filter_area_item">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_industry_item"
+            style="@style/Widget.FilterItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_industry_item"
+            android:textAppearance="@style/TextAppearance.FilterLight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/filter_industry_check_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/filter_industry_check_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/arrow_forward"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/salary_input_layout"
@@ -51,7 +73,7 @@
         app:expandedHintEnabled="false"
         app:hintTextAppearance="@style/TextAppearance.Hint"
         app:hintTextColor="@color/salary_hint_text_color"
-        app:layout_constraintTop_toBottomOf="@+id/filter_industry_item"
+        app:layout_constraintTop_toBottomOf="@+id/filter_industry_container"
         app:placeholderText="@string/edit_textbox_salary"
         app:placeholderTextAppearance="@style/TextAppearance.Input"
         app:placeholderTextColor="?attr/placeholder_color">

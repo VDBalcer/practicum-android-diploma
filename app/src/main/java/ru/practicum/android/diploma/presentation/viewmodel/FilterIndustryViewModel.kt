@@ -42,7 +42,7 @@ class FilterIndustryViewModel(
     }
 
     private fun processResult(
-        result: NetworkResult<List<FilterIndustryModel>>
+        result: NetworkResult<List<FilterIndustryModel>>,
     ) {
         val state = when (result) {
             is NetworkResult.Error -> IndustryScreenState.ServerError
@@ -83,7 +83,11 @@ class FilterIndustryViewModel(
 
     fun checkIndustry(checkedIndustryId: Int, filterQuery: String) {
         reSelect(checkedIndustryId)
-        latestSelectedIndustryId = checkedIndustryId
+        latestSelectedIndustryId = if (latestSelectedIndustryId == checkedIndustryId) {
+            -1
+        } else {
+            checkedIndustryId
+        }
 
         val newIndustryList = industriesList.map { item ->
             FilteredIndustryItem(
