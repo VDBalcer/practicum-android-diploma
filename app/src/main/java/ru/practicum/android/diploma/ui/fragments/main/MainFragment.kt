@@ -126,7 +126,7 @@ class MainFragment : Fragment() {
                     val pos = layoutManager.findLastVisibleItemPosition()
                     val itemsCount = vacancyAdapter.itemCount
                     if (pos >= itemsCount - 1) {
-                        viewModel.onLastItemReached()
+                        viewModel.onLastItemReached(binding.editTextboxJobSearch.text.toString())
                     }
                 }
             }

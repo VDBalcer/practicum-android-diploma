@@ -169,7 +169,7 @@ class MainFragmentViewModel(
         }
     }
 
-    fun onLastItemReached() {
+    fun onLastItemReached(query: String) {
         val currentState = mainStateLiveData.value
         if (
             currentState !is MainScreenState.Content ||
@@ -183,7 +183,8 @@ class MainFragmentViewModel(
         )
         loadPage(
             filter = currentFilter.copy(
-                page = currentState.response.page + 1
+                page = currentState.response.page + 1,
+                text = query
             ),
             isNewSearch = false
         )
