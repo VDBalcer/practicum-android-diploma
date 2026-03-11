@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceCountryBinding
+import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
 
-class FilterPlaceCountryFragment : Fragment() {
+class FilterPlaceCountryFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterPlaceCountryBinding? = null
     private val binding get() = _binding!!
 
@@ -23,5 +24,10 @@ class FilterPlaceCountryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initToolbar(R.string.filter_country_fragment_title)
     }
 }

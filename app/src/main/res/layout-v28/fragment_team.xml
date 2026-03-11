@@ -7,13 +7,6 @@
     tools:context=".ui.fragments.team.TeamFragment">
 
     <TextView
-        style="@style/Widget.PageTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/team_fragment_title"
-        android:textAppearance="@style/TextAppearance.PageTitle" />
-
-    <TextView
         style="@style/info_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

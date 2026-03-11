@@ -4,19 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.view.inputmethod.InputMethodManager
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
+import ru.practicum.android.diploma.presentation.viewmodel.FilterViewModel
 
-class FilterFragment : Fragment() {
+class FilterFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: FilterViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentFilterBinding.inflate(inflater, container, false)
         return binding.root
@@ -24,22 +30,109 @@ class FilterFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        viewModel.saveFilter()
         _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initSalaryInput()
+        initToolbar(R.string.filter_fragment_title)
+        initFilterObserver()
+        initListeners(view)
+    }
 
-        binding.filterFieldButton.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_filterFragment_to_filterFieldFragment
-            )
-        }
-        binding.filterPlaceButton.setOnClickListener {
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateFilter()
+    }
+
+    private fun initListeners(view: View) {
+        binding.filterAreaItem.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterFragment_to_filterPlaceFragment
             )
         }
 
+        binding.filterIndustryEditText.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_filterFragment_to_filterFieldFragment
+            )
+        }
+
+        binding.btnApply.setOnClickListener {
+            viewModel.saveFilter()
+            parentFragmentManager.setFragmentResult(
+                "filter_result",
+                bundleOf("apply_filter" to true)
+            )
+            findNavController().popBackStack()
+        }
+        binding.btnReset.setOnClickListener {
+            view.findFocus()?.clearFocus()
+            viewModel.resetFilter()
+        }
+    }
+
+    private fun initSalaryInput() {
+        binding.salaryInputLayout.isEndIconVisible = false
+        binding.salaryInputLayout.setEndIconOnClickListener {
+            val editText = binding.salaryInputEditText
+            editText.text?.clear()
+            val imm = requireContext()
+                .getSystemService(InputMethodManager::class.java)
+            imm.hideSoftInputFromWindow(editText.windowToken, 0)
+            editText.clearFocus()
+        }
+        binding.salaryInputEditText.doAfterTextChanged { text ->
+            binding.salaryInputLayout.isEndIconVisible = !text.isNullOrEmpty()
+
+            val salary = text?.toString()?.toIntOrNull()
+            viewModel.changeSalary(salary)
+        }
+    }
+
+    private fun initFilterObserver() {
+        viewModel.observeFilterState().observe(viewLifecycleOwner) {
+            with(binding) {
+                filterOnlySalary.setOnCheckedChangeListener(null)
+                filterOnlySalary.isChecked = it.includeWithoutSalary
+                filterOnlySalary.setOnCheckedChangeListener { _, isChecked ->
+                    viewModel.changeIncludeWithoutSalary(isChecked)
+                }
+
+                if (!salaryInputEditText.isFocused) {
+                    val text = it.salaryFrom?.toString().orEmpty()
+
+                    if (salaryInputEditText.text.toString() != text) {
+                        salaryInputEditText.setText(text)
+                    }
+                }
+
+                val industry = it.industry?.name ?: ""
+                if (industry.isNotBlank()) {
+                    filterIndustryEditText.setText(industry)
+                    filterIndustryEditText.setTextColor(
+                        resources.getColor(R.color.graphite_black, null)
+                    )
+                    filterIndustryContainer.setEndIconDrawable(R.drawable.icon_clear)
+                    filterIndustryContainer.setEndIconOnClickListener {
+                        viewModel.clearIndustry()
+                    }
+
+                } else {
+                    filterIndustryEditText.setText("")
+                    filterIndustryEditText.setTextColor(
+                        resources.getColor(R.color.agate_gray, null)
+                    )
+                    filterIndustryContainer.setEndIconDrawable(R.drawable.arrow_forward)
+                    filterIndustryContainer.setEndIconOnClickListener(null)
+                }
+
+                val btnsVisibility = viewModel.isBtnsVisible()
+                btnReset.isVisible = btnsVisibility
+                btnApply.isVisible = btnsVisibility
+            }
+        }
     }
 }

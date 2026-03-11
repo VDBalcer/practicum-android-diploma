@@ -8,47 +8,36 @@
     android:orientation="vertical"
     tools:context=".ui.fragments.favorites.FavoritesFragment">
 
-    <TextView
-        android:id="@+id/favorites_title_page"
-        style="@style/Widget.PageTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/favorites_fragment_title"
-        android:textAppearance="@style/TextAppearance.PageTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ProgressBar
-        android:visibility="gone"
         android:id="@+id/favorites_progressbar"
         android:layout_width="@dimen/size_progress_bar"
         android:layout_height="@dimen/size_progress_bar"
         android:layout_gravity="center"
         android:indeterminateTint="@color/progress_bar"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favorites_title_page" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/favorites_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favorites_title_page" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="gone"
         android:id="@+id/favorites_container_placeholder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingHorizontal="@dimen/placeholder_margin_horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favorites_title_page"
-        android:paddingHorizontal="@dimen/placeholder_margin_horizontal">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/favorites_placeholder_image"

@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterPlaceBinding
+import ru.practicum.android.diploma.ui.fragments.filter.FilterBaseFragment
 
-class FilterPlaceFragment : Fragment() {
+class FilterPlaceFragment : FilterBaseFragment() {
     private var _binding: FragmentFilterPlaceBinding? = null
     private val binding get() = _binding!!
 
@@ -29,14 +29,13 @@ class FilterPlaceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.filterPlaceCountryButton.setOnClickListener {
+        initToolbar(R.string.filter_place_fragment_title)
+        binding.filterAreaCountryItem.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterPlaceFragment_to_filterPlaceCountryFragment
             )
         }
-
-        binding.filterPlaceRegionButton.setOnClickListener {
+        binding.filterAreaRegionItem.setOnClickListener {
             findNavController().navigate(
                 R.id.action_filterPlaceFragment_to_filterPlaceRegionFragment
             )

@@ -1,28 +1,20 @@
 package ru.practicum.android.diploma.ui.root
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
-import ru.practicum.android.diploma.domain.api.ApiInteractor
-import ru.practicum.android.diploma.domain.api.NetworkResult
-import ru.practicum.android.diploma.domain.models.VacancyRequestModel
 
 class RootActivity : AppCompatActivity() {
     private var _binding: ActivityRootBinding? = null
-    private val binding get() = _binding!!
-    private val repository: ApiInteractor by inject()
+    val rootBinding get() = _binding!!
     private val topLevelDestinations = setOf(
         R.id.main_fragment,
         R.id.favorites_fragment,
@@ -33,16 +25,16 @@ class RootActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityRootBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(binding.root)
+        setContentView(rootBinding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(rootBinding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             v.updatePadding(
                 left = systemBars.left,
                 top = systemBars.top,
                 right = systemBars.right,
-                bottom = if (binding.rootBottomNavMenu.isVisible) 0 else systemBars.bottom
+                bottom = if (this@RootActivity.rootBinding.rootBottomNavMenu.isVisible) 0 else systemBars.bottom
             )
 
             insets
@@ -53,45 +45,17 @@ class RootActivity : AppCompatActivity() {
             ?: error("NavHostFragment not found")
         val navController = navHostFragment.navController
 
-        binding.rootBottomNavMenu.setupWithNavController(navController)
+        rootBinding.rootBottomNavMenu.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.rootBottomNavMenu.isVisible =
+            this@RootActivity.rootBinding.rootBottomNavMenu.isVisible =
                 destination.id in topLevelDestinations
-            ViewCompat.requestApplyInsets(binding.root)
+            ViewCompat.requestApplyInsets(rootBinding.root)
         }
-
-        // Пример запроса к API
-        networkRequestExample()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
-    private fun networkRequestExample() {
-        lifecycleScope.launch {
-            val result = repository.getVacancies(VacancyRequestModel()) // Любой тестируемый запрос
-
-            when (result) {
-                is NetworkResult.Success -> {
-                    Log.d(NETWORK_DEBUG_TAG, "Success: ${result.data}")
-                }
-
-                is NetworkResult.Error -> {
-                    Log.e(NETWORK_DEBUG_TAG, "HTTP error: ${result.code}")
-                }
-
-                is NetworkResult.NetworkError -> {
-                    Log.e(NETWORK_DEBUG_TAG, "Network error")
-                }
-            }
-        }
-    }
-
-    companion object {
-        private const val NETWORK_DEBUG_TAG = "NETWORK_TEST"
-    }
-
 }

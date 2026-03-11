@@ -7,18 +7,6 @@
     android:background="?attr/activity_background"
     tools:context=".ui.fragments.details.VacancyDetailsFragment">
 
-    <!-- Toolbar -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/activity_background"
-        android:titleTextColor="?attr/colorOnSurface"
-        app:layout_scrollFlags="enterAlways"
-        app:menu="@menu/menu_toolbar_vacancy"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:titleTextAppearance="@style/TextAppearance.PageTitle" />
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="@dimen/size_progress_bar"
@@ -35,7 +23,6 @@
         android:id="@+id/vacancy_all_info_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -249,7 +236,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="24dp"
-                android:text="email: 123@gmail.com"
+
                 android:textAppearance="@style/VacancyDeyail.ListItemStyle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

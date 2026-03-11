@@ -14,12 +14,14 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.google.android.material.appbar.MaterialToolbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
 import ru.practicum.android.diploma.domain.models.VacancyDetailModel
 import ru.practicum.android.diploma.presentation.model.VacancyDetailScreenState
 import ru.practicum.android.diploma.presentation.viewmodel.VacancyDetailsViewModel
+import ru.practicum.android.diploma.ui.root.RootActivity
 import ru.practicum.android.diploma.util.Converter
 import ru.practicum.android.diploma.util.formatSalary
 
@@ -28,6 +30,9 @@ class VacancyDetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: VacancyDetailsViewModel by viewModel()
+
+    private var _rootToolbar: MaterialToolbar? = null
+    private val rootToolbar get() = _rootToolbar!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,18 +45,25 @@ class VacancyDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
-
+        onInitToolbar()
         viewModel.observeMainState().observe(viewLifecycleOwner) {
             render(it)
         }
     }
 
+    private fun onInitToolbar() {
+        _rootToolbar = (activity as RootActivity).rootBinding.rootToolbar
+        rootToolbar.title = getString(R.string.vacancy_details_fragment_title)
+        rootToolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        rootToolbar.setupWithNavController(navController, appBarConfiguration)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        _rootToolbar = null
         _binding = null
     }
 
@@ -77,7 +89,7 @@ class VacancyDetailsFragment : Fragment() {
         binding.apply {
             containerPlaceholder.isVisible = false
             progressBar.isVisible = true
-            toolbar.menu.forEach { item -> item.isVisible = false }
+            rootToolbar.menu.forEach { item -> item.isVisible = false }
             vacancyAllInfoContainer.isVisible = false
         }
     }
@@ -87,7 +99,7 @@ class VacancyDetailsFragment : Fragment() {
             containerPlaceholder.isVisible = true
             placeholderImage.setImageResource(im)
             placeholderMessage.text = message
-            toolbar.menu.forEach { item -> item.isVisible = false }
+            rootToolbar.menu.forEach { item -> item.isVisible = false }
             progressBar.isVisible = false
             vacancyAllInfoContainer.isVisible = false
         }
@@ -114,7 +126,6 @@ class VacancyDetailsFragment : Fragment() {
         containerPlaceholder.isVisible = false
         progressBar.isVisible = false
         vacancyAllInfoContainer.isVisible = true
-        toolbar.menu.forEach { it.isVisible = true }
     }
 
     private fun bindHeader(vacancy: VacancyDetailModel) {
@@ -165,22 +176,18 @@ class VacancyDetailsFragment : Fragment() {
     private fun bindContacts(vacancy: VacancyDetailModel) {
         val contacts = vacancy.contacts
         val hasContacts = contacts != null
-
+        val email = contacts?.email.orEmpty()
+        val hasEmail = email.isNotBlank()
         binding.tvContactsTitle.isVisible = hasContacts
         binding.tvContactsName.isVisible = hasContacts
         binding.tvContactsEmail.isVisible = hasContacts
-
         if (hasContacts) {
             binding.tvContactsName.text = contacts!!.name
-
-            val email = contacts.email
-            binding.tvContactsEmail.text =
-                getString(R.string.email, email)
-
-            if (email.isNotEmpty()) {
-                binding.tvContactsEmail.setOnClickListener {
-                    viewModel.onEmailClicked(email)
-                }
+        }
+        if (hasEmail) {
+            binding.tvContactsEmail.text = getString(R.string.email, email)
+            binding.tvContactsEmail.setOnClickListener {
+                viewModel.onEmailClicked(email)
             }
         }
     }
@@ -215,7 +222,10 @@ class VacancyDetailsFragment : Fragment() {
     }
 
     private fun bindToolbar(vacancy: VacancyDetailModel) {
-        binding.toolbar.setOnMenuItemClickListener { item ->
+        rootToolbar.menu.forEach { it.isVisible = true }
+        rootToolbar.menu.findItem(R.id.action_filter).isVisible = false
+
+        rootToolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_share -> {
                     viewModel.onShareClicked(vacancy.url)
@@ -255,9 +265,9 @@ class VacancyDetailsFragment : Fragment() {
 
     private fun bindFavoriteIcon(isFavorite: Boolean) {
         if (isFavorite) {
-            binding.toolbar.menu.findItem(R.id.action_favorite).setIcon(R.drawable.favorites_24px)
+            rootToolbar.menu.findItem(R.id.action_favorite).setIcon(R.drawable.favorites_24px)
         } else {
-            binding.toolbar.menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_border)
+            rootToolbar.menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_border)
         }
     }
 
